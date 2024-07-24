@@ -12,7 +12,7 @@
 
 <div class="row">
     <div class="col-lg-4 offset-lg-4 pt-4 pb-4 border">
-    <EditForm Model="@User" OnSubmit="Authenticate" FormName="UserModel">
+    <EditForm Model="@User" OnSubmit="Authenticate" FormName="LoginForm">
         <div class="mb-3 text-center flex-column">
             <img src="/favicon.png" style="max-height: 5rem;" />
             <h3>LOGIN</h3>
@@ -54,7 +54,7 @@
     {
         try
         {
-            var response = await Http.PostAsJsonAsync("/Auth/login", new { Username = "admin", Password = "admin" });
+            var response = await Http.PostAsJsonAsync("/Auth/login", new { Username = User.Name, Password = User.Password });
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = await response.Content.ReadFromJsonAsync<JwtResponse>();
