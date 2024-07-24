@@ -11,14 +11,14 @@ namespace AuthExample.Controllers
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
-        // Hardcode name-password
+        // Хардкодим ім'я користувача та пароль
         private const string HardcodedUsername = "admin";
         private const string HardcodedPassword = "admin";
 
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
-            // Check
+            // Перевірка хардкодених значень
             if (request.Username == HardcodedUsername && request.Password == HardcodedPassword)
             {
                 var claims = new[]
@@ -37,10 +37,9 @@ namespace AuthExample.Controllers
                     expires: DateTime.Now.AddMinutes(30),
                     signingCredentials: creds);
 
-                return Ok(new
-                {
-                    token = new JwtSecurityTokenHandler().WriteToken(token)
-                });
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+                return Ok(new JwtResponse { Token = tokenString });
             }
 
             return Unauthorized();
@@ -51,5 +50,10 @@ namespace AuthExample.Controllers
     {
         public string Username { get; set; }
         public string Password { get; set; }
+    }
+
+    public class JwtResponse
+    {
+        public string Token { get; set; }
     }
 }

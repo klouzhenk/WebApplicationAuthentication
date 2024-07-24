@@ -10,7 +10,7 @@
 
 <div class="row">
     <div class="col-lg-4 offset-lg-4 pt-4 pb-4 border">
-        <EditForm Model="@model" OnValidSubmit="Authenticate" FormName="LoginForm">
+        <EditForm Model="@User" OnValidSubmit="Authenticate" FormName="UserModel">
             <DataAnnotationsValidator></DataAnnotationsValidator>
             <div class="mb-3 text-center flex-column">
                 <img src="/favicon.png" style="max-height: 5rem;" />
@@ -19,19 +19,19 @@
 
             <div class="mb-3">
                 <label>Username</label>
-                <InputText @bind-Value="model.Name" class="form-control" placeholder="Username" />
-                <ValidationMessage For="() => model.Name"></ValidationMessage>
+                <InputText @bind-Value="User.Name" class="form-control" placeholder="Username" />
+                <ValidationMessage For="() => User.Name"></ValidationMessage>
             </div>
 
             <div class="mb-3">
                 <label>Password</label>
-                <InputText @bind-Value="model.Password" class="form-control" placeholder="Password" type="password" />
-                <ValidationMessage For="() => model.Password"></ValidationMessage>
+                <InputText @bind-Value="User.Password" class="form-control" placeholder="Password" type="password" />
+                <ValidationMessage For="() => User.Password"></ValidationMessage>
             </div>
 
             <div class="mb-3 text-center">
                 <span class="text-danger">
-                    @errorMessage
+                    @_errorMessage
                 </span>
             </div>
 
@@ -45,29 +45,48 @@
 </div>
 
 @code {
-    public Model model { get; set; } = new();
-    private string? errorMessage;
+    public UserModel User { get; set; } = new();
+    private string? _errorMessage;
 
     private async Task Authenticate()
     {
         try
         {
-            var response = await Http.PostAsJsonAsync("api/authenticate", new { model.Name, model.Password });
+            var response = await Http.PostAsJsonAsync("/Auth/login", new { Username = User.Name, Password = User.Password });
             if (response.IsSuccessStatusCode)
             {
-                var token = await response.Content.ReadAsStringAsync();
-                // Збереження токена у localStorage
-                await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", token);
-                NavigationManager.NavigateTo("/");
+                var responseContent = await response.Content.ReadFromJsonAsync<JwtResponse>();
+                if (responseContent != null)
+                {
+                    var token = responseContent.Token;
+                    // Збереження токена у localStorage
+                    await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", token);
+                    NavigationManager.NavigateTo("/");
+                }
+                else
+                {
+                    _errorMessage = "Invalid response from server";
+                }
             }
             else
             {
-                errorMessage = "Invalid username or password";
+                _errorMessage = "Invalid username or password";
             }
         }
         catch (Exception ex)
         {
-            errorMessage = $"An error occurred: {ex.Message}";
+            _errorMessage = $"An error occurred: {ex.Message}";
         }
+    }
+
+    public class UserModel
+    {
+        public string Name { get; set; }
+        public string Password { get; set; }
+    }
+
+    public class JwtResponse
+    {
+        public string Token { get; set; }
     }
 }
