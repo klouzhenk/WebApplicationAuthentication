@@ -1,67 +1,70 @@
 ﻿@page "/login"
 @using System.Net.Http.Headers
 @using System.Net.Http.Json
+@using Microsoft.AspNetCore.Authentication
+@rendermode InteractiveServer
 
 @inject HttpClient Http
-@inject NavigationManager NavigationManager
+@inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
 
 <h2 class="text-center mb-3" style="font-size:36px">Login</h2>
 
 <div class="row">
     <div class="col-lg-4 offset-lg-4 pt-4 pb-4 border">
-        <EditForm Model="@User" OnValidSubmit="Authenticate" FormName="UserModel">
-            <DataAnnotationsValidator></DataAnnotationsValidator>
-            <div class="mb-3 text-center flex-column">
-                <img src="/favicon.png" style="max-height: 5rem;" />
-                <h3>LOGIN</h3>
-            </div>
+    <EditForm Model="@User" OnSubmit="Authenticate" FormName="UserModel">
+        <div class="mb-3 text-center flex-column">
+            <img src="/favicon.png" style="max-height: 5rem;" />
+            <h3>LOGIN</h3>
+        </div>
 
-            <div class="mb-3">
-                <label>Username</label>
-                <InputText @bind-Value="User.Name" class="form-control" placeholder="Username" />
-                <ValidationMessage For="() => User.Name"></ValidationMessage>
-            </div>
+        <div class="mb-3">
+            <label>Username</label>
+            <InputText @bind-Value="User.Name" class="form-control" placeholder="Username" />
+        </div>
 
-            <div class="mb-3">
-                <label>Password</label>
-                <InputText @bind-Value="User.Password" class="form-control" placeholder="Password" type="password" />
-                <ValidationMessage For="() => User.Password"></ValidationMessage>
-            </div>
+        <div class="mb-3">
+            <label>Password</label>
+            <InputText @bind-Value="User.Password" class="form-control" placeholder="Password" type="password" />
+        </div>
 
-            <div class="mb-3 text-center">
-                <span class="text-danger">
-                    @_errorMessage
-                </span>
-            </div>
+        <div class="mb-3 text-center">
+            <span class="text-danger">
+                @_errorMessage
+            </span>
+        </div>
 
-            <div class="mb-3 d-grid gap-2">
-                <button type="submit" class="btn btn-primary">
-                    Login
-                </button>
-            </div>
-        </EditForm>
+        <div class="mb-3 d-grid gap-2">
+            <button type="submit" class="btn btn-primary">
+                Login
+            </button>
+        </div>
+    </EditForm>
     </div>
 </div>
 
 @code {
     public UserModel User { get; set; } = new();
-    private string? _errorMessage;
+
+    private string _errorMessage;
+    private bool _isAuthenticated = false;
+    private string _authToken;
 
     private async Task Authenticate()
     {
         try
         {
-            var response = await Http.PostAsJsonAsync("/Auth/login", new { Username = User.Name, Password = User.Password });
+            var response = await Http.PostAsJsonAsync("/Auth/login", new { Username = "admin", Password = "admin" });
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = await response.Content.ReadFromJsonAsync<JwtResponse>();
                 if (responseContent != null)
                 {
-                    var token = responseContent.Token;
-                    // Збереження токена у localStorage
-                    await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", token);
-                    NavigationManager.NavigateTo("/");
+                    _authToken = responseContent.Token;
+                    _isAuthenticated = true;
+                    // Збереження токена у localStorage після рендерингу
+                    await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", _authToken);
+                    navigationManager.NavigateTo("/weather", false);
                 }
                 else
                 {
