@@ -8,7 +8,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddHttpClient();
 builder.Services.AddScoped(sp => new HttpClient
 {
-    BaseAddress = new Uri("https://localhost:7267") // «м≥н≥ть на ваш URL
+    BaseAddress = new Uri("https://localhost:7267") // URL
 });
 
 var app = builder.Build();

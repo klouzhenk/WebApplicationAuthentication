@@ -3,8 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Linq;
-using WebApplicationAuthentication;
+using System;
 
 namespace AuthExample.Controllers
 {
@@ -12,19 +11,15 @@ namespace AuthExample.Controllers
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly UserDbContext _context;
-
-        public AuthController(UserDbContext context)
-        {
-            _context = context;
-        }
+        // Hardcode name-password
+        private const string HardcodedUsername = "admin";
+        private const string HardcodedPassword = "admin";
 
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
-            var user = _context.Users.SingleOrDefault(u => u.Username == request.Username && u.Password == request.Password);
-
-            if (user != null)
+            // Check
+            if (request.Username == HardcodedUsername && request.Password == HardcodedPassword)
             {
                 var claims = new[]
                 {
