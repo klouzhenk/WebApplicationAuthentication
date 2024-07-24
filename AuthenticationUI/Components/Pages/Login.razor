@@ -1,0 +1,73 @@
+﻿@page "/login"
+@using System.Net.Http.Headers
+@using System.Net.Http.Json
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+<h2 class="text-center mb-3" style="font-size:36px">Login</h2>
+
+<div class="row">
+    <div class="col-lg-4 offset-lg-4 pt-4 pb-4 border">
+        <EditForm Model="@model" OnValidSubmit="Authenticate" FormName="LoginForm">
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+            <div class="mb-3 text-center flex-column">
+                <img src="/favicon.png" style="max-height: 5rem;" />
+                <h3>LOGIN</h3>
+            </div>
+
+            <div class="mb-3">
+                <label>Username</label>
+                <InputText @bind-Value="model.Name" class="form-control" placeholder="Username" />
+                <ValidationMessage For="() => model.Name"></ValidationMessage>
+            </div>
+
+            <div class="mb-3">
+                <label>Password</label>
+                <InputText @bind-Value="model.Password" class="form-control" placeholder="Password" type="password" />
+                <ValidationMessage For="() => model.Password"></ValidationMessage>
+            </div>
+
+            <div class="mb-3 text-center">
+                <span class="text-danger">
+                    @errorMessage
+                </span>
+            </div>
+
+            <div class="mb-3 d-grid gap-2">
+                <button type="submit" class="btn btn-primary">
+                    Login
+                </button>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    public Model model { get; set; } = new();
+    private string? errorMessage;
+
+    private async Task Authenticate()
+    {
+        try
+        {
+            var response = await Http.PostAsJsonAsync("api/authenticate", new { model.Name, model.Password });
+            if (response.IsSuccessStatusCode)
+            {
+                var token = await response.Content.ReadAsStringAsync();
+                // Збереження токена у localStorage
+                await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", token);
+                NavigationManager.NavigateTo("/");
+            }
+            else
+            {
+                errorMessage = "Invalid username or password";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"An error occurred: {ex.Message}";
+        }
+    }
+}
