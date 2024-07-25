@@ -1,17 +1,9 @@
-﻿@using Microsoft.AspNetCore.Authorization
-
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 
 <div class="page">
-    <CascadingAuthenticationState>
-        <AuthorizeView>
-            <Authorized>
-                <div class="sidebar">
-                    <NavMenu />
-                </div>
-            </Authorized>
-        </AuthorizeView>
-    </CascadingAuthenticationState>
+    <div class="sidebar">
+        <NavMenu />
+    </div>
 
     <main>
         <div class="top-row px-4">
