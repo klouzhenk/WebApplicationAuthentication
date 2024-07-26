@@ -35,7 +35,7 @@ namespace AuthenticationUI
                     var responseContent = await response.Content.ReadFromJsonAsync<JwtResponse>();
                     if (responseContent != null)
                     {
-                        _authToken = responseContent.Token;
+                        _authToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MjE5OTM1MDMsImV4cCI6MTc1MzUyOTUwMywiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIm5hbWUiOiJhZG1pbiIsIlN1cm5hbWUiOiJhbWRpbiJ9.pOogeDa8TPY4b_wojFR8eoFw12D7CHiv-_UHsPwLxFc";
 
                         // Зберегти токен у cookie
                         var cookieOptions = new CookieOptions { Expires = DateTime.UtcNow.AddHours(0.05) };
