@@ -8,7 +8,6 @@
 @inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
 
-
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -23,27 +22,3 @@
         </div>
     </div>
 </div>
-
-@code {
-
-    protected override async Task OnInitializedAsync()
-    {
-
-
-        try
-        {
-            // Видалення токена з localStorage
-            await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "authToken");
-            // Delay
-            await Task.Delay(2000);
-            // Перенаправлення на сторінку входу 
-            navigationManager.NavigateTo("/", true);
-        }
-        catch (Exception ex)
-        {
-            // Логування помилки (можливо, на консоль або в якийсь інший спосіб)
-            Console.Error.WriteLine($"JavaScript interop failed: {ex.Message}");
-        }
-    }
-
-}
