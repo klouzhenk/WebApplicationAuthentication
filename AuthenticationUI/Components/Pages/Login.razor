@@ -8,16 +8,12 @@
 @using AuthenticationUI.Components.Pages;
 @using Microsoft.JSInterop;
 
-@* @inject AuthenticationStateProvider AuthenticationStateProvider
-@inject HttpClient Http
-@inject NavigationManager Navigation
-@inject IJSRuntime JSRuntime *@
-
-
 @using System.Net.Http.Headers
 @using System.Net.Http.Json
 
 @inherits LoginPage
+
+@rendermode InteractiveServer
 
 <CascadingAuthenticationState>
     <AuthorizeView Context="AuthenticationContext">
@@ -61,6 +57,7 @@
         </Authorized>
     </AuthorizeView>
 </CascadingAuthenticationState>
+
 
 @* @code{
     // public fields

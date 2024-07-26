@@ -8,6 +8,8 @@
 @inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
 
+@inherits LogoutClass
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -20,5 +22,8 @@
                 </div>
             </div>
         </div>
+        <button class="btn btn-primary" onclick="@LogoutAsync()">
+            Click to logout
+        </button>
     </div>
 </div>

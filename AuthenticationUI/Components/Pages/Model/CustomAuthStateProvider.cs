@@ -1,52 +1,71 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System.Threading.Tasks;
 
 public class CustomAuthStateProvider : AuthenticationStateProvider
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IJSRuntime _jsRuntime;
     private readonly JwtSecurityTokenHandler _tokenHandler;
+    private bool _isAuthenticated = false;
+    private bool _isAuthenticationInProgress = false;
+    private ClaimsPrincipal _user = new ClaimsPrincipal(new ClaimsIdentity());
 
-    public CustomAuthStateProvider(IHttpContextAccessor httpContextAccessor)
+    public CustomAuthStateProvider(IJSRuntime jsRuntime, bool isAuthenticationInProgress = false)
     {
-        _httpContextAccessor = httpContextAccessor;
+        _jsRuntime = jsRuntime;
         _tokenHandler = new JwtSecurityTokenHandler();
+        _isAuthenticationInProgress = isAuthenticationInProgress;
     }
 
-    public override Task<AuthenticationState> GetAuthenticationStateAsync()
+    public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        var httpContext = _httpContextAccessor.HttpContext;
-        var cookieToken = httpContext?.Request.Cookies["auth_token"];
-        ClaimsPrincipal user = new ClaimsPrincipal(new ClaimsIdentity());
-
-        if (!string.IsNullOrEmpty(cookieToken))
-        {
-            try
-            {
-                //string correctTokenForm = cookieToken.Replace("-\0", ".");
-                var token = _tokenHandler.ReadJwtToken(cookieToken);
-                var claims = token.Claims;
-                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                user = new ClaimsPrincipal(identity);
-            }
-            catch (Exception)
-            {
-                user = new ClaimsPrincipal(new ClaimsIdentity());       // юзер - неавтифікований
-            }
-        }
-
-        return Task.FromResult(new AuthenticationState(user));
+        await LoadAuthTokenAsync();
+        return new AuthenticationState(_user);
     }
 
     public void MarkUserAsAuthenticated(ClaimsPrincipal user)
     {
+        _isAuthenticated = true;
+        _user = user;
         NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
     }
 
     public void MarkUserAsLoggedOut()
     {
-        var user = new ClaimsPrincipal(new ClaimsIdentity());
-        NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
+        _isAuthenticated = false;
+        _user = new ClaimsPrincipal(new ClaimsIdentity());
+        NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(_user)));
+    }
+
+    private async Task LoadAuthTokenAsync()
+    {
+        if (_isAuthenticationInProgress) 
+        {
+            string lsToken = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "auth_token");
+
+            if (!string.IsNullOrEmpty(lsToken))
+            {
+                try
+                {
+                    var token = _tokenHandler.ReadJwtToken(lsToken);
+                    var claims = token.Claims;
+                    var identity = new ClaimsIdentity(claims, "auth_type");
+                    _user = new ClaimsPrincipal(identity);
+                }
+                catch (Exception)
+                {
+                    _user = new ClaimsPrincipal(new ClaimsIdentity());
+                }
+            }
+            else
+            {
+                _user = new ClaimsPrincipal(new ClaimsIdentity());
+            }
+
+            _isAuthenticationInProgress = false;
+        }
     }
 }

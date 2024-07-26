@@ -6,6 +6,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Components;
 using AuthenticationUI.Components.Pages;
 using Microsoft.JSInterop;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 namespace AuthenticationUI
 {
@@ -20,9 +21,11 @@ namespace AuthenticationUI
         [Inject] private HttpClient Http { get; set; }
         [Inject] private NavigationManager Navigation { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
+        [Inject] public ProtectedLocalStorage storage { get; set; }
 
-        private string _authToken;
         public string _errorMessage { get; set; }
+        private string _authToken;
+        private bool _isAuthenticated = false;
 
         public async Task Authenticate()
         {
@@ -35,18 +38,15 @@ namespace AuthenticationUI
                     var responseContent = await response.Content.ReadFromJsonAsync<JwtResponse>();
                     if (responseContent != null)
                     {
-                        _authToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MjE5OTM1MDMsImV4cCI6MTc1MzUyOTUwMywiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIm5hbWUiOiJhZG1pbiIsIlN1cm5hbWUiOiJhbWRpbiJ9.pOogeDa8TPY4b_wojFR8eoFw12D7CHiv-_UHsPwLxFc";
-
-                        // Зберегти токен у cookie
-                        var cookieOptions = new CookieOptions { Expires = DateTime.UtcNow.AddHours(0.05) };
-                        HttpContext.Response.Cookies.Append("auth_token", _authToken, cookieOptions);
+                        _authToken = responseContent.Token;
+                        _isAuthenticated = true;
+                        await storage.SetAsync("auth_token", _authToken);
 
                         var claims = new List<Claim> { new Claim(ClaimTypes.Name, User.Name) };
                         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         var principal = new ClaimsPrincipal(identity);
 
                         ((CustomAuthStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(principal);
-                        await HttpContext.SignInAsync(principal);
                     }
                     else
                     {
