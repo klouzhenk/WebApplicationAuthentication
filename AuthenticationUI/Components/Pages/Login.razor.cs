@@ -7,18 +7,14 @@ using Microsoft.AspNetCore.Components;
 using AuthenticationUI.Components.Pages;
 using Microsoft.JSInterop;
 
-using Microsoft.AspNetCore.Http;
-
 namespace AuthenticationUI
 {
     public partial class LoginPage : ComponentBase
     {
         // public fields
         [CascadingParameter] public HttpContext HttpContext { get; set; }
-
         [SupplyParameterFromForm] public UserModel User { get; set; } = new();
 
-        public string _errorMessage { get; set; }
         // private fields
         [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Inject] private HttpClient Http { get; set; }
@@ -26,6 +22,7 @@ namespace AuthenticationUI
         [Inject] private IJSRuntime JSRuntime { get; set; }
 
         private string _authToken;
+        public string _errorMessage { get; set; }
 
         public async Task Authenticate()
         {
@@ -41,11 +38,7 @@ namespace AuthenticationUI
                         _authToken = responseContent.Token;
 
                         // Зберегти токен у cookie
-                        var cookieOptions = new CookieOptions
-                        {
-                            Expires = DateTime.UtcNow.AddHours(1), // Налаштуйте термін дії cookie
-                            IsEssential = true // Для ASP.NET Core 3.1+
-                        };
+                        var cookieOptions = new CookieOptions { Expires = DateTime.UtcNow.AddHours(0.05) };
                         HttpContext.Response.Cookies.Append("auth_token", _authToken, cookieOptions);
 
                         var claims = new List<Claim> { new Claim(ClaimTypes.Name, User.Name) };

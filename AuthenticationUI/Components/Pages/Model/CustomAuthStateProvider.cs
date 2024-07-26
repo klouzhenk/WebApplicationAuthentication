@@ -1,9 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 public class CustomAuthStateProvider : AuthenticationStateProvider
@@ -27,6 +24,7 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
         {
             try
             {
+                //string correctTokenForm = cookieToken.Replace("-", ".");
                 var token = _tokenHandler.ReadJwtToken(cookieToken);
                 var claims = token.Claims;
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

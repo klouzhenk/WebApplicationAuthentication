@@ -3,60 +3,116 @@
 @using Microsoft.AspNetCore.Authentication.Cookies
 @using Microsoft.AspNetCore.Authentication
 
-@using Microsoft.AspNetCore.Components.Authorization;
-@using Microsoft.AspNetCore.Authentication.Cookies;
-@using Microsoft.AspNetCore.Authentication;
-
 @using System.Security.Claims;
 @using Microsoft.AspNetCore.Components;
 @using AuthenticationUI.Components.Pages;
 @using Microsoft.JSInterop;
 
+@* @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime *@
+
+
 @using System.Net.Http.Headers
 @using System.Net.Http.Json
-@using System.Security.Claims
 
 @inherits LoginPage
 
-@* <CascadingAuthenticationState> *@
-<AuthorizeView Context="AuthenticationContext">
-    <NotAuthorized>
-        <h2 class="text-center mb-3" style="font-size:36px">Login</h2>
-        <div class="row">
-            <div class="col-lg-4 offset-lg-4 pt-4 pb-4 border">
-                <EditForm Model="@User" OnSubmit="Authenticate" FormName="LoginForm">
-                    <div class="mb-3 text-center flex-column">
-                        <img src="/favicon.png" style="max-height: 5rem;" />
-                        <h3>LOGIN</h3>
-                    </div>
+<CascadingAuthenticationState>
+    <AuthorizeView Context="AuthenticationContext">
+        <NotAuthorized>
+            <h2 class="text-center mb-3" style="font-size:36px">Login</h2>
+            <div class="row">
+                <div class="col-lg-4 offset-lg-4 pt-4 pb-4 border">
+                    <EditForm Model="@User" OnSubmit="Authenticate" FormName="LoginForm">
+                        <div class="mb-3 text-center flex-column">
+                            <img src="/favicon.png" style="max-height: 5rem;" />
+                            <h3>LOGIN</h3>
+                        </div>
 
-                    <div class="mb-3">
-                        <label>Username</label>
-                        <InputText @bind-Value="User.Name" class="form-control" placeholder="Username" />
-                    </div>
+                        <div class="mb-3">
+                            <label>Username</label>
+                            <InputText @bind-Value="User.Name" class="form-control" placeholder="Username" />
+                        </div>
 
-                    <div class="mb-3">
-                        <label>Password</label>
-                        <InputText @bind-Value="User.Password" class="form-control" placeholder="Password" type="password" />
-                    </div>
+                        <div class="mb-3">
+                            <label>Password</label>
+                            <InputText @bind-Value="User.Password" class="form-control" placeholder="Password" type="password" />
+                        </div>
 
-                    <div class="mb-3 text-center">
-                        <span class="text-danger">
-                            @_errorMessage
-                        </span>
-                    </div>
+                        <div class="mb-3 text-center">
+                            <span class="text-danger">
+                                @_errorMessage
+                            </span>
+                        </div>
 
-                    <div class="mb-3 d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">
-                            Login
-                        </button>
-                    </div>
-                </EditForm>
+                        <div class="mb-3 d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                Login
+                            </button>
+                        </div>
+                    </EditForm>
+                </div>
             </div>
-        </div>
-    </NotAuthorized>
-    <Authorized>
-        <h2 class="text-center mb-3" style="font-size:36px">Hello, @User.Name</h2>
-    </Authorized>
-</AuthorizeView>
-@* </CascadingAuthenticationState> *@
+        </NotAuthorized>
+        <Authorized>
+            <h2 class="text-center mb-3" style="font-size:36px">Hello, @User.Name</h2>
+        </Authorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
+
+@* @code{
+    // public fields
+    [CascadingParameter] 
+    private HttpContext HttpContext { get; set; }
+    [SupplyParameterFromForm] 
+    private UserModel User { get; set; } = new();
+
+    private string _authToken;
+    private string _errorMessage;
+
+    private async Task Authenticate()
+    {
+        try
+        {
+            var response = await Http.PostAsJsonAsync("/Auth/login", new { Username = User.Name, Password = User.Password });
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = await response.Content.ReadFromJsonAsync<JwtResponse>();
+                if (responseContent != null)
+                {
+                    _authToken = responseContent.Token;
+
+                    // Зберегти токен у cookie
+                    var cookieOptions = new CookieOptions
+                        {
+                            Expires = DateTime.UtcNow.AddHours(1), // Налаштуйте термін дії cookie
+                            IsEssential = true // Для ASP.NET Core 3.1+
+                        };
+                    HttpContext.Response.Cookies.Append("auth_token", _authToken, cookieOptions);
+
+                    var claims = new List<Claim> { new Claim(ClaimTypes.Name, User.Name) };
+                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principal = new ClaimsPrincipal(identity);
+
+                    ((CustomAuthStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(principal);
+                    await HttpContext.SignInAsync(principal);
+                }
+                else
+                {
+                    _errorMessage = "Invalid response from server";
+                }
+            }
+            else
+            {
+                _errorMessage = "Invalid username or password";
+            }
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = $"An error occurred: {ex.Message}";
+        }
+    }
+} *@
