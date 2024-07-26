@@ -1,56 +1,72 @@
 ﻿@page "/"
-@page "/login"
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Authentication.Cookies
+@using Microsoft.AspNetCore.Authentication
+
 @using System.Net.Http.Headers
 @using System.Net.Http.Json
-@using Microsoft.AspNetCore.Authentication
-@rendermode InteractiveServer
+@using System.Security.Claims
 
+@* @rendermode InteractiveServer *@
 
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject HttpClient Http
-@inject NavigationManager navigationManager
+@inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
 
-<h2 class="text-center mb-3" style="font-size:36px">Login</h2>
+@* <CascadingAuthenticationState> *@
+<AuthorizeView Context="AuthenticationContext">
+    <NotAuthorized>
+        <h2 class="text-center mb-3" style="font-size:36px">Login</h2>
+        <div class="row">
+            <div class="col-lg-4 offset-lg-4 pt-4 pb-4 border">
+                <EditForm Model="@User" OnSubmit="Authenticate" FormName="LoginForm">
+                    <div class="mb-3 text-center flex-column">
+                        <img src="/favicon.png" style="max-height: 5rem;" />
+                        <h3>LOGIN</h3>
+                    </div>
 
-<div class="row">
-    <div class="col-lg-4 offset-lg-4 pt-4 pb-4 border">
-    <EditForm Model="@User" OnSubmit="Authenticate" FormName="LoginForm">
-        <div class="mb-3 text-center flex-column">
-            <img src="/favicon.png" style="max-height: 5rem;" />
-            <h3>LOGIN</h3>
-        </div>
+                    <div class="mb-3">
+                        <label>Username</label>
+                        <InputText @bind-Value="User.Name" class="form-control" placeholder="Username" />
+                    </div>
 
-        <div class="mb-3">
-            <label>Username</label>
-            <InputText @bind-Value="User.Name" class="form-control" placeholder="Username" />
-        </div>
+                    <div class="mb-3">
+                        <label>Password</label>
+                        <InputText @bind-Value="User.Password" class="form-control" placeholder="Password" type="password" />
+                    </div>
 
-        <div class="mb-3">
-            <label>Password</label>
-            <InputText @bind-Value="User.Password" class="form-control" placeholder="Password" type="password" />
-        </div>
+                    <div class="mb-3 text-center">
+                        <span class="text-danger">
+                            @_errorMessage
+                        </span>
+                    </div>
 
-        <div class="mb-3 text-center">
-            <span class="text-danger">
-                @_errorMessage
-            </span>
+                    <div class="mb-3 d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            Login
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
         </div>
+    </NotAuthorized>
+    <Authorized>
+        <h2 class="text-center mb-3" style="font-size:36px">Hello, @User.Name</h2>
+    </Authorized>
+</AuthorizeView>
+@* </CascadingAuthenticationState> *@
 
-        <div class="mb-3 d-grid gap-2">
-            <button type="submit" class="btn btn-primary">
-                Login
-            </button>
-        </div>
-    </EditForm>
-    </div>
-</div>
 
 @code {
+    [CascadingParameter]
+    public HttpContext? HttpContext { get; set; }
+
+    [SupplyParameterFromForm]
     public UserModel User { get; set; } = new();
 
     private string _errorMessage;
-    private bool _isAuthenticated = false;
     private string _authToken;
 
     private async Task Authenticate()
@@ -58,16 +74,28 @@
         try
         {
             var response = await Http.PostAsJsonAsync("/Auth/login", new { Username = User.Name, Password = User.Password });
+
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = await response.Content.ReadFromJsonAsync<JwtResponse>();
                 if (responseContent != null)
                 {
                     _authToken = responseContent.Token;
-                    _isAuthenticated = true;
-                    // Збереження токена у localStorage після рендерингу
-                    await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", _authToken);
-                    navigationManager.NavigateTo("/weather", false);
+
+                    // Зберегти токен у cookie
+                    var cookieOptions = new CookieOptions
+                        {
+                            Expires = DateTime.UtcNow.AddHours(1), // Налаштуйте термін дії cookie
+                            IsEssential = true // Для ASP.NET Core 3.1+
+                        };
+                    HttpContext.Response.Cookies.Append("auth_token", _authToken, cookieOptions);
+
+                    var claims = new List<Claim> { new Claim(ClaimTypes.Name, User.Name) };
+                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principal = new ClaimsPrincipal(identity);
+
+                    ((CustomAuthStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(principal);
+                    await HttpContext.SignInAsync(principal);
                 }
                 else
                 {
@@ -84,5 +112,4 @@
             _errorMessage = $"An error occurred: {ex.Message}";
         }
     }
-
 }
