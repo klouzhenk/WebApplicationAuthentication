@@ -7,12 +7,12 @@ using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddHttpClient();   // original
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddHttpContextAccessor();
+//builder.Services.AddHttpClient();   // original
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -48,7 +48,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseRouting();
+app.UseRouting();       // swagger is launched
 
 app.UseStaticFiles();
 app.UseAuthentication();

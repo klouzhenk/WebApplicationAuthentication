@@ -14,12 +14,11 @@ namespace AuthenticationUI
     public partial class LoginPage : ComponentBase
     {
         // public fields
-        [CascadingParameter] [Inject] private HttpContext? HttpContext { get; set; }
+        [CascadingParameter] public HttpContext HttpContext { get; set; }
 
-        [SupplyParameterFromForm]
-        [Inject] public UserModel User { get; set; } = new();
+        [SupplyParameterFromForm] public UserModel User { get; set; } = new();
 
-        [Inject] public string _errorMessage { get; set; }
+        public string _errorMessage { get; set; }
         // private fields
         [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Inject] private HttpClient Http { get; set; }
