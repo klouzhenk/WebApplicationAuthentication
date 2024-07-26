@@ -24,7 +24,7 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
         {
             try
             {
-                //string correctTokenForm = cookieToken.Replace("-", ".");
+                //string correctTokenForm = cookieToken.Replace("-\0", ".");
                 var token = _tokenHandler.ReadJwtToken(cookieToken);
                 var claims = token.Claims;
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
