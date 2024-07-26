@@ -5,6 +5,8 @@
 @using Microsoft.AspNetCore.Authentication
 @rendermode InteractiveServer
 
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject HttpClient Http
 @inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
@@ -83,14 +85,4 @@
         }
     }
 
-    public class UserModel
-    {
-        public string Name { get; set; }
-        public string Password { get; set; }
-    }
-
-    public class JwtResponse
-    {
-        public string Token { get; set; }
-    }
 }
