@@ -7,11 +7,12 @@ using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient();   // original
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-
-//builder.Services.AddHttpClient();   // original
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -22,8 +23,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/access-denied";
     });
 
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<CustomAuthStateProvider>();
+builder.Services.AddAuthenticationCore();
+builder.Services.AddAuthorizationCore();
+
 builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<CustomAuthStateProvider>());
 builder.Services.AddSingleton<JwtSecurityTokenHandler>();
 
