@@ -36,8 +36,8 @@
             await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "authToken");
             // Delay
             await Task.Delay(2000);
-            // Перенаправлення на сторінку входу або іншу сторінку
-            navigationManager.NavigateTo("/login", true);
+            // Перенаправлення на сторінку входу 
+            navigationManager.NavigateTo("/", true);
         }
         catch (Exception ex)
         {
