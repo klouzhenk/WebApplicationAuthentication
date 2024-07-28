@@ -10,7 +10,7 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
     private readonly IJSRuntime _jsRuntime;
     private readonly JwtSecurityTokenHandler _tokenHandler;
     private bool _isAuthenticated = false;
-    private bool _isAuthenticationInProgress = false;
+    private bool _isAuthenticationInProgress = true;
     private ClaimsPrincipal _user = new ClaimsPrincipal(new ClaimsIdentity());
 
     public CustomAuthStateProvider(IJSRuntime jsRuntime, bool isAuthenticationInProgress = false)
@@ -33,6 +33,12 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
         NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
     }
 
+    public void CheckAuthenticationAfterRendering()
+    {
+        _isAuthenticationInProgress = true;
+        NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+    }
+
     public void MarkUserAsLoggedOut()
     {
         _isAuthenticated = false;
@@ -42,9 +48,11 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
 
     private async Task LoadAuthTokenAsync()
     {
-        if (_isAuthenticationInProgress) 
+        if (_isAuthenticationInProgress && _jsRuntime != null)
         {
-            string lsToken = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "auth_token");
+            string lsToken = string.Empty;
+            try { lsToken = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "auth_token"); }
+            catch(Exception ex) { Console.Error.WriteLine(ex.Message); }
 
             if (!string.IsNullOrEmpty(lsToken))
             {
@@ -55,10 +63,7 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
                     var identity = new ClaimsIdentity(claims, "auth_type");
                     _user = new ClaimsPrincipal(identity);
                 }
-                catch (Exception)
-                {
-                    _user = new ClaimsPrincipal(new ClaimsIdentity());
-                }
+                catch (Exception) { _user = new ClaimsPrincipal(new ClaimsIdentity()); }
             }
             else
             {
