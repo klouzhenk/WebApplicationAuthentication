@@ -19,7 +19,6 @@ namespace AuthenticationUI
         // private fields
         [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
         [Inject] private HttpClient Http { get; set; }
-        [Inject] private NavigationManager Navigation { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] public ProtectedLocalStorage storage { get; set; }
 
@@ -27,11 +26,19 @@ namespace AuthenticationUI
         private string _authToken;
         private bool _isAuthenticated = false;
 
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                ((CustomAuthStateProvider)AuthenticationStateProvider).CheckAuthenticationAfterRendering();
+            }
+        }
+
         public async Task Authenticate()
         {
             try
             {
-                var response = await Http.PostAsJsonAsync("/Auth/login", new { Username = User.Name, Password = User.Password });
+                var response = await Http.PostAsJsonAsync("/Auth/login", new { Username = "admin", Password = "admin" });
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -40,10 +47,11 @@ namespace AuthenticationUI
                     {
                         _authToken = responseContent.Token;
                         _isAuthenticated = true;
-                        await storage.SetAsync("auth_token", _authToken);
+                        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "auth_token", _authToken);
+                        //await storage.SetAsync("auth_token", _authToken.ToString());
 
                         var claims = new List<Claim> { new Claim(ClaimTypes.Name, User.Name) };
-                        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var identity = new ClaimsIdentity(claims, "Authentication");
                         var principal = new ClaimsPrincipal(identity);
 
                         ((CustomAuthStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(principal);
