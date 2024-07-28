@@ -1,28 +1,26 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
-
+using System;
+using System.Threading.Tasks;
 
 namespace AuthenticationUI
 {
-    public partial class LogoutClass : ComponentBase
+    public partial class Logout : ComponentBase
     {
         [Inject] private HttpClient Http { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
-        [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
-        protected async Task LogoutAsync()
+        protected override async Task OnInitializedAsync()
         {
             try
             {
                 // Видалення токена з localStorage
-                await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "auth_token");
+                await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "authToken");
                 // Delay
-                await Task.Delay(1000);
+                await Task.Delay(2000);
                 // Перенаправлення на сторінку входу 
                 NavigationManager.NavigateTo("/", true);
-                ((CustomAuthStateProvider)AuthenticationStateProvider).MarkUserAsLoggedOut();
             }
             catch (Exception ex)
             {
