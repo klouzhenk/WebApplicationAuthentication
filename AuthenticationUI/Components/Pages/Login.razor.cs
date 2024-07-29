@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
 
 using System.Security.Claims;
 using Microsoft.AspNetCore.Components;
@@ -38,7 +36,7 @@ namespace AuthenticationUI
         {
             try
             {
-                var response = await Http.PostAsJsonAsync("/Auth/login", new { Username = "admin", Password = "admin" });
+                var response = await Http.PostAsJsonAsync("/Auth/login", new { Username = User.Name, User.Password });
 
                 if (response.IsSuccessStatusCode)
                 {

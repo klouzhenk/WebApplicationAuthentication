@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using AuthenticationUI.Components.Pages.Model;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Authorization;
 
 
@@ -13,29 +9,37 @@ namespace AuthenticationUI
     public partial class WeatherClass : ComponentBase
     {
         public WeatherForecast[]? forecasts;
-        [Inject] private HttpClient Http { get; set; } = default!;
-        [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
-        [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+        [Inject] private HttpClient Http { get; set; }
+        [Inject] private CustomAuthStateProvider AuthenticationStateProvider { get; set; }
+        [Inject] private NavigationManager NavigationManager { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            if (!authState.User.Identity.IsAuthenticated)
+            if (firstRender)
             {
-                // Перенаправлення на сторінку входу або повідомлення про помилку
-                NavigationManager.NavigateTo("/");
-                return;
-            }
-
-            try
-            {
-                forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
-            }
-            catch (HttpRequestException ex)
-            {
-                // Логування помилки
-                Console.Error.WriteLine($"Failed to fetch weather data: {ex.Message}");
+                ((CustomAuthStateProvider)AuthenticationStateProvider).CheckAuthenticationAfterRendering();
             }
         }
+
+        //protected override async Task OnInitializedAsync()
+        //{
+        //    var authState = await CustomAuthStateProvider.GetAuthenticationStateAsync();
+        //    if (!authState.User.Identity.IsAuthenticated)
+        //    {
+        //        // Перенаправлення на сторінку входу або повідомлення про помилку
+        //        NavigationManager.NavigateTo("/");
+        //        return;
+        //    }
+
+        //    try
+        //    {
+        //        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        //    }
+        //    catch (HttpRequestException ex)
+        //    {
+        //        // Логування помилки
+        //        Console.Error.WriteLine($"Failed to fetch weather data: {ex.Message}");
+        //    }
+        //}
     }
 }

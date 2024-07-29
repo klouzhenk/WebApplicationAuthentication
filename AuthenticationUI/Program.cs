@@ -9,7 +9,6 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddHttpContextAccessor();
-//builder.Services.AddHttpClient();   // original
 
 builder.Services.AddAuthenticationCore();
 builder.Services.AddAuthorizationCore();

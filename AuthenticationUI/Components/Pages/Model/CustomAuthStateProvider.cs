@@ -49,7 +49,7 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
         if (_isAuthenticationInProgress && _jsRuntime != null)
         {
             string lsToken = string.Empty;
-            try { lsToken = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "auth_token"); }
+            try { lsToken = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "authToken"); }
             catch(Exception ex) { Console.Error.WriteLine(ex.Message); }
 
             if (!string.IsNullOrEmpty(lsToken))
