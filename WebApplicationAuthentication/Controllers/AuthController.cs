@@ -4,6 +4,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System;
+using WebApplicationAuthentication.Class;
+
 
 [ApiController]
 [Route("[controller]")]
@@ -43,13 +45,3 @@ public class AuthController : ControllerBase
     }
 }
 
-public class LoginRequest
-{
-    public string Username { get; set; }
-    public string Password { get; set; }
-}
-
-public class JwtResponse
-{
-    public string Token { get; set; }
-}
