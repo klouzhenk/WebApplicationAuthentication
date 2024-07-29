@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
-using AuthenticationUI.Components.Pages.Model;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Net.Http.Json;
+using System.Threading.Tasks;
+using AuthenticationUI.Components.Pages.Model;
 
 namespace AuthenticationUI
 {
@@ -13,6 +14,27 @@ namespace AuthenticationUI
         [Inject] private CustomAuthStateProvider AuthenticationStateProvider { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
 
+        protected override async Task OnInitializedAsync()
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            if (!authState.User.Identity.IsAuthenticated)
+            {
+                // Перенаправлення на сторінку входу
+                NavigationManager.NavigateTo("/");
+                return;
+            }
+
+            try
+            {
+                forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+            }
+            catch (HttpRequestException ex)
+            {
+                // Логування помилки
+                Console.Error.WriteLine($"Failed to fetch weather data: {ex.Message}");
+            }
+        }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -20,6 +42,8 @@ namespace AuthenticationUI
                 ((CustomAuthStateProvider)AuthenticationStateProvider).CheckAuthenticationAfterRendering();
             }
         }
+    }
+}
 
         //protected override async Task OnInitializedAsync()
         //{
@@ -41,5 +65,4 @@ namespace AuthenticationUI
         //        Console.Error.WriteLine($"Failed to fetch weather data: {ex.Message}");
         //    }
         //}
-    }
-}
+

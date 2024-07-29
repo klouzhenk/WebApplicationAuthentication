@@ -5,21 +5,27 @@ using System.Security.Claims;
 using System.Text;
 using System;
 using WebApplicationAuthentication.Class;
+using WebApplicationAuthentication;
 
 
 [ApiController]
 [Route("[controller]")]
 public class AuthController : ControllerBase
 {
-    // Хардкодим ім'я користувача та пароль
-    private const string HardcodedUsername = "admin";
-    private const string HardcodedPassword = "admin";
+    private readonly UserDbContext _context;
+
+    public AuthController(UserDbContext context)
+    {
+        _context = context;
+    }
+
 
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequest request)
     {
-        // Перевірка хардкодених значень
-        if (request.Username == HardcodedUsername && request.Password == HardcodedPassword)
+        var user = _context.Users.SingleOrDefault(u => u.Username == request.Username && u.Password == request.Password);
+
+        if (user != null)
         {
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("XA5dpjm3TcXLloBvCtplCKI8cy9e75ubuZK+d8zlfLNbyJTbsRsDcOyyQ3grsE4j"));
             var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
@@ -27,6 +33,7 @@ public class AuthController : ControllerBase
             {
                 new Claim("Name", request.Username),
                 new Claim("Password", request.Password)
+              
             };
 
             var securityToken = new JwtSecurityToken(

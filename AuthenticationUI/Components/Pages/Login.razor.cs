@@ -48,7 +48,11 @@ namespace AuthenticationUI
                         await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", _authToken);
                         //await storage.SetAsync("auth_token", _authToken.ToString());
 
-                        var claims = new List<Claim> { new Claim(ClaimTypes.Name, User.Name) };
+                        var claims = new List<Claim> 
+                        { 
+                            new Claim(ClaimTypes.Name, User.Name)
+                            //, new Claim(ClaimTypes.Role, userAccountRole)
+                        };
                         var identity = new ClaimsIdentity(claims, "Authentication");
                         var principal = new ClaimsPrincipal(identity);
 
@@ -68,6 +72,8 @@ namespace AuthenticationUI
             {
                 _errorMessage = $"An error occurred: {ex.Message}";
             }
+
+
         }
     }
 }
