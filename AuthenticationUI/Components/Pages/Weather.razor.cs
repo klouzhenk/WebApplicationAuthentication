@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
-using AuthenticationUI.Components.Pages.Model;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Net.Http.Json;
+using System.Threading.Tasks;
+using AuthenticationUI.Components.Pages.Model;
 
 namespace AuthenticationUI
 {
@@ -13,16 +14,12 @@ namespace AuthenticationUI
         [Inject] private CustomAuthStateProvider CustomAuthStateProvider { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override async Task OnInitializedAsync()
         {
-            if (firstRender)
-            {
-                CustomAuthStateProvider.CheckAuthenticationAfterRendering();
-            }
-
-            var authState = await CustomAuthStateProvider.GetAuthenticationStateAsync();
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             if (!authState.User.Identity.IsAuthenticated)
             {
+                // Перенаправлення на сторінку входу
                 NavigationManager.NavigateTo("/");
                 return;
             }
@@ -37,5 +34,17 @@ namespace AuthenticationUI
                 Console.Error.WriteLine($"Failed to fetch weather data: {ex.Message}");
             }
         }
-    }
-}
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                CustomAuthStateProvider.CheckAuthenticationAfterRendering();
+            }
+
+            var authState = await CustomAuthStateProvider.GetAuthenticationStateAsync();
+            if (!authState.User.Identity.IsAuthenticated)
+            {
+                NavigationManager.NavigateTo("/");
+                return;
+            }
