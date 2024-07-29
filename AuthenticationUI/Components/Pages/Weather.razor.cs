@@ -16,7 +16,7 @@ namespace AuthenticationUI
 
         protected override async Task OnInitializedAsync()
         {
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var authState = await CustomAuthStateProvider.GetAuthenticationStateAsync();
             if (!authState.User.Identity.IsAuthenticated)
             {
                 // Перенаправлення на сторінку входу
@@ -48,3 +48,6 @@ namespace AuthenticationUI
                 NavigationManager.NavigateTo("/");
                 return;
             }
+        }
+    }
+}
