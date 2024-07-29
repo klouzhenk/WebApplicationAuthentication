@@ -17,6 +17,14 @@ body {
     background-color: #f8f9fd;
 }
 
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .form__container {
     position: relative;
     width: 920px;
@@ -242,24 +250,26 @@ body {
 
 
 .form__hider {
-    transition: left 0.5s ease-in, right 0.5s ease-in;
+    transition: transform 0.5s ease-in-out;
     position: absolute;
     z-index: 1;
     top: 0;
+    left: 0;
     background: linear-gradient(135deg, #f75959 0%, #f35587 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     color: #fff;
+    transform: translateX(0);
 }
 
 .hide-sign-up {
-    right: 0;
+    transform: translateX(100%);
 }
 
 .hide-login {
-    left: 0;
+    transform: transformX(0);
 }
 
 .form__hider-title {

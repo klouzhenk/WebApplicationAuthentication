@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
+<div class="page" style="width: 100%">
     <CascadingAuthenticationState>
         <AuthorizeView>
             <Authorized>
@@ -12,18 +12,14 @@
     </CascadingAuthenticationState>
 
     <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-            <AuthorizeView>
-                <NotAuthorized>
-                    <a href="/login">Login</a>
-                </NotAuthorized>
-                <Authorized>
+        <AuthorizeView>
+            <Authorized>
+                <div class="top-row px-4">
+                    <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
                     <a href="/logout">Logout</a>
-                </Authorized>
-            </AuthorizeView>
-        </div>
-
+                </div>
+            </Authorized>
+        </AuthorizeView>
 
         <article class="content px-4">
             @Body
