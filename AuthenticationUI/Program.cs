@@ -1,9 +1,6 @@
 using AuthenticationUI.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using System;
 using System.IdentityModel.Tokens.Jwt;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +36,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

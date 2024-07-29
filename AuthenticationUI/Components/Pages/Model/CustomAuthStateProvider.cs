@@ -1,9 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.Threading.Tasks;
 
 public class CustomAuthStateProvider : AuthenticationStateProvider
 {

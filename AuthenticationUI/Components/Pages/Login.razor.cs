@@ -47,7 +47,7 @@ namespace AuthenticationUI
                     {
                         _authToken = responseContent.Token;
                         _isAuthenticated = true;
-                        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "auth_token", _authToken);
+                        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", _authToken);
                         //await storage.SetAsync("auth_token", _authToken.ToString());
 
                         var claims = new List<Claim> { new Claim(ClaimTypes.Name, User.Name) };

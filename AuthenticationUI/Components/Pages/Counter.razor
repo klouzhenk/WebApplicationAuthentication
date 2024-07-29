@@ -21,7 +21,6 @@
     // for reauthorizing
 
     [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
-    
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)

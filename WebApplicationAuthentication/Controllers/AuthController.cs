@@ -19,23 +19,22 @@ public class AuthController : ControllerBase
         // Перевірка хардкодених значень
         if (request.Username == HardcodedUsername && request.Password == HardcodedPassword)
         {
-            var claims = new[]
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("XA5dpjm3TcXLloBvCtplCKI8cy9e75ubuZK+d8zlfLNbyJTbsRsDcOyyQ3grsE4j"));
+            var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+            var claims = new List<Claim>()
             {
-                new Claim(JwtRegisteredClaimNames.Sub, request.Username),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim("Name", request.Username),
+                new Claim("Password", request.Password)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-very-secure-and-long-secret-key-should-be-at-least-32-bytes"));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                issuer: "https://example.com",
-                audience: "https://myapi.com",
-                claims: claims,
+            var securityToken = new JwtSecurityToken(
+                issuer: "https://localhost:7267/",
+                audience: "https://localhost:7147/",
                 expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds);
+                signingCredentials: credentials,
+                claims: claims);
 
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(securityToken);
 
             return Ok(new JwtResponse { Token = tokenString });
         }

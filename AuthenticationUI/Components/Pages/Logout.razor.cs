@@ -15,16 +15,12 @@ namespace AuthenticationUI
         {
             try
             {
-                // Видалення токена з localStorage
                 await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "authToken");
-                // Delay
                 await Task.Delay(2000);
-                // Перенаправлення на сторінку входу 
                 NavigationManager.NavigateTo("/", true);
             }
             catch (Exception ex)
             {
-                // Логування помилки (можливо, на консоль або в якийсь інший спосіб)
                 Console.Error.WriteLine($"JavaScript interop failed: {ex.Message}");
             }
         }
