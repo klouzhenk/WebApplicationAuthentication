@@ -269,7 +269,7 @@ body {
 }
 
 .hide-login {
-    transform: transformX(0);
+    transform: translateX(0);
 }
 
 .form__hider-title {
