@@ -49,8 +49,14 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
         if (_isAuthenticationInProgress && _jsRuntime != null)
         {
             string lsToken = string.Empty;
-            try { lsToken = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "authToken"); }
-            catch(Exception ex) { Console.Error.WriteLine(ex.Message); }
+            try
+            {
+                lsToken = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "authToken");
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+            }
 
             if (!string.IsNullOrEmpty(lsToken))
             {
@@ -58,10 +64,14 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
                 {
                     var token = _tokenHandler.ReadJwtToken(lsToken);
                     var claims = token.Claims;
-                    var identity = new ClaimsIdentity(claims, "auth_type");
+                    var identity = new ClaimsIdentity(claims, "jwt");
                     _user = new ClaimsPrincipal(identity);
                 }
-                catch (Exception) { _user = new ClaimsPrincipal(new ClaimsIdentity()); }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine(ex.Message);
+                    _user = new ClaimsPrincipal(new ClaimsIdentity());
+                }
             }
             else
             {
@@ -71,4 +81,5 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
             _isAuthenticationInProgress = false;
         }
     }
+
 }

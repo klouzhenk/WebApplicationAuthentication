@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using AuthenticationUI.Components.Pages;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using AuthenticationUI.Components.Pages.Model;
 
 namespace AuthenticationUI
 {
@@ -13,6 +14,7 @@ namespace AuthenticationUI
         // public fields
         [CascadingParameter] public HttpContext HttpContext { get; set; }
         [SupplyParameterFromForm] public UserModel User { get; set; } = new();
+        [SupplyParameterFromForm] public RegisterRequest Register { get; set; }
 
         // private fields
         [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
