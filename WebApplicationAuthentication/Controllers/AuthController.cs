@@ -3,7 +3,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System;
 using WebApplicationAuthentication.Class;
 using WebApplicationAuthentication;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +23,7 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequest request)
     {
-        var user = _context.Users.SingleOrDefault(u => u.Username == request.Username && u.Password == request.Password);
+        var user =  _context.Users.SingleOrDefault(u => u.Username == request.Username && u.Password == request.Password);
 
         if (user != null)
         {
@@ -82,6 +81,5 @@ public class AuthController : ControllerBase
 
         return Ok(new { message = "User registered successfully" });
     }
-
 }
 

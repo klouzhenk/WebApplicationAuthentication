@@ -23,11 +23,11 @@ namespace AuthenticationUI
         [Inject] public ProtectedLocalStorage storage { get; set; }
 
         public string ErrorMessage;
-        public bool IsSignUpHidden = false;
+        public bool IsSignUpHidden = true;
 
 
         private string _authToken;
-        private bool _isAuthenticated = false;
+        private bool _isAuthenticated = true;
 
         public void ChangeHiding()
         {
