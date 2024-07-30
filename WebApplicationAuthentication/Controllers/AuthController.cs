@@ -32,8 +32,9 @@ public class AuthController : ControllerBase
             var claims = new List<Claim>()
             {
                 new Claim("Name", request.Username),
-                new Claim("Password", request.Password)
-              
+                new Claim("Password", request.Password),
+                new Claim(ClaimTypes.Role, user.Role)
+
             };
 
             var securityToken = new JwtSecurityToken(
