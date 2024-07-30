@@ -6,6 +6,7 @@ using System.Text;
 using System;
 using WebApplicationAuthentication.Class;
 using WebApplicationAuthentication;
+using Microsoft.EntityFrameworkCore;
 
 
 [ApiController]
@@ -53,10 +54,16 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public IActionResult Register([FromBody] RegisterRequest request)
+    public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
+        // Перевірка вхідних даних
+        if (request == null || string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
+        {
+            return BadRequest(new { message = "Invalid request" });
+        }
+
         // Перевірка чи користувач вже існує
-        var existingUser = _context.Users.SingleOrDefault(u => u.Username == request.Username);
+        var existingUser = await _context.Users.SingleOrDefaultAsync(u => u.Username == request.Username);
         if (existingUser != null)
         {
             return BadRequest(new { message = "Username already exists" });
@@ -66,12 +73,12 @@ public class AuthController : ControllerBase
         var user = new User
         {
             Username = request.Username,
-            Password = request.Password, // Використовуйте хешування паролів у реальних проектах
+            Password = request.Password,
             Role = request.Role
         };
 
         _context.Users.Add(user);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
 
         return Ok(new { message = "User registered successfully" });
     }
