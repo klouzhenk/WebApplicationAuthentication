@@ -14,7 +14,7 @@ namespace AuthenticationUI
         // public fields
         [CascadingParameter] public HttpContext HttpContext { get; set; }
         [SupplyParameterFromForm] public UserModel User { get; set; } = new();
-        [SupplyParameterFromForm] public RegisterRequest Register { get; set; }
+        [SupplyParameterFromForm] public RegisterRequest Register { get; set; } = new();
 
         // private fields
         [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
@@ -28,6 +28,7 @@ namespace AuthenticationUI
 
         private string _authToken;
         private bool _isAuthenticated = false;
+
         public void ChangeHiding()
         {
             IsSignUpHidden = IsSignUpHidden ? false : true;
@@ -56,8 +57,6 @@ namespace AuthenticationUI
                         _authToken = responseContent.Token;
                         _isAuthenticated = true;
                         await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", _authToken);
-                        //await storage.SetAsync("auth_token", _authToken.ToString());
-
                         var claims = new List<Claim>
                         {
                             new Claim(ClaimTypes.Name, User.Name)
@@ -75,6 +74,28 @@ namespace AuthenticationUI
                 else
                 {
                     ErrorMessage = "Invalid username or password";
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = $"An error occurred: {ex.Message}";
+            }
+        }
+
+        public async Task Registration()
+        {
+            try
+            {
+                var response = await Http.PostAsJsonAsync("/Auth/register", new { Register.Username, Register.Password, Register.Role });
+
+                if (response.IsSuccessStatusCode)
+                {
+                    ChangeHiding();
+                    Task.Delay(1000);
+                }
+                else
+                {
+                    ErrorMessage = "Singing up wasn't successful...";
                 }
             }
             catch (Exception ex)

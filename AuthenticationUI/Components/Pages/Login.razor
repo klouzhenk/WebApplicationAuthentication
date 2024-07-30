@@ -78,7 +78,7 @@
                                     <InputText @bind-Value="@Register.Username" type="text" class="input-field" placeholder="Username" />
                                 </div>
                                 <div class="form__input-area form__sign-up-pwd">
-                                    <label for="sign-up-pwd" class="input-label ">Password</label>
+                                    <label for="sign-up-pwd" class="input-label">Password</label>
                                     <InputText @bind-Value="@Register.Password" type="password" class="input-field" placeholder="Password" />
                                 </div>
                                 <div class="form__select-container">
@@ -105,7 +105,6 @@
                     <div class="form-wrapper form__hider @(IsSignUpHidden ? "hide-sign-up" : "hide-sign-in")">
                         <h1 class="form__hider-title">Welcome to @(IsSignUpHidden ? "login" : "sign up")</h1>
                         <h3 class="form__hider-subtitle">@(IsSignUpHidden ? "Don't" : "Do") have an account?</h3>
-                        <h3 class="form__hider-subtitle" style="color: antiquewhite">@SuccessMessage</h3>
                         <button class="form__hider-btn" @onclick="ChangeHiding">@(IsSignUpHidden ? "Sign Up" : "Sign In")</button>
                     </div>
                 </div>
