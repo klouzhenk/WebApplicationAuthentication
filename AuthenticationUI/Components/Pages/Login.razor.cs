@@ -21,7 +21,7 @@ namespace AuthenticationUI
         [Inject] public ProtectedLocalStorage storage { get; set; }
 
         public string ErrorMessage;
-        public bool IsSignUpHidden = true;
+        public bool IsSignUpHidden = false;
 
 
         private string _authToken;
@@ -59,7 +59,6 @@ namespace AuthenticationUI
                         var claims = new List<Claim> 
                         { 
                             new Claim(ClaimTypes.Name, User.Name)
-                            //, new Claim(ClaimTypes.Role, userAccountRole)
                         };
                         var identity = new ClaimsIdentity(claims, "Authentication");
                         var principal = new ClaimsPrincipal(identity);
