@@ -51,5 +51,30 @@ public class AuthController : ControllerBase
 
         return Unauthorized();
     }
+
+    [HttpPost("register")]
+    public IActionResult Register([FromBody] RegisterRequest request)
+    {
+        // Перевірка чи користувач вже існує
+        var existingUser = _context.Users.SingleOrDefault(u => u.Username == request.Username);
+        if (existingUser != null)
+        {
+            return BadRequest(new { message = "Username already exists" });
+        }
+
+        // Створення нового користувача
+        var user = new User
+        {
+            Username = request.Username,
+            Password = request.Password, // Використовуйте хешування паролів у реальних проектах
+            Role = request.Role
+        };
+
+        _context.Users.Add(user);
+        _context.SaveChanges();
+
+        return Ok(new { message = "User registered successfully" });
+    }
+
 }
 
