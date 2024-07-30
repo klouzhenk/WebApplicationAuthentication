@@ -7,6 +7,7 @@
 
 a {
     text-decoration: none;
+    color: #000;
 }
 
 body {
@@ -29,19 +30,21 @@ body {
     position: relative;
     width: 920px;
     height: 470px;
-    /* form shadow --- ? */
+    /*form shadow --- ?*/ 
     box-shadow: 20px 10px -10px rgba(0, 0, 0, 0.05);
     display: flex;
     justify-content: space-between;
 }
 
 .form__part {
+    transition: all 1s ease-in-out;
     width: 50%;
     height: 100%;
     background-color: #fff;
 }
 
 .form__sign {
+    opacity: 1;
     padding: 48px;
     display: flex;
     flex-direction: column;
@@ -239,7 +242,7 @@ body {
         transform: rotate(45deg);
     }
 
-.span__forgot {
+.a__forgot {
     transition: .3s all ease;
     color: #808080;
     font-family: "Lato", Arial, sans-serif;
@@ -247,6 +250,10 @@ body {
     line-height: 1.8;
     font-weight: 500;
 }
+
+    .a__forgot:hover, .a__forgot:focus, .a__forgot:active, .a__forgot:visited {
+        color: #808080;
+    }
 
 
 .form__hider {
@@ -268,8 +275,14 @@ body {
     transform: translateX(100%);
 }
 
-.hide-login {
-    transform: transformX(0);
+.hide-sign-in {
+    transform: translateX(0);
+}
+
+.hidden {
+    transition: all 0.25s ease-in-out;
+    visibility: hidden;
+    opacity: 0;
 }
 
 .form__hider-title {
@@ -302,9 +315,9 @@ body {
     line-height: 1.5;
 }
 
-.form__hider-btn:hover {
-    cursor: pointer;
-    border-color: transparent;
-    background-color: #fff;
-    color: #000;
-}
+    .form__hider-btn:hover {
+        cursor: pointer;
+        border-color: transparent;
+        background-color: #fff;
+        color: #000;
+    }

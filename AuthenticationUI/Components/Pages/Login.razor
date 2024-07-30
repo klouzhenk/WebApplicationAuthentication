@@ -22,7 +22,7 @@
         <AuthorizeView Context="AuthenticationContext">
             <NotAuthorized>
                 <EditForm Model="@User" OnSubmit="Authenticate" FormName="LoginForm" class="form__container">
-                    <div class="form__part form__sign form__sign-in">
+                    <div class="form__part form__sign form__sign-in @(IsSignUpHidden ? "" : "hidden")">
                         <div class="form__header">
                             <h3 class="form__header-title">Sign In</h3>
                             <div class="btns-container">
@@ -53,11 +53,11 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
-                            <a href="#" class="span__forgot">Forgot Password</a>
+                            <a href="#" class="a__forgot">Forgot Password</a>
                         </div>
                     </div>
 
-                    <div class="form__part form__sign form__sign-up">
+                    <div class="form__part form__sign form__sign-up @(IsSignUpHidden ? "hidden" : "")">
                         <div class="form__header">
                             <h3 class="form__header-title">Sign Up</h3>
                             <div class="btns-container">
@@ -91,10 +91,10 @@
                         </div>
                     </div>
 
-                    <div class="form__part form__hider @(hideSignUp ? "hide-sign-in" : "hide-sign-up")">
-                        <h1 class="form__hider-title">Welcome to login</h1>
-                        <h3 class="form__hider-subtitle">Don't have an account?</h3>
-                        <button class="form__hider-btn" @onclick="ChangeHiding">Sign Up</button>
+                    <div class="form__part form__hider @(IsSignUpHidden ? "hide-sign-up" : "hide-sign-in")">
+                        <h1 class="form__hider-title">Welcome to @(IsSignUpHidden ? "login" : "sign up")</h1>
+                        <h3 class="form__hider-subtitle">@(IsSignUpHidden ? "Don't" : "Do") have an account?</h3>
+                        <button class="form__hider-btn" @onclick="ChangeHiding">@(IsSignUpHidden ? "Sign Up" : "Sign In")</button>
                     </div>
                 </EditForm>
             </NotAuthorized>
@@ -104,19 +104,3 @@
         </AuthorizeView>
     </CascadingAuthenticationState>
 </div>
-
-@code {
-    private bool hideSignUp = false;
-
-    private void ChangeHiding()
-    {
-        if (hideSignUp)
-        {
-            hideSignUp = false;
-            return;
-        }
-
-        hideSignUp = true;
-        return;
-    }
-}

@@ -20,9 +20,17 @@ namespace AuthenticationUI
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] public ProtectedLocalStorage storage { get; set; }
 
-        public string _errorMessage { get; set; }
+        public string ErrorMessage;
+        public bool IsSignUpHidden = true;
+
+
         private string _authToken;
         private bool _isAuthenticated = false;
+        public void ChangeHiding()
+        {
+            IsSignUpHidden = IsSignUpHidden ? false : true;
+            return;
+        }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -60,20 +68,18 @@ namespace AuthenticationUI
                     }
                     else
                     {
-                        _errorMessage = "Invalid response from server";
+                        ErrorMessage = "Invalid response from server";
                     }
                 }
                 else
                 {
-                    _errorMessage = "Invalid username or password";
+                    ErrorMessage = "Invalid username or password";
                 }
             }
             catch (Exception ex)
             {
-                _errorMessage = $"An error occurred: {ex.Message}";
+                ErrorMessage = $"An error occurred: {ex.Message}";
             }
-
-
         }
     }
 }
