@@ -8,7 +8,7 @@ namespace WebApplicationAuthentication
     {
         [Key]
         [Column("id")]
-        public decimal Id { get; set; }
+        public int Id { get; set; }
 
         [Column("name")]
         public string Username { get; set; }

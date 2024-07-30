@@ -10,6 +10,14 @@ a {
     color: #000;
 }
 
+.main-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 body {
     height: 100vh;
     display: flex;
@@ -18,38 +26,52 @@ body {
     background-color: #f8f9fd;
 }
 
-.container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.form__container {
+.forms__container {
     position: relative;
     width: 920px;
     height: 470px;
-    /*form shadow --- ?*/ 
     box-shadow: 20px 10px -10px rgba(0, 0, 0, 0.05);
     display: flex;
     justify-content: space-between;
 }
 
-.form__part {
+
+.form__wrapper {
     transition: all 1s ease-in-out;
     width: 50%;
     height: 100%;
     background-color: #fff;
 }
 
-.form__sign {
+.form__position {
+    position: absolute;
+    top: 0;
+}
+
+.form__wrapper-sign-in{
+    left: 0;
+}
+
+.form__wrapper-sign-up {
+    right: 0;
+}
+
+.form__register {
     opacity: 1;
     padding: 48px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
+
+
+
+
+
+
+
+
 
 .form__header, .form__main, .form__footer {
     width: 100%;
@@ -266,6 +288,8 @@ body {
     z-index: 1;
     top: 0;
     left: 0;
+    height: 100%;
+    width: 50%;
     background: linear-gradient(135deg, #f75959 0%, #f35587 100%);
     display: flex;
     flex-direction: column;
