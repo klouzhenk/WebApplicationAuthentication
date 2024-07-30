@@ -275,16 +275,6 @@ body {
     transform: translateX(100%);
 }
 
-.hide-sign-in {
-    transform: translateX(0);
-}
-
-.hidden {
-    transition: all 0.25s ease-in-out;
-    visibility: hidden;
-    opacity: 0;
-}
-
 .form__hider-title {
     margin-bottom: 0.5rem;
     font-weight: 900;
