@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /WebApplicationAuthentication/appsettings.json
 /.gitignore
+/WebApplicationAuthentication/appsettings.Development.json
