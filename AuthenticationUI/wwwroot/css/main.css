@@ -72,6 +72,7 @@ body {
 .form__wrapper-sign-up {
   -webkit-transition: -webkit-transform 1s ease-in-out;
   transition: -webkit-transform 1s ease-in-out;
+  -o-transition: transform 1s ease-in-out;
   transition: transform 1s ease-in-out;
   transition: transform 1s ease-in-out, -webkit-transform 1s ease-in-out;
   border-top-right-radius: inherit;
@@ -126,6 +127,7 @@ body {
 
 .form__header-btn {
   -webkit-transition: 0.3s all ease;
+  -o-transition: 0.3s all ease;
   transition: 0.3s all ease;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -201,6 +203,7 @@ body {
 
 .input-field {
   -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   height: 48px;
   background-color: rgba(0, 0, 0, 0.05);
@@ -228,6 +231,7 @@ body {
 
 .form__btn-submit {
   -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
   transition: all 0.3s;
   padding: 10px 16px;
   width: 100%;
@@ -243,6 +247,7 @@ body {
 
 .form__btn-submit:hover {
   -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
   transition: all 0.3s;
   cursor: pointer;
   background: transparent;
@@ -308,6 +313,7 @@ body {
 
 .checkmark {
   -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
   transition: 0.3s;
   position: absolute;
   top: 22.5%;
@@ -338,6 +344,7 @@ body {
 
 .a__forgot {
   -webkit-transition: 0.3s all ease;
+  -o-transition: 0.3s all ease;
   transition: 0.3s all ease;
   color: #808080;
   font-family: "Lato", Arial, sans-serif;
@@ -362,6 +369,7 @@ body {
   width: 50%;
   border-top-left-radius: inherit;
   border-bottom-left-radius: inherit;
+  background: -o-linear-gradient(315deg, #f75959 0%, #f35587 100%);
   background: linear-gradient(135deg, #f75959 0%, #f35587 100%);
   display: -webkit-box;
   display: -ms-flexbox;
@@ -399,6 +407,7 @@ body {
 .form__hider-btn {
   -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  -o-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   outline: none;
@@ -468,6 +477,7 @@ body {
 
 .form__select {
   -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   height: 48px;
   background-color: rgba(0, 0, 0, 0.05);
