@@ -1,9 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Web
 
-<!-- Модальне вікно з використанням Bootstrap -->
-<div class="modal @ModalClass" tabindex="-1" role="dialog" style="@(IsVisible ? "display: block;" : "display: none;")">
-    <!-- Діалогове вікно -->
-    <div class="modal-dialog" role="document">
+<div class="modal-backdrop @(IsVisible ? "show" : "")" @onclick="CloseModal"></div>
+<div class="modal @(IsVisible ? "show" : "")" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document" @onclick="PreventCloseOnContentClick">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">@Title</h5>
@@ -23,31 +23,33 @@
 </div>
 
 @code {
-    // Параметри, які можуть бути встановлені з зовнішнього коду
-    [Parameter] public string Title { get; set; } // Заголовок модального вікна
-    [Parameter] public string Message { get; set; } // Повідомлення у тілі модального вікна
-    [Parameter] public EventCallback<bool> OnConfirm { get; set; } // Callback для підтвердження дії
-    [Parameter] public bool IsVisible { get; set; } // Показник видимості модального вікна
-    [Parameter] public EventCallback OnCancel { get; set; } // Callback для скасування дії
-
-    private string ModalClass => IsVisible ? "show" : "";
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string Message { get; set; }
+    [Parameter] public EventCallback<bool> OnConfirm { get; set; }
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
 
     private async Task ConfirmAction()
     {
-        await OnConfirm.InvokeAsync(true); // Виклик callback для підтвердження
+        await OnConfirm.InvokeAsync(true);
         CloseModal();
     }
 
     private async Task CancelAction()
     {
-        await OnCancel.InvokeAsync(); // Виклик callback для скасування
+        await OnCancel.InvokeAsync();
         CloseModal();
     }
 
-    // Метод для закриття модального вікна
     private void CloseModal()
     {
         IsVisible = false;
-        StateHasChanged(); // Оновлення стану компонента
+        StateHasChanged();
+    }
+
+    private void PreventCloseOnContentClick(MouseEventArgs e)
+    {
+        // Запобігти закриттю модального вікна при натисканні всередині контенту
+        // Нічого не робимо тут, просто щоб залишити простір для обробки натискань на фон
     }
 }
