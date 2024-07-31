@@ -29,33 +29,3 @@ app.UseAuthentication();
 app.MapControllers();
 
 app.Run();
-
-
-
-
-
-
-
-
-
-
-
-
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//})
-//.AddJwtBearer(options =>
-//{
-//    options.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        ValidateIssuer = true,
-//        ValidateAudience = true,
-//        ValidateLifetime = true,
-//        ValidateIssuerSigningKey = true,
-//        ValidIssuer = "yourIssuer",
-//        ValidAudience = "yourAudience",
-//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("zstrX7dDGp1JObIWkR245dDYJW1a277y"))
-//    };
-//});
