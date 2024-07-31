@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
-
 using System.Security.Claims;
 using Microsoft.AspNetCore.Components;
 using AuthenticationUI.Components.Pages;
@@ -24,7 +23,6 @@ namespace AuthenticationUI
 
         public string ErrorMessage;
         public bool IsSignUpHidden = true;
-
 
         private string _authToken;
         private bool _isAuthenticated = true;
@@ -80,6 +78,8 @@ namespace AuthenticationUI
             {
                 ErrorMessage = $"An error occurred: {ex.Message}";
             }
+
+            StateHasChanged();
         }
 
         public async Task Registration()
@@ -95,13 +95,15 @@ namespace AuthenticationUI
                 }
                 else
                 {
-                    ErrorMessage = "Singing up wasn't successful...";
+                    ErrorMessage = "Signing up wasn't successful...";
                 }
             }
             catch (Exception ex)
             {
                 ErrorMessage = $"An error occurred: {ex.Message}";
             }
+
+            StateHasChanged();
         }
     }
 }

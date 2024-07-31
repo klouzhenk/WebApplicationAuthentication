@@ -59,6 +59,13 @@
                                 </div>
                             </div>
                         </EditForm>
+                        <!-- Error Message Display -->
+                        @if (!string.IsNullOrEmpty(ErrorMessage))
+                        {
+                            <div class="form__error-message">
+                                <p>@ErrorMessage</p>
+                            </div>
+                        }
                     </div>
 
                     <div class="form__wrapper form__wrapper-sign-up @(IsSignUpHidden ? "hide-form" : "show-form") @(IsSignUpHidden ? "right-position" : "left-position")">
