@@ -1,14 +1,14 @@
 ﻿@page "/logout"
 @using System.Net.Http.Headers
 @using System.Net.Http.Json
+@using AuthenticationUI.Components.Shared
 @using Microsoft.AspNetCore.Authentication
 @rendermode InteractiveServer
 
 @inject HttpClient Http
-@inject NavigationManager navigationManager
+@inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
-
-@inherits AuthenticationUI.Logout
+@inherits LogoutPage
 
 <div class="row">
     <div class="col-12">
@@ -20,7 +20,17 @@
                 <div class="text-center mt-2">
                     <span class="text fw-bolder">You've successfully logged out of the application.</span>
                 </div>
+                <button class="btn btn-primary mt-3" @onclick="ShowLogoutConfirmation">Log Out</button>
             </div>
         </div>
     </div>
 </div>
+
+<ConfirmationModal
+    Title="Confirm Logout" 
+    Message="Are you sure you want to log out?" 
+    OnConfirm="OnLogoutConfirmed" 
+    IsVisible="showModal" />
+
+
+

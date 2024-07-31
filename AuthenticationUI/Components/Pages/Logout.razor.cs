@@ -1,28 +1,46 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using System;
+﻿using Microsoft.AspNetCore.Components; 
+using Microsoft.JSInterop; 
+using System; 
 using System.Threading.Tasks;
 
-namespace AuthenticationUI
+namespace AuthenticationUI 
 {
-    public partial class Logout : ComponentBase
+    public partial class LogoutPage : ComponentBase // Клас LogoutPage, який є частковим та успадковується від ComponentBase
     {
-        [Inject] private HttpClient Http { get; set; }
-        [Inject] private NavigationManager NavigationManager { get; set; }
-        [Inject] private IJSRuntime JSRuntime { get; set; }
+        [Inject] private HttpClient Http { get; set; } 
+        [Inject] private NavigationManager NavigationManager { get; set; } 
+        [Inject] private IJSRuntime JSRuntime { get; set; } 
 
-        protected override async Task OnInitializedAsync()
+        public bool showModal = false; 
+
+        public void ShowLogoutConfirmation()
         {
-            try
+            showModal = true; 
+        }
+
+        // Метод, який викликається при підтвердженні виходу
+        public async Task OnLogoutConfirmed(bool isConfirmed)
+        {
+            if (isConfirmed) 
             {
-                await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "authToken");
-                await Task.Delay(2000);
-                NavigationManager.NavigateTo("/", true);
+                try
+                {
+                    // Видалення токена аутентифікації з локального сховища
+                    await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "authToken");
+                    // Перенаправлення на головну сторінку з примусовим перезавантаженням
+                    NavigationManager.NavigateTo("/", true);
+                }
+                catch (Exception ex) 
+                {
+                    // Виведення повідомлення про помилку у консоль
+                    Console.Error.WriteLine($"JavaScript interop failed: {ex.Message}");
+                }
             }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine($"JavaScript interop failed: {ex.Message}");
-            }
+            showModal = false; 
+        }
+        public void OnCancelLogout()
+        {
+            showModal = false; 
         }
     }
 }

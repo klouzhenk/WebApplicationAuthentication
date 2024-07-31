@@ -1,0 +1,49 @@
+﻿/* ConfirmationModal.razor.css */
+
+/* Стилі для фону модального вікна */
+.modal-backdrop {
+    display: none; /* Приховане за замовчуванням */
+    position: fixed; /* Фіксоване положення */
+    top: 0; /* На верхній частині */
+    left: 0; /* На лівій частині */
+    width: 100%; /* Ширина на весь екран */
+    height: 100%; /* Висота на весь екран */
+    background-color: rgba(0, 0, 0, 0.5); /* Півпрозорий чорний фон */
+    z-index: 1040; /* Позиція фону за модальним вікном */
+}
+
+    .modal-backdrop.show {
+        display: block; /* Показати фон, коли вікно активно */
+    }
+
+/* Стилі для модального вікна */
+.modal {
+    display: none; /* Приховане за замовчуванням */
+    position: fixed; /* Фіксоване положення */
+    top: 50%; /* Центрування по вертикалі */
+    left: 50%; /* Центрування по горизонталі */
+    transform: translate(-50%, -50%); /* Переміщення на центр */
+    z-index: 1050; /* Позиція модального вікна поверх фону */
+}
+
+    .modal.show {
+        display: block; /* Показати модальне вікно, коли активне */
+    }
+
+.modal-dialog {
+    position: relative;
+    width: 100%;
+    max-width: 500px; /* Максимальна ширина */
+    margin: 0 auto; /* Центрування діалогу */
+}
+
+.modal-content {
+    background-color: white; /* Білий фон для контенту */
+    border-radius: 0.3rem; /* Закруглені кути */
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5); /* Тінь для модального вікна */
+    overflow: hidden; /* Приховати переповнені частини */
+}
+
+.modal-header, .modal-body, .modal-footer {
+    padding: 1rem; /* Відступи */
+}
