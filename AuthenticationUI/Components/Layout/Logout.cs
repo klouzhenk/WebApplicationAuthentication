@@ -1,17 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System;
-using System.Threading.Tasks;
 
-namespace AuthenticationUI
+namespace AuthenticationUI.Components.Layout
 {
-    public partial class LogoutPage : ComponentBase // Клас LogoutPage, який є частковим та успадковується від ComponentBase
+    public partial class LogoutPage : ComponentBase
     {
-        [Inject] private HttpClient Http { get; set; }
+        public bool showModal = false;
         [Inject] private NavigationManager NavigationManager { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
-
-        public bool showModal = false;
 
         public void ShowLogoutConfirmation()
         {
@@ -25,14 +21,11 @@ namespace AuthenticationUI
             {
                 try
                 {
-                    // Видалення токена аутентифікації з локального сховища
                     await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "authToken");
-                    // Перенаправлення на головну сторінку з примусовим перезавантаженням
                     NavigationManager.NavigateTo("/", true);
                 }
                 catch (Exception ex)
                 {
-                    // Виведення повідомлення про помилку у консоль
                     Console.Error.WriteLine($"JavaScript interop failed: {ex.Message}");
                 }
             }

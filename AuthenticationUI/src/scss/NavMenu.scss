@@ -62,6 +62,9 @@
         display: flex;
         align-items: center;
         width: calc(100% - 40px);
+        
+        border: none;
+        outline: none;
 
         &:hover {
             background-color: rgba(225, 207, 207, 0.3);

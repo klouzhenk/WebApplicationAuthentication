@@ -466,6 +466,11 @@ ul {
   padding: 0;
 }
 
+button {
+  border: none;
+  outline: none;
+}
+
 body {
   height: 100vh;
   background-color: #f0d3d3;
@@ -583,6 +588,8 @@ body {
       -ms-flex-align: center;
           align-items: center;
   width: calc(100% - 40px);
+  border: none;
+  outline: none;
 }
 
 .nav__btn-logout:hover {
