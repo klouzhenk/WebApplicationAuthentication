@@ -1,27 +1,27 @@
-﻿using Microsoft.AspNetCore.Components; 
-using Microsoft.JSInterop; 
-using System; 
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System;
 using System.Threading.Tasks;
 
-namespace AuthenticationUI 
+namespace AuthenticationUI
 {
     public partial class LogoutPage : ComponentBase // Клас LogoutPage, який є частковим та успадковується від ComponentBase
     {
-        [Inject] private HttpClient Http { get; set; } 
-        [Inject] private NavigationManager NavigationManager { get; set; } 
-        [Inject] private IJSRuntime JSRuntime { get; set; } 
+        [Inject] private HttpClient Http { get; set; }
+        [Inject] private NavigationManager NavigationManager { get; set; }
+        [Inject] private IJSRuntime JSRuntime { get; set; }
 
-        public bool showModal = false; 
+        public bool showModal = false;
 
         public void ShowLogoutConfirmation()
         {
-            showModal = true; 
+            showModal = true;
         }
 
         // Метод, який викликається при підтвердженні виходу
         public async Task OnLogoutConfirmed(bool isConfirmed)
         {
-            if (isConfirmed) 
+            if (isConfirmed)
             {
                 try
                 {
@@ -30,17 +30,17 @@ namespace AuthenticationUI
                     // Перенаправлення на головну сторінку з примусовим перезавантаженням
                     NavigationManager.NavigateTo("/", true);
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     // Виведення повідомлення про помилку у консоль
                     Console.Error.WriteLine($"JavaScript interop failed: {ex.Message}");
                 }
             }
-            showModal = false; 
+            showModal = false;
         }
         public void OnCancelLogout()
         {
-            showModal = false; 
+            showModal = false;
         }
     }
 }

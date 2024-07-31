@@ -22,7 +22,7 @@
         <AuthorizeView Context="AuthenticationContext">
             <NotAuthorized>
                 <div class="forms__container">
-                    <div class="form__wrapper form__wrapper-sign-in form--position @(IsSignUpHidden ? "show-form" : "hide-form")">
+                    <div class="form__wrapper form__wrapper-sign-in @(IsSignUpHidden ? "show-form" : "hide-form") @(IsSignUpHidden ? "right-position" : "left-position")">
                         <EditForm Model="@User" OnSubmit="Authenticate" FormName="SignInForm" class="form">
                             <div class="form__register form__sign-in">
                                 <div class="form__header">
@@ -61,7 +61,7 @@
                         </EditForm>
                     </div>
 
-                    <div class="form__wrapper form__wrapper-sign-up form--position @(IsSignUpHidden ? "hide-form" : "show-form")">
+                    <div class="form__wrapper form__wrapper-sign-up @(IsSignUpHidden ? "hide-form" : "show-form") @(IsSignUpHidden ? "right-position" : "left-position")">
                         <EditForm Model="@Register" OnSubmit="Registration" FormName="SignUpForm" class="form">
                             <div class="form__register form__sign-up">
                                 <div class="form__header">
@@ -106,10 +106,10 @@
                         </EditForm>
                     </div>
 
-                    <div class="form__wrapper form__hider">
-                        <h1 class="form__hider-title">Welcome to @(IsSignUpHidden ? "login" : "sign up")</h1>
-                        <h3 class="form__hider-subtitle">@(IsSignUpHidden ? "Don't" : "Do") have an account?</h3>
-                        <button class="form__hider-btn" @onclick="ChangeHiding">@(IsSignUpHidden ? "Sign Up" : "Sign In")</button>
+                    <div class="form__wrapper form__wrapper-img form__img @(IsSignUpHidden ? "left-position" : "right-position")">
+                        <h1 class="form__img-title">Welcome to @(IsSignUpHidden ? "login" : "sign up")</h1>
+                        <h3 class="form__img-subtitle">@(IsSignUpHidden ? "Don't" : "Do") have an account?</h3>
+                        <button class="form__img-btn" @onclick="ChangeHiding">@(IsSignUpHidden ? "Sign Up" : "Sign In")</button>
                     </div>
                 </div>
             </NotAuthorized>

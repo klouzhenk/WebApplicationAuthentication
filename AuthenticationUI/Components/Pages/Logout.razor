@@ -3,11 +3,13 @@
 @using System.Net.Http.Json
 @using AuthenticationUI.Components.Shared
 @using Microsoft.AspNetCore.Authentication
+
 @rendermode InteractiveServer
 
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
+
 @inherits LogoutPage
 
 <div class="row">
@@ -26,11 +28,7 @@
     </div>
 </div>
 
-<ConfirmationModal
-    Title="Confirm Logout" 
-    Message="Are you sure you want to log out?" 
-    OnConfirm="OnLogoutConfirmed" 
-    IsVisible="showModal" />
-
-
-
+<ConfirmationModal Title="Confirm Logout"
+                   Message="Are you sure you want to log out?"
+                   OnConfirm="OnLogoutConfirmed"
+                   IsVisible="showModal" />
