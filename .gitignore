@@ -359,11 +359,8 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-# Fody - auto-generated XML schema
-FodyWeavers.xsd
 /WebApplicationAuthentication/appsettings.json
 /.gitignore
 
-FodyWeavers.xsd
-/WebApplicationAuthentication/appsettings.Developmant.json
+/WebApplicationAuthentication/appsettings.Development.json
 /.gitignore
