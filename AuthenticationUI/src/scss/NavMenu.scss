@@ -1,0 +1,108 @@
+﻿$pink-gradient: linear-gradient(135deg, #f75959 0%, #f35587 100%);
+
+@mixin nav-btn {
+    transition: background-color 0.3s ease-in;
+    background-color: transparent;
+    height: 50px;
+    width: 100%;
+    border-radius: 8px;
+    padding: 0 20px;
+}
+
+.nav {
+    position: relative;
+    height: 100%;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 16px;
+    background: $pink-gradient;
+
+    &__title {
+        position: relative;
+        font-size: 2.25rem;
+        font-weight: 400;
+        line-height: 2.5rem;
+        color: aliceblue;
+
+        &::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.5);
+            bottom: -5%;
+            left: 0;
+            transform-origin: right;
+            transform: scaleX(0);
+            transition: transform .3s ease-in-out;
+        }
+
+        &:hover {
+            color: aliceblue;
+
+            &::before {
+                transform-origin: left;
+                transform: scaleX(1);
+            }
+        }
+    }
+
+    &__list {
+        margin-top: 32px;
+        width: 100%;
+    }
+
+    &__btn-logout {
+        position: absolute;
+        bottom: 30px;
+        @include nav-btn;
+        display: flex;
+        align-items: center;
+        width: calc(100% - 40px);
+
+        &:hover {
+            background-color: rgba(225, 207, 207, 0.3);
+        }
+    }
+}
+
+.nav__list-el {
+    list-style-type: none;
+    margin-bottom: 16px;
+    @include nav-btn;
+
+    &:hover {
+        background-color: rgba(225, 207, 207, 0.2);
+    }
+
+    > a {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    &-img {
+        width: 24px;
+        height: 24px;
+        margin-right: 24px;
+        fill: #fccad9;
+    }
+
+    &-text {
+        color: #fccad9;
+        font-size: 1.3rem;
+    }
+}
+
+.container {
+    width: auto;
+    height: 100%;
+}
