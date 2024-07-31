@@ -1,26 +1,27 @@
 ﻿@using Microsoft.AspNetCore.Components
-@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.JSInterop
 
-<div class="modal-backdrop @(IsVisible ? "show" : "")" @onclick="CloseModal"></div>
+<div class="modal__backdrop @(IsVisible ? "show" : "")" @onclick="CloseModal"></div>
 <div class="modal @(IsVisible ? "show" : "")" tabindex="-1" role="dialog">
-    <div class="modal-content" role="document" @onclick="PreventCloseOnContentClick">
-        <div class="modal-header">
-            <h5 class="modal-title">@Title</h5>
-            <button type="button" class="close" aria-label="Close" @onclick="CloseModal">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <p>@Message</p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @onclick="CancelAction">Cancel</button>
-            <button type="button" class="btn btn-primary" @onclick="ConfirmAction">OK</button>
+    <div class="modal__dialog" role="document">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h5 class="modal__text modal__title">@Title</h5>
+            </div>
+            <div class="modal__body">
+                <p class="modal__text">@Message</p>
+            </div>
+            <div class="modal__footer">
+                <button type="button" class="modal__button modal__text" @onclick="CancelAction">Cancel</button>
+                <button type="button" class="modal__button modal__text" @onclick="ConfirmAction">OK</button>
+            </div>
         </div>
     </div>
 </div>
 
 @code {
+    [Inject] private IJSRuntime JSRuntime { get; set; }
+
     [Parameter] public string Title { get; set; }
     [Parameter] public string Message { get; set; }
     [Parameter] public EventCallback<bool> OnConfirm { get; set; }
@@ -30,24 +31,19 @@
     private async Task ConfirmAction()
     {
         await OnConfirm.InvokeAsync(true);
-        CloseModal();
+        await CloseModal();
     }
 
     private async Task CancelAction()
     {
         await OnCancel.InvokeAsync();
-        CloseModal();
+        await CloseModal();
     }
 
-    private void CloseModal()
+    private async Task CloseModal()
     {
         IsVisible = false;
+        await JSRuntime.InvokeVoidAsync("closeConfirmationModal");
         StateHasChanged();
-    }
-
-    private void PreventCloseOnContentClick(MouseEventArgs e)
-    {
-        // Запобігти закриттю модального вікна при натисканні всередині контенту
-        // Нічого не робимо тут, просто щоб залишити простір для обробки натискань на фон
     }
 }

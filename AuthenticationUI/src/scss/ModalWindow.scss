@@ -1,0 +1,80 @@
+﻿/* Стилі для фону модального вікна */
+.modal__backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(20px);
+    z-index: 1040;
+}
+
+.modal__backdrop.show, .modal.show {
+    display: block;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1050;
+
+    &__text {
+        color: #fff;
+        font-size: 1.25rem;
+        letter-spacing: 1px;
+        text-align: center;
+    }
+
+    &__dialog {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        margin: 5% auto;
+    }
+
+    &__header, &__body, &__footer {
+        padding: 1rem 2rem;
+    }
+
+    &__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+
+    &__content {
+        padding: 2rem 3rem;
+        background: linear-gradient(135deg, #f75959 0%, #f35587 100%);
+        border-radius: 8px;
+        box-shadow: 0 6px 9px rgba(0, 0, 0, 0.5);
+    }
+
+    &__title {
+        font-size: 2rem;
+    }
+
+    &__button {
+        transition: background-color 0.2s ease-in-out;
+        opacity: 0.75;
+        padding: 0 20px;
+        min-width: 80px;
+        max-width: 120px;
+        height: 45px;
+        border-radius: 8px;
+        border: 2px solid;
+        border-color: #f2acae;
+        background-color: transparent;
+        color: #0c040d;
+
+        &:hover {
+            background-color: #f2acae;
+            opacity: 1;
+        }
+    }
+}

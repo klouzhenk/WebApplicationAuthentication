@@ -14,7 +14,7 @@ namespace AuthenticationUI.Components.Layout
             showModal = true;
         }
 
-        // Метод, який викликається при підтвердженні виходу
+
         public async Task OnLogoutConfirmed(bool isConfirmed)
         {
             if (isConfirmed)
