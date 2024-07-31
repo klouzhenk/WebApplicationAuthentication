@@ -364,3 +364,6 @@ MigrationBackup/
 
 /WebApplicationAuthentication/appsettings.Development.json
 /.gitignore
+
+/AuthenticationUI/node_modules
+/.gitignore
