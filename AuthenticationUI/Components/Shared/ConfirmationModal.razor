@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Components
 @using Microsoft.JSInterop
 
-<div class="modal__backdrop @(IsVisible ? "show" : "")" @onclick="CloseModal"></div>
+<div class="modal__backdrop @(IsVisible ? "show" : "")" @onclick="CancelAction"></div>
 <div class="modal @(IsVisible ? "show" : "")" tabindex="-1" role="dialog">
     <div class="modal__dialog" role="document">
         <div class="modal__content">

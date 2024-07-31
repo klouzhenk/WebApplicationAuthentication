@@ -99,7 +99,7 @@
     width: 100px;
     height: 40px;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .form__main {
@@ -112,7 +112,7 @@
     height: 84px;
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: flex-end;
     margin-bottom: 16px;
 }
 
@@ -182,7 +182,7 @@
     &-checkpart {
         width: 180px;
         display: flex;
-        justify-content: start;
+        justify-content: flex-start;
         align-items: center;
     }
 }
@@ -336,7 +336,7 @@
     height: 84px;
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: flex-end;
     margin-bottom: 16px;
 }
 
