@@ -3,21 +3,19 @@
 
 <div class="modal-backdrop @(IsVisible ? "show" : "")" @onclick="CloseModal"></div>
 <div class="modal @(IsVisible ? "show" : "")" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document" @onclick="PreventCloseOnContentClick">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">@Title</h5>
-                <button type="button" class="close" aria-label="Close" @onclick="CloseModal">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>@Message</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" @onclick="CancelAction">Cancel</button>
-                <button type="button" class="btn btn-primary" @onclick="ConfirmAction">OK</button>
-            </div>
+    <div class="modal-content" role="document" @onclick="PreventCloseOnContentClick">
+        <div class="modal-header">
+            <h5 class="modal-title">@Title</h5>
+            <button type="button" class="close" aria-label="Close" @onclick="CloseModal">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p>@Message</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @onclick="CancelAction">Cancel</button>
+            <button type="button" class="btn btn-primary" @onclick="ConfirmAction">OK</button>
         </div>
     </div>
 </div>
