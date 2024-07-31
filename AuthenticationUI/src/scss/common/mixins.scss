@@ -1,0 +1,138 @@
+﻿// Default colors
+$bg-white: #FFFFFF;
+$bg-main-color: #FBFBFD;
+$bg-black: #111111;
+$bg-grey: #eaf1f5;
+$primary-color: #1E4FFB;
+$primary-dark-color: #1c48e2;
+$accent-color: #53e075;
+$text-default: #111111;
+$text-default-light: #9898A4;
+$text-color-white: #FFFFFF;
+$text-green: #50634A;
+$red-color: #FF5247;
+$mint-color: #4BABA2;
+
+//Shadows
+/*$box-shadow: 4px 4px 20px rgba(20,20,20,.24);
+$small-shadow: 0 0 15px rgba(20,20,20,.15);
+$minimum-shadow: 0 0 5px rgba(20,20,20,.1);*/
+$box-shadow: 0px 10px 20px rgba(20,20,20,.15);
+$small-shadow: 0 5px 15px rgba(20,20,20,.1);
+$minimum-shadow: 0 0 5px rgba(20,20,20,.05);
+
+//Other
+$user-gradient-bg: linear-gradient(90deg, #32DC82, #76E567);
+
+
+// Breakpoints
+$desktop: 1600px;
+$desktop-normal: 1440px;
+$desktop-notepad: 1366px;
+$desktop-small: 1280px;
+$desktop-very-small: 1080px;
+
+$tablet: 990px;
+$tablet-normal: 740px;
+$tablet-small: 575px;
+
+$mobile: 480px;
+$mobile-normal: 360px;
+$mobile-small: 320px;
+
+%button {
+    border-radius: 50px;
+    background: $bg-white;
+    color: $text-default;
+    box-shadow: $small-shadow;
+    padding: 15px 40px;
+    margin: 20px 0;
+    @extend %Link;
+    cursor: pointer;
+    transition: .2s ease-in;
+
+    &:active {
+        box-shadow: none;
+    }
+}
+
+%primary-button {
+    background: $primary-color;
+    color: $text-color-white;
+
+    &:hover {
+        background: $primary-dark-color;
+    }
+
+    &:active {
+        background: $primary-dark-color;
+        box-shadow: none;
+    }
+}
+
+%success-button {
+    background: $accent-color;
+    color: $text-color-white;
+}
+
+%danger-button {
+    background: $red-color;
+    color: $text-color-white;
+}
+
+// Fonts styles
+%H1 {
+    font-family: 'Druk Cyr', sans-serif;
+    font-weight: 900;
+    font-size: calc(28px + (48 - 28) * ((100vw - 320px) / (1600 - 320)));
+    line-height: calc(36px + (56 - 36) * ((100vw - 320px) / (1600 - 320)));
+}
+
+%H2 {
+    font-family: 'Druk Cyr', sans-serif;
+    font-weight: 700;
+    font-size: calc(24px + (34 - 24) * ((100vw - 320px) / (1600 - 320)));
+    line-height: calc(22px + (32 - 22) * ((100vw - 320px) / (1600 - 320)));
+}
+
+%H3 {
+    font-family: "Druk Cyr", sans-serif;
+    font-weight: 600;
+    font-size: calc(22px + (32 - 22) * ((100vw - 320px) / (1600 - 320)));
+    line-height: calc(30px + (40 - 30) * ((100vw - 320px) / (1600 - 320)));
+}
+
+%H4 {
+    font-family: 'Formular', sans-serif;
+    font-weight: 700;
+    font-size: calc(18px + (24 - 18) * ((100vw - 320px) / (1600 - 320)));
+    line-height: calc(20px + (28 - 20) * ((100vw - 320px) / (1600 - 320)));
+}
+
+%BodyBold {
+    font-family: "Formular", sans-serif;
+    font-weight: 700;
+    font-size: calc(12px + (16 - 12) * ((100vw - 320px) / (1600 - 320)));
+    line-height: calc(16px + (18 - 16) * ((100vw - 320px) / (1600 - 320)));
+}
+
+%BodyRegular {
+    font-family: "Formular", sans-serif;
+    font-weight: 400;
+    font-size: calc(12px + (16 - 12) * ((100vw - 320px) / (1600 - 320)));
+    line-height: calc(16px + (18 - 16) * ((100vw - 320px) / (1600 - 320)));
+}
+
+%Caption {
+    font-family: 'Formular', sans-serif;
+    font-weight: 500;
+    font-size: calc(10px + (14 - 10) * ((100vw - 320px) / (1600 - 320)));
+    line-height: calc(16px + (18 - 16) * ((100vw - 320px) / (1600 - 320)));
+}
+
+%Link {
+    font-family: "Formular", sans-serif;
+    font-weight: 400;
+    font-size: calc(10px + (12 - 10) * ((100vw - 320px) / (1600 - 320)));
+    line-height: calc(12px + (14 - 12) * ((100vw - 320px) / (1600 - 320)));
+}

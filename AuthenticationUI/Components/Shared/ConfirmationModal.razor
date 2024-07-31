@@ -1,0 +1,87 @@
+﻿<div class="modal-backdrop" style="display:@(isVisible ? "block" : "none");" @onclick="HandleClickOutside">
+    <div class="modal" @onclick:stopPropagation="true">
+        <div class="modal-header">
+            <h5 class="modal-title">@Title</h5>
+            <button type="button" class="close" @onclick="Hide">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>@Message</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" @onclick="Hide">Cancel</button>
+            <button class="btn btn-primary" @onclick="HandleConfirm">OK</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string Message { get; set; }
+    [Parameter] public EventCallback<bool> OnClose { get; set; }
+
+    private bool isVisible = false;
+
+    public void Show()
+    {
+        isVisible = true;
+        StateHasChanged(); // Ensure the UI updates when showing the modal
+    }
+
+    public void Hide()
+    {
+        isVisible = false;
+        StateHasChanged(); // Ensure the UI updates when hiding the modal
+    }
+
+    private async Task HandleClickOutside()
+    {
+        await OnClose.InvokeAsync(false);
+        Hide();
+    }
+
+    private async Task HandleConfirm()
+    {
+        await OnClose.InvokeAsync(true);
+        Hide();
+    }
+}
+
+<style>
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1050;
+    }
+
+    .modal {
+        background-color: white;
+        border-radius: 8px;
+        padding: 1rem;
+        max-width: 500px;
+        width: 100%;
+    }
+
+    .modal-header, .modal-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .modal-title {
+        margin: 0;
+    }
+
+    .close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+    }
+</style>

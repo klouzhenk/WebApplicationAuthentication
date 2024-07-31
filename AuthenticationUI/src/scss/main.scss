@@ -1,0 +1,26 @@
+﻿//common
+@import "fonts.scss";
+@import "./common/mixins.scss";
+@import "./common/default.scss";
+@import "./common/base.scss";
+@import "./common/animations.scss";
+
+// Components
+@import "./components/Header.scss";
+@import "./components/Loader.scss";
+@import "./components/Footer.scss";
+@import "./components/Tooltip.scss";
+@import "./components/Pagination.scss";
+@import "./components/CustomPopup.scss";
+@import "./components/ShowReport.scss";
+
+// Pages
+@import "./pages/FetchData.scss";
+@import "./pages/ReceiptViewOne.scss";
+@import "./pages/MainPage.scss";
+@import "./pages/ManagmentPages.scss";
+@import "./pages/AddingCertificate.scss";
+@import "./pages/UserCreate.scss";
+@import "pages/UserUpdate.scss";
+@import "pages/Reports.scss";
+@import "pages/StoreSettings.scss";
