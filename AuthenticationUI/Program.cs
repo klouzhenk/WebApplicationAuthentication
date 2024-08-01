@@ -45,17 +45,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-var supportedCultures = new[]
-{
-    new CultureInfo("en"),
-    new CultureInfo("ua")
-};
-app.UseRequestLocalization(new RequestLocalizationOptions
-{
-    DefaultRequestCulture = new RequestCulture("en"),
-    SupportedCultures = supportedCultures,
-    SupportedUICultures = supportedCultures
-});
+string[] supportedCultures = ["en-US", "uk-UA"];
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+app.UseRequestLocalization(localizationOptions);
+
 
 app.UseRouting();       // swagger is launched
 
