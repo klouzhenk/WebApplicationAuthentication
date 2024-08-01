@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AuthenticationUI.Resources {
+namespace AuthenticationUI.Locales {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace AuthenticationUI.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resource_en {
+    public class Resource_ua {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resource_en() {
+        internal Resource_ua() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace AuthenticationUI.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AuthenticationUI.Resources.Resource_en", typeof(Resource_en).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AuthenticationUI.Locales.Resource_ua", typeof(Resource_ua).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace AuthenticationUI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account.
+        ///   Looks up a localized string similar to Обліковий запис.
         /// </summary>
         public static string Account {
             get {
@@ -70,7 +70,7 @@ namespace AuthenticationUI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel.
+        ///   Looks up a localized string similar to Відміна.
         /// </summary>
         public static string CancelStatement {
             get {
@@ -79,7 +79,7 @@ namespace AuthenticationUI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hello,.
+        ///   Looks up a localized string similar to Привіт,.
         /// </summary>
         public static string HomeTxt {
             get {
@@ -88,7 +88,7 @@ namespace AuthenticationUI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirm logout.
+        ///   Looks up a localized string similar to Підтвердити вихід.
         /// </summary>
         public static string LogoutModalConfirm {
             get {
@@ -97,7 +97,7 @@ namespace AuthenticationUI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to log out?.
+        ///   Looks up a localized string similar to Ви впевнені, що хочете вийти?.
         /// </summary>
         public static string LogoutModaltext {
             get {
@@ -106,7 +106,7 @@ namespace AuthenticationUI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Counter.
+        ///   Looks up a localized string similar to Лічильник.
         /// </summary>
         public static string MenuCounter {
             get {
@@ -115,7 +115,7 @@ namespace AuthenticationUI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Home.
+        ///   Looks up a localized string similar to Головна.
         /// </summary>
         public static string MenuHome {
             get {
@@ -124,7 +124,7 @@ namespace AuthenticationUI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Logout.
+        ///   Looks up a localized string similar to Вихід.
         /// </summary>
         public static string MenuLogout {
             get {
@@ -133,7 +133,7 @@ namespace AuthenticationUI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Weather.
+        ///   Looks up a localized string similar to Погода.
         /// </summary>
         public static string MenuWeather {
             get {
@@ -142,7 +142,7 @@ namespace AuthenticationUI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ok.
+        ///   Looks up a localized string similar to Так.
         /// </summary>
         public static string OkStatement {
             get {

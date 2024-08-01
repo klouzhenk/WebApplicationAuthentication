@@ -20,12 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Resources\Resource_en.Designer.cs">
+    <Compile Update="Locales\Resource_en.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resource_en.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\Resource_ua.Designer.cs">
+    <Compile Update="Locales\Resource_ua.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resource_ua.resx</DependentUpon>
@@ -33,11 +33,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\Resource_en.resx">
+    <EmbeddedResource Update="Locales\Resource_en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource_en.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Resource_ua.resx">
+    <EmbeddedResource Update="Locales\Resource_ua.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource_ua.Designer.cs</LastGenOutput>
     </EmbeddedResource>
