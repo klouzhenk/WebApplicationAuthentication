@@ -24,11 +24,12 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
         return new AuthenticationState(_user);
     }
 
-    public void MarkUserAsAuthenticated(ClaimsPrincipal user)
+    public async Task<AuthenticationState> MarkUserAsAuthenticated(ClaimsPrincipal user)
     {
         _isAuthenticated = true;
         _user = user;
         NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        return new AuthenticationState(_user);
     }
 
     public void CheckAuthenticationAfterRendering()

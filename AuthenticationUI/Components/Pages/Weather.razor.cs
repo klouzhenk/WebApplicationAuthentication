@@ -41,8 +41,8 @@ namespace AuthenticationUI
             {
                 CustomAuthStateProvider.CheckAuthenticationAfterRendering();
             }
-
             var authState = await CustomAuthStateProvider.GetAuthenticationStateAsync();
+
             if (!authState.User.Identity.IsAuthenticated)
             {
                 NavigationManager.NavigateTo("/");
