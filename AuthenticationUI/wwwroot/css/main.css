@@ -719,32 +719,44 @@ body {
 /* Стилі для фону модального вікна */
 
 .modal__backdrop {
-  display: none;
-  position: fixed;
+  position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  display: none;
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.25);
   -webkit-backdrop-filter: blur(20px);
           backdrop-filter: blur(20px);
-  z-index: 1040;
-}
-
-.modal__backdrop.show,
-.modal.show {
-  display: block;
+  z-index: 33;
 }
 
 .modal {
   display: none;
   position: fixed;
-  top: 50%;
+  top: 40%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
       -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  z-index: 1050;
+  z-index: 99;
+  min-width: 300px;
+  max-width: 540px;
+  height: 280px;
+  padding: 2rem 3rem;
+  background: linear-gradient(135deg, #f75959 0%, #f35587 100%);
+  border-radius: 8px;
+  -webkit-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 6px 9px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
 .modal__text {
@@ -754,17 +766,10 @@ body {
   text-align: center;
 }
 
-.modal__dialog {
-  position: relative;
-  width: 100%;
-  max-width: 500px;
-  margin: 5% auto;
-}
-
 .modal__header,
 .modal__body,
 .modal__footer {
-  padding: 1rem 2rem;
+  width: 100%;
 }
 
 .modal__footer {
@@ -774,38 +779,39 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-}
-
-.modal__content {
-  padding: 2rem 3rem;
-  background: linear-gradient(135deg, #f75959 0%, #f35587 100%);
-  border-radius: 8px;
-  -webkit-box-shadow: 0 6px 9px rgba(0, 0, 0, 0.5);
-          box-shadow: 0 6px 9px rgba(0, 0, 0, 0.5);
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
 }
 
 .modal__title {
-  font-size: 2rem;
+  font-size: 2.25rem;
+  letter-spacing: 2px;
 }
 
 .modal__button {
-  -webkit-transition: background-color 0.2s ease-in-out;
-  transition: background-color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease;
   opacity: 0.75;
   padding: 0 20px;
-  min-width: 80px;
-  max-width: 120px;
+  min-width: 100px;
+  max-width: 160px;
   height: 45px;
   border-radius: 8px;
   border: 2px solid;
   border-color: #f2acae;
   background-color: transparent;
-  color: #0c040d;
 }
 
 .modal__button:hover {
   background-color: #f2acae;
   opacity: 1;
+  color: #0c040d;
+}
+
+.modal__backdrop.show,
+.modal.show {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }

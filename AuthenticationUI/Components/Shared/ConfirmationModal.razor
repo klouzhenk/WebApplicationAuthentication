@@ -3,19 +3,15 @@
 
 <div class="modal__backdrop @(IsVisible ? "show" : "")" @onclick="CancelAction"></div>
 <div class="modal @(IsVisible ? "show" : "")" tabindex="-1" role="dialog">
-    <div class="modal__dialog" role="document">
-        <div class="modal__content">
-            <div class="modal__header">
-                <h5 class="modal__text modal__title">@Title</h5>
-            </div>
-            <div class="modal__body">
-                <p class="modal__text">@Message</p>
-            </div>
-            <div class="modal__footer">
-                <button type="button" class="modal__button modal__text" @onclick="CancelAction">Cancel</button>
-                <button type="button" class="modal__button modal__text" @onclick="ConfirmAction">OK</button>
-            </div>
-        </div>
+    <div class="modal__header">
+        <h5 class="modal__text modal__title">@Title</h5>
+    </div>
+    <div class="modal__body">
+        <p class="modal__text">@Message</p>
+    </div>
+    <div class="modal__footer">
+        <button type="button" class="modal__button modal__text" @onclick="CancelAction">Cancel</button>
+        <button type="button" class="modal__button modal__text" @onclick="ConfirmAction">OK</button>
     </div>
 </div>
 
