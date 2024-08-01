@@ -43,7 +43,6 @@
     private async Task CloseModal()
     {
         IsVisible = false;
-        await JSRuntime.InvokeVoidAsync("closeConfirmationModal");
         StateHasChanged();
     }
 }
