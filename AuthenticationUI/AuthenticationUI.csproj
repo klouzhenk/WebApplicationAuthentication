@@ -19,4 +19,10 @@
     <Folder Include="wwwroot\fonts\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\SharedResource.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

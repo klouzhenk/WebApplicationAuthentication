@@ -2,6 +2,8 @@ using AuthenticationUI.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
 builder.Services.AddScoped(sp => new HttpClient
 {
@@ -42,7 +45,21 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+var supportedCultures = new[]
+{
+    new CultureInfo("en"),
+    new CultureInfo("ua")
+};
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+});
+
 app.UseRouting();       // swagger is launched
+
+app.UseRequestLocalization();
 
 app.UseStaticFiles();
 app.UseAuthentication();
