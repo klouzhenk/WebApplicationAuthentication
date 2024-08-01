@@ -10,6 +10,8 @@
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 @code {
+    [Inject] private NavigationManager NavigationManager { get; set; }
+
     private int currentCount = 0;
 
     private void IncrementCount()
@@ -19,13 +21,19 @@
 
 
     // for reauthorizing
-
-    [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+    [Inject] private CustomAuthStateProvider AuthenticationStateProvider { get; set; }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            ((CustomAuthStateProvider)AuthenticationStateProvider).CheckAuthenticationAfterRendering();
+            AuthenticationStateProvider.CheckAuthenticationAfterRendering();
+        }
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+        if (!authState.User.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("/");
+            return;
         }
     }
 }

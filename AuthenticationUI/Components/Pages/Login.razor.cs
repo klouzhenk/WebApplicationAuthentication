@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Components;
 using AuthenticationUI.Components.Pages;
 using Microsoft.JSInterop;
@@ -13,10 +12,11 @@ namespace AuthenticationUI
         // public fields
         [CascadingParameter] public HttpContext HttpContext { get; set; }
         [SupplyParameterFromForm] public UserModel User { get; set; } = new();
+        public UserModel UserInfo { get; set; } = new();
         [SupplyParameterFromForm] public RegisterRequest Register { get; set; } = new();
 
         // private fields
-        [Inject] private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+        [Inject] private CustomAuthStateProvider AuthenticationStateProvider { get; set; }
         [Inject] private HttpClient Http { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] public ProtectedLocalStorage storage { get; set; }
@@ -37,8 +37,14 @@ namespace AuthenticationUI
         {
             if (firstRender)
             {
-                ((CustomAuthStateProvider)AuthenticationStateProvider).CheckAuthenticationAfterRendering();
+                AuthenticationStateProvider.CheckAuthenticationAfterRendering();
             }
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+            if (!authState.User.Identity.IsAuthenticated) { return; }
+
+            var userClaims = authState.User.Claims;
+            UserInfo = UserModel.GetUserInfoFromClaims(authState.User);
         }
 
         public async Task Authenticate()
@@ -62,7 +68,10 @@ namespace AuthenticationUI
                         var identity = new ClaimsIdentity(claims, "Authentication");
                         var principal = new ClaimsPrincipal(identity);
 
-                        ((CustomAuthStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(principal);
+                        var authState = await AuthenticationStateProvider.MarkUserAsAuthenticated(principal);
+                        if (!authState.User.Identity.IsAuthenticated) { return; }
+                        var userClaims = authState.User.Claims;
+                        UserInfo = UserModel.GetUserInfoFromClaims(authState.User);
                     }
                     else
                     {
@@ -91,7 +100,6 @@ namespace AuthenticationUI
                 if (response.IsSuccessStatusCode)
                 {
                     ChangeHiding();
-                    Task.Delay(1000);
                 }
                 else
                 {

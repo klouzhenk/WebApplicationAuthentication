@@ -31,7 +31,7 @@ public class AuthController : ControllerBase
             var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
             var claims = new List<Claim>()
             {
-                new Claim("Name", request.Username),
+                new Claim(ClaimTypes.Name, request.Username),
                 new Claim("Password", request.Password),
                 new Claim(ClaimTypes.Role, user.Role)
 
