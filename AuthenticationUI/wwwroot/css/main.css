@@ -809,13 +809,3 @@ body {
   background-color: #f2acae;
   opacity: 1;
 }
-
-.form__error-message {
-    color: #d9534f; 
-    font-size: 0.875rem; 
-    margin-top: 1rem; 
-    padding: 0.5rem; 
-    border: 1px solid #d9534f; 
-    border-radius: 4px; 
-    background-color: #f8d7da; 
-}
