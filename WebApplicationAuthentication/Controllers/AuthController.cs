@@ -79,7 +79,7 @@ public class AuthController : ControllerBase
             Password = hashedPassword,
             Salt = salt,
             Role = request.Role,
-            IdTown = 2
+            IdTown = 1
         };
 
         _context.Users.Add(user);
