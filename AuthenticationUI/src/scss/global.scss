@@ -26,6 +26,7 @@ body {
 }
 
 .body__container {
+    position: relative;
     width: 100%;
     height: 100%;
     display: flex;
@@ -40,6 +41,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
 }
 
 .lang-block {

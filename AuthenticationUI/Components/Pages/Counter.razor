@@ -1,24 +1,32 @@
-﻿@page "/counter"
+﻿@page "/info"
 @rendermode InteractiveServer
 
-<PageTitle>Counter</PageTitle>
+<PageTitle>Info</PageTitle>
 
-<h1>Counter</h1>
+<h1 class="page__title">User information</h1>
 
-<p role="status">Current count: @currentCount</p>
+<p class="page__paragraph">You can see your information here.</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<table class="page__table">
+    <tbody>
+        <tr class="page__table-row">
+            <td class="page__table-el--em">Username</td>
+            <td>@UserInfo.Name</td>
+        </tr>
+        <tr class="page__table-row">
+            <td class="page__table-el--em">Role</td>
+            <td>@UserInfo.Role</td>
+        </tr>
+        <tr class="page__table-row">
+            <td class="page__table-el--em">Town</td>
+            <td>...</td>
+        </tr>
+    </tbody>
+</table>
 
 @code {
     [Inject] private NavigationManager NavigationManager { get; set; }
-
-    private int currentCount = 0;
-
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
-
+    public UserModel UserInfo { get; set; } = new();
 
     // for reauthorizing
     [Inject] private CustomAuthStateProvider AuthenticationStateProvider { get; set; }
@@ -35,5 +43,9 @@
             NavigationManager.NavigateTo("/");
             return;
         }
+
+        var userClaims = authState.User.Claims;
+        UserInfo = UserModel.GetUserInfoFromClaims(authState.User);
+        StateHasChanged();
     }
 }

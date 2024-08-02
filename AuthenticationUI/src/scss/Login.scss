@@ -1,11 +1,21 @@
 ﻿$pink-gradient: linear-gradient(135deg, #f75959 0%, #f35587 100%);
 
 .main-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    &--notauthorized {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &--authorized {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 .forms__container {
@@ -14,10 +24,12 @@
     height: 470px;
     box-shadow: 20px 10px -10px rgba(0, 0, 0, 0.05);
     border-radius: 8px;
+
+    left: -12.5%;
 }
 
 .form__wrapper {
-    transition: all 1s ease-in-out;
+    transition: all 1s cubic-bezier(0.68,-0.55,0.27,1.55);
     position: absolute;
     top: 0;
     left: 0;
