@@ -1,16 +1,17 @@
 ﻿@page "/weather"
 @using Microsoft.AspNetCore.Authorization
+@using AuthenticationUI.Components.Pages.Model;
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
-@using AuthenticationUI.Components.Pages.Model;
 
-@inherits WeatherClass
+@inherits WeatherPage
 
 <PageTitle>Weather</PageTitle>
 
-<h1>Weather</h1>
+<link rel="stylesheet" href="css/main.min.css"/>
 
-<p>This component demonstrates showing data.</p>
+<h1 class="page__title">Weather</h1>
+<p class="page__paragraph">You can see day weather forecast in your town here.</p>
 
 @if (forecasts == null)
 {
@@ -18,23 +19,21 @@
 }
 else
 {
-    <table class="table">
-        <thead>
+    <table class="page__table">
+        <thead class="page__table-row row--main">
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>Time</th>
+                <th>Temperature</th>
+                <th>State</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var forecast in forecasts)
             {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                <tr class="page__table-row">
+                    <td>@forecast.Time</td>
+                    <td>@forecast.Temperature °C</td>
+                    <td>@forecast.State</td>
                 </tr>
             }
         </tbody>

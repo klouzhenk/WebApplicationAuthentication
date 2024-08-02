@@ -21,5 +21,8 @@ namespace WebApplicationAuthentication
         [Required]
         [Column("role")]
         public string Role { get; set; }
+
+        [Column("id_town")]
+        public int IdTown { get; set; }
     }
 }

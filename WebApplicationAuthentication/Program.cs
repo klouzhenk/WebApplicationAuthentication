@@ -25,6 +25,9 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
+builder.Services.AddDbContext<ForecastDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

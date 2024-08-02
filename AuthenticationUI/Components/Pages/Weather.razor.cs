@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Authorization;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
-using AuthenticationUI.Components.Pages.Model;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 
-namespace AuthenticationUI
+namespace AuthenticationUI.Components.Pages
 {
+
     [Authorize]
-    public partial class WeatherClass : ComponentBase
+    public partial class WeatherPage : ComponentBase
     {
         public WeatherForecast[]? forecasts;
         [Inject] private HttpClient Http { get; set; }
@@ -19,18 +17,24 @@ namespace AuthenticationUI
             var authState = await CustomAuthStateProvider.GetAuthenticationStateAsync();
             if (!authState.User.Identity.IsAuthenticated)
             {
-                // Перенаправлення на сторінку входу
                 NavigationManager.NavigateTo("/");
                 return;
             }
 
             try
             {
-                forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+                var idTownClaim = authState.User.FindFirst("IdTown");
+                if (idTownClaim != null)
+                {
+                    string idTown = idTownClaim.Value;
+                    string day = DateTime.Today.ToString("dd.MM.yyyy");
+
+                    var url = $"WeatherForecast?idTown={idTown}&day={day}";
+                    forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>(url);
+                }
             }
             catch (HttpRequestException ex)
             {
-                // Логування помилки
                 Console.Error.WriteLine($"Failed to fetch weather data: {ex.Message}");
             }
         }
