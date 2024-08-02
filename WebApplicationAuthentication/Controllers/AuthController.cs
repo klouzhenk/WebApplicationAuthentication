@@ -23,9 +23,9 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequest request)
     {
-        var user =  _context.Users.SingleOrDefault(u => u.Username == request.Username && u.Password == request.Password);
+        var user =  _context.Users.SingleOrDefault(u => u.Username == request.Username);
 
-        if (user != null)
+        if (user != null && user.Password == PasswordHelper.HashPassword(request.Password, user.Salt))
         {
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("XA5dpjm3TcXLloBvCtplCKI8cy9e75ubuZK+d8zlfLNbyJTbsRsDcOyyQ3grsE4j"));
             var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
@@ -68,13 +68,18 @@ public class AuthController : ControllerBase
             return BadRequest(new { message = "Username already exists" });
         }
 
+        // Генерація солі та хешування паролю
+        var salt = PasswordHelper.GenerateSalt();
+        var hashedPassword = PasswordHelper.HashPassword(request.Password, salt);
+
         // Створення нового користувача
         var user = new User
         {
             Username = request.Username,
-            Password = request.Password,
+            Password = hashedPassword,
+            Salt = salt,
             Role = request.Role,
-            IdTown = 1
+            IdTown = 2
         };
 
         _context.Users.Add(user);
