@@ -1,11 +1,17 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplicationAuthentication.ControllersC
+namespace WebApplicationAuthentication.Controllers
 {
     [Route("[controller]/[action]")]
     public class CultureController : Controller
     {
+        [HttpGet]
+        public IActionResult Test()
+        {
+            return Content("Test route is working");
+        }
+
         [HttpGet]
         public IActionResult Set(string culture, string redirectUri)
         {
@@ -27,6 +33,7 @@ namespace WebApplicationAuthentication.ControllersC
             HttpContext.Response.Cookies.Append(cookieName, cookieValue);
 
             return LocalRedirect(redirectUri);
+
         }
 
     }
