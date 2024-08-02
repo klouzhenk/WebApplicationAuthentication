@@ -1,5 +1,4 @@
 ﻿@inject NavigationManager Navigation
-@using System.Globalization
 
 <div>
     <select @bind="Culture">
@@ -29,9 +28,8 @@
                 var cultureEscaped = Uri.EscapeDataString(value.Name);
                 var uriEscaped = Uri.EscapeDataString(uri);
 
-                Console.WriteLine($"Navigating to /Culture/Set?culture={cultureEscaped}&redirectUri={uriEscaped}");
-
-                Navigation.NavigateTo($"/Culture/Set?culture={cultureEscaped}&redirectUri={uriEscaped}", forceLoad: true);
+                // Ensure `redirectUri` is properly encoded
+                Navigation.NavigateTo($"Culture/Set?culture={cultureEscaped}&redirectUri={uriEscaped}", forceLoad: true);
             }
         }
     }

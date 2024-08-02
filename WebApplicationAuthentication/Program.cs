@@ -11,6 +11,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddLocalization();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBlazorApp",
+        builder =>
+        {
+            builder.WithOrigins("https://localhost:7147") // URL вашого Blazor додатка
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
