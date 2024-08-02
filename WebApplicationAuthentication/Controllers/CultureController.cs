@@ -7,6 +7,12 @@ namespace WebApplicationAuthentication.Controllers
     public class CultureController : Controller
     {
         [HttpGet]
+        public IActionResult Test()
+        {
+            return Content("Test route is working");
+        }
+
+        [HttpGet]
         public IActionResult Set(string culture, string redirectUri)
         {
             if (string.IsNullOrEmpty(culture))
@@ -27,6 +33,7 @@ namespace WebApplicationAuthentication.Controllers
             HttpContext.Response.Cookies.Append(cookieName, cookieValue);
 
             return LocalRedirect(redirectUri);
+
         }
 
     }
