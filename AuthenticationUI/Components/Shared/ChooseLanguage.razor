@@ -1,6 +1,6 @@
 ﻿@inherits ChooseLanguageBase
 
-@if (cultures != null)
+@if (cultures != null && cultures.Any())
 {
     <form class="user-select-form">
         <select class="form-control mr-2" @onchange="RequestCultureChange">

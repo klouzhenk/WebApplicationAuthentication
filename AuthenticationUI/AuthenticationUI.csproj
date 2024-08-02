@@ -14,10 +14,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Locales\" />
     <Folder Include="src\fonts\" />
     <Folder Include="src\img\" />
     <Folder Include="wwwroot\fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Locales\App.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Locales\App.uk.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

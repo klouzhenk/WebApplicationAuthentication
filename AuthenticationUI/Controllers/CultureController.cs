@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Localization;
 
-namespace Mint.Software.EReceipt.WebUI.Controllers
+namespace AuthenticationUI.Controllers
 {
+    [ApiController]
     [Route("[controller]/[action]")]
     public class CultureController : Controller
     {
