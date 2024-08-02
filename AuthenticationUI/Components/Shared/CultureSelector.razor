@@ -1,36 +1,21 @@
-﻿@inject NavigationManager Navigation
+﻿@inherits ChooseLanguageBase
 
-<div>
-    <select @bind="Culture">
-        <option value="en-US">English</option>
-        <option value="uk-UA">Ukrainian</option>
-    </select>
-</div>
-
-@code
+@if (cultures != null)
 {
-    protected override void OnInitialized()
-    {
-        Culture = CultureInfo.CurrentCulture;
-    }
-
-    private CultureInfo Culture
-    {
-        get
-        {
-            return CultureInfo.CurrentCulture;
-        }
-        set
-        {
-            if (CultureInfo.CurrentCulture != value)
+    <form class="user-select-form">
+        <select class="form-control mr-2" @onchange="RequestCultureChange">
+            @foreach (var culture in cultures)
             {
-                var uri = new Uri(Navigation.Uri).GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
-                var cultureEscaped = Uri.EscapeDataString(value.Name);
-                var uriEscaped = Uri.EscapeDataString(uri);
-
-                // Ensure `redirectUri` is properly encoded
-                Navigation.NavigateTo($"Culture/Set?culture={cultureEscaped}&redirectUri={uriEscaped}", forceLoad: true);
+                @if (selectedCulture.Equals(culture.Key))
+                {
+                    <option value="@culture.Key" selected>@Localizer[culture.Value].Value</option>
+                }
+                else
+                {
+                    <option value="@culture.Key">@Localizer[culture.Value].Value</option>
+                }
             }
-        }
-    }
+        </select>
+    </form>
 }
+

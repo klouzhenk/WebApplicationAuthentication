@@ -58,8 +58,7 @@ namespace AuthenticationUI.Locales {
             set {
                 resourceCulture = value;
             }
-        }
-        
+        }        
         /// <summary>
         ///   Looks up a localized string similar to Account.
         /// </summary>
