@@ -31,10 +31,10 @@ public class AuthController : ControllerBase
             var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, request.Username),
-                new Claim("Password", request.Password),
-                new Claim(ClaimTypes.Role, user.Role)
-
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim("Password", user.Password),
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim("IdTown", user.IdTown.ToString()),
             };
 
             var securityToken = new JwtSecurityToken(
@@ -73,7 +73,8 @@ public class AuthController : ControllerBase
         {
             Username = request.Username,
             Password = request.Password,
-            Role = request.Role
+            Role = request.Role,
+            IdTown = 1
         };
 
         _context.Users.Add(user);

@@ -815,3 +815,42 @@ body {
   display: -ms-flexbox;
   display: flex;
 }
+
+.page__title {
+  margin: 24px 0;
+  font-size: 3.5rem;
+  letter-spacing: 2px;
+  text-align: center;
+  color: #795858;
+  font-weight: 1000;
+}
+
+.page__paragraph {
+  margin: 20px 0;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  text-align: center;
+  color: #795858;
+  font-weight: 400;
+}
+
+.page__table {
+  margin: 20px 20px 0;
+  min-width: 700px;
+  max-width: 900px;
+  border: 2px solid #795858;
+}
+
+.page__table-row {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 95%;
+  height: 3rem;
+  text-align: center;
+}
+
+.row--main {
+  background-color: #e67c7c;
+  height: 3.5rem;
+  border-bottom: 2px solid #795858;
+}

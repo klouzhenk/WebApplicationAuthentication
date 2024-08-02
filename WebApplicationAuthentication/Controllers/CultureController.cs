@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace WebApplicationAuthentication.ControllersC
+namespace WebApplicationAuthentication.Controllers
 {
     [Route("[controller]/[action]")]
     public class CultureController : Controller
