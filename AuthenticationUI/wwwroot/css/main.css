@@ -884,3 +884,52 @@ body {
   height: 3.5rem;
   border-bottom: 2px solid #795858;
 }
+
+.preloader {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 50px;
+  aspect-ratio: 1;
+  display: -ms-grid;
+  display: grid;
+}
+
+.preloader::before,
+.preloader::after {
+  content: "";
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: 1/1;
+  --c: no-repeat radial-gradient(farthest-side,#f35587 92%,#0000);
+  background: var(--c) 50% 0, var(--c) 50% 100%, var(--c) 100% 50%, var(--c) 0 50%;
+  background-size: 12px 12px;
+  -webkit-animation: l12 1s infinite;
+          animation: l12 1s infinite;
+}
+
+.preloader::before {
+  margin: 4px;
+  -webkit-filter: hue-rotate(45deg);
+          filter: hue-rotate(45deg);
+  background-size: 8px 8px;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+}
+
+@-webkit-keyframes l12 {
+  100% {
+    -webkit-transform: rotate(0.5turn);
+            transform: rotate(0.5turn);
+  }
+}
+
+@keyframes l12 {
+  100% {
+    -webkit-transform: rotate(0.5turn);
+            transform: rotate(0.5turn);
+  }
+}
