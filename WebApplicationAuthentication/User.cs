@@ -23,6 +23,10 @@ namespace WebApplicationAuthentication
         public string Salt { get; set; } */
 
         [Required]
+        [Column("salt")]
+        public string Salt { get; set; }
+
+        [Required]
         [Column("role")]
         public string Role { get; set; }
 

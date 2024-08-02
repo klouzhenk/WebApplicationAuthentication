@@ -4,6 +4,9 @@ using AuthenticationUI.Components.Pages;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using AuthenticationUI.Components.Pages.Model;
+// hasging and salting
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Security.Cryptography;
 
 namespace AuthenticationUI
 {
