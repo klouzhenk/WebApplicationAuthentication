@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddLocalization();
+builder.Services.AddControllers();
+
 // Додаємо послуги до контейнера
 builder.Services.AddRazorPages();
 
@@ -31,37 +34,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();
 
-// Додаємо локалізацію
-//builder.Services.AddLocalization(options => options.ResourcesPath = "Locales");
-AddLocalization(builder);
-
 // Налаштування HttpClient
 builder.Services.AddScoped(sp => new HttpClient
 {
     BaseAddress = new Uri("https://localhost:7267")
 });
 
-// Налаштування локалізації
-var supportedCultures = new List<CultureInfo>();
-var cultures = builder.Configuration.GetSection("Cultures").GetChildren().ToDictionary(x => x.Key, x => x.Value);
-foreach (var culture in cultures)
-    supportedCultures.Add(new CultureInfo(culture.Key));
-
-var defaultCulture = new CultureInfo(builder.Configuration["DefaultLanguage"]);
-
-builder.Services.Configure<RequestLocalizationOptions>(options =>
-{
-    options.DefaultRequestCulture = new RequestCulture(defaultCulture);
-    options.SupportedCultures = supportedCultures;
-    options.SupportedUICultures = supportedCultures;
-    options.RequestCultureProviders = new List<IRequestCultureProvider>
-    {
-        new QueryStringRequestCultureProvider(),
-        new CookieRequestCultureProvider()
-    };
-});
-
 var app = builder.Build();
+
+
+
+string[] supportedCultures = ["en-US", "uk-UA"];
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+app.UseRequestLocalization(localizationOptions);
+
+
 
 // Налаштування конвеєра обробки запитів
 if (!app.Environment.IsDevelopment())
@@ -75,9 +65,13 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseRequestLocalization(app.Services.GetService<IOptions<RequestLocalizationOptions>>()?.Value!);
-//app.UseRequestLocalization(app.Services.GetService<IOptions<RequestLocalizationOptions>>()?.Value);
 app.UseAntiforgery();
+
+
+
+app.MapControllers();
+
+
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
@@ -87,6 +81,8 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+
 
 static void AddLocalization(WebApplicationBuilder builder)
 {

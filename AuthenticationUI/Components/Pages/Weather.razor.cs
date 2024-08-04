@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components;
 
 namespace AuthenticationUI.Components.Pages
 {
-
     [Authorize]
     public partial class WeatherPage : ComponentBase
     {
@@ -20,12 +19,6 @@ namespace AuthenticationUI.Components.Pages
                 CustomAuthStateProvider.CheckAuthenticationAfterRendering();
 
                 var authState = await CustomAuthStateProvider.GetAuthenticationStateAsync();
-
-                if (!authState.User.Identity.IsAuthenticated)
-                {
-                    NavigationManager.NavigateTo("/");
-                    return;
-                }
 
                 if (!authState.User.Identity.IsAuthenticated)
                 {

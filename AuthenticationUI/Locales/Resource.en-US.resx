@@ -117,34 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Account" xml:space="preserve">
-    <value>Обліковий запис</value>
+  <data name="NavHome" xml:space="preserve">
+    <value>Home</value>
   </data>
-  <data name="CancelStatement" xml:space="preserve">
-    <value>Відміна</value>
+  <data name="NavInfo" xml:space="preserve">
+    <value>Info</value>
   </data>
-  <data name="HomeTxt" xml:space="preserve">
-    <value>Привіт,</value>
-  </data>
-  <data name="LogoutModalConfirm" xml:space="preserve">
-    <value>Підтвердити вихід</value>
-  </data>
-  <data name="LogoutModaltext" xml:space="preserve">
-    <value>Ви впевнені, що хочете вийти?</value>
-  </data>
-  <data name="MenuCounter" xml:space="preserve">
-    <value>Лічильник</value>
-  </data>
-  <data name="MenuHome" xml:space="preserve">
-    <value>Головна</value>
-  </data>
-  <data name="MenuLogout" xml:space="preserve">
-    <value>Вихід</value>
-  </data>
-  <data name="MenuWeather" xml:space="preserve">
-    <value>Погода</value>
-  </data>
-  <data name="OkStatement" xml:space="preserve">
-    <value>Так</value>
+  <data name="NavWeather" xml:space="preserve">
+    <value>Weather</value>
   </data>
 </root>

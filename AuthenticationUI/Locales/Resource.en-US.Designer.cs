@@ -10,8 +10,8 @@
 
 namespace AuthenticationUI.Locales {
     using System;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,14 +22,14 @@ namespace AuthenticationUI.Locales {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class App_en {
+    public class Resource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal App_en() {
+        internal Resource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace AuthenticationUI.Locales {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AuthenticationUI.Locales.App.en.rexs", typeof(App_en).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AuthenticationUI.Locales.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -58,94 +58,32 @@ namespace AuthenticationUI.Locales {
             set {
                 resourceCulture = value;
             }
-        }        
-        /// <summary>
-        ///   Looks up a localized string similar to Account.
-        /// </summary>
-        public static string Account {
-            get {
-                return ResourceManager.GetString("Account", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cancel.
-        /// </summary>
-        public static string CancelStatement {
-            get {
-                return ResourceManager.GetString("CancelStatement", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hello,.
-        /// </summary>
-        public static string HomeTxt {
-            get {
-                return ResourceManager.GetString("HomeTxt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Confirm logout.
-        /// </summary>
-        public static string LogoutModalConfirm {
-            get {
-                return ResourceManager.GetString("LogoutModalConfirm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to log out?.
-        /// </summary>
-        public static string LogoutModaltext {
-            get {
-                return ResourceManager.GetString("LogoutModaltext", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Counter.
-        /// </summary>
-        public static string MenuCounter {
-            get {
-                return ResourceManager.GetString("MenuCounter", resourceCulture);
-            }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
-        public static string MenuHome {
+        public static string NavHome {
             get {
-                return ResourceManager.GetString("MenuHome", resourceCulture);
+                return ResourceManager.GetString("NavHome", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Logout.
+        ///   Looks up a localized string similar to Info.
         /// </summary>
-        public static string MenuLogout {
+        public static string NavInfo {
             get {
-                return ResourceManager.GetString("MenuLogout", resourceCulture);
+                return ResourceManager.GetString("NavInfo", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Weather.
         /// </summary>
-        public static string MenuWeather {
+        public static string NavWeather {
             get {
-                return ResourceManager.GetString("MenuWeather", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ok.
-        /// </summary>
-        public static string OkStatement {
-            get {
-                return ResourceManager.GetString("OkStatement", resourceCulture);
+                return ResourceManager.GetString("NavWeather", resourceCulture);
             }
         }
     }
