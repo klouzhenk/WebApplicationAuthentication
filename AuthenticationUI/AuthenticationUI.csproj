@@ -20,6 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WebApplicationAuthentication\WebApplicationAuthentication.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Locales\Resource.en-US.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

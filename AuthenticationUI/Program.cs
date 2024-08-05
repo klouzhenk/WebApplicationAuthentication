@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
+using WebApplicationAuthentication.Services.Implementation;
+using WebApplicationAuthentication.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,15 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers().AddMvcOptions(x => x.CacheProfiles.Clear());
+
+
+builder.Services.AddHttpClient<IUserAPIClient, UserAPIClient>(configureClient =>
+{
+    configureClient.BaseAddress = new Uri("https://localhost:7267");
+});
+builder.Services.AddTransient<IUserDataService, UserDataService>();
+
+
 
 builder.Services.AddAuthenticationCore();
 builder.Services.AddAuthorizationCore();

@@ -3,10 +3,12 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using WebApplicationAuthentication.Entities;
 using Microsoft.EntityFrameworkCore;
+
+using WebApplicationAuthentication.Entities;
 using WebApplicationAuthentication.Models;
 using WebApplicationAuthentication.Models.DTO;
+
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
 
@@ -26,19 +28,19 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequest request)
     {
-        var user =  _context.Users.SingleOrDefault(u => u.Username == request.Username);
+        var user = _context.Users.SingleOrDefault(u => u.Username == request.Username);
 
         if (user != null && user.Password == PasswordHelper.HashPassword(request.Password, user.Salt))
         {
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("XA5dpjm3TcXLloBvCtplCKI8cy9e75ubuZK+d8zlfLNbyJTbsRsDcOyyQ3grsE4j"));
             var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
-            var claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim("Password", user.Password),
-                new Claim(ClaimTypes.Role, user.Role),
-                new Claim("IdTown", user.IdTown.ToString()),
-            };
+            var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.Username),
+                    new Claim("Password", user.Password),
+                    new Claim(ClaimTypes.Role, user.Role),
+                    new Claim("IdTown", user.IdTown.ToString()),
+                };
 
             var securityToken = new JwtSecurityToken(
                 issuer: "https://localhost:7267/",

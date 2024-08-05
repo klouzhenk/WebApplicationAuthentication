@@ -4,9 +4,8 @@ using AuthenticationUI.Components.Pages;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using AuthenticationUI.Components.Pages.Model;
-// hasging and salting
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using System.Security.Cryptography;
+
+using WebApplicationAuthentication.Services.Interfaces;
 
 namespace AuthenticationUI
 {
@@ -20,7 +19,7 @@ namespace AuthenticationUI
 
         // private fields
         [Inject] private CustomAuthStateProvider AuthenticationStateProvider { get; set; }
-        [Inject] private HttpClient Http { get; set; }
+        [Inject] private IUserDataService DataService { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] public ProtectedLocalStorage storage { get; set; }
 
@@ -54,7 +53,7 @@ namespace AuthenticationUI
         {
             try
             {
-                var response = await Http.PostAsJsonAsync("/Auth/login", new { Username = User.Name, User.Password });
+                var response = await DataService.LoginUserAsync(User.Name, User.Password);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -98,7 +97,7 @@ namespace AuthenticationUI
         {
             try
             {
-                var response = await Http.PostAsJsonAsync("/Auth/register", new { Register.Username, Register.Password, Register.Role });
+                var response = await DataService.RegisterUserAsync(Register.Username, Register.Password, Register.Role);
 
                 if (response.IsSuccessStatusCode)
                 {
