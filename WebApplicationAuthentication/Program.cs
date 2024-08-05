@@ -2,8 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.AspNetCore.Localization;
 using WebApplicationAuthentication.Models;
-using WebApplicationAuthentication.Services.Interfaces;
-using WebApplicationAuthentication.Services.Implementation;
+using WebApplicationAuthentication.Services.Implementation.HttpClients;
+using WebApplicationAuthentication.Services.Implementation.DataServices;
+using WebApplicationAuthentication.Services.Interfaces.HttpClients;
+using WebApplicationAuthentication.Services.Interfaces.DataServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +38,13 @@ builder.Services.AddHttpClient<IUserAPIClient, UserAPIClient>( configureClient =
     configureClient.BaseAddress = new Uri("https://localhost:7267");
 });
 builder.Services.AddTransient<IUserDataService, UserDataService>();
+
+builder.Services.AddHttpClient<IWeatherForecastAPIClient, WeatherForecastAPIClient>(configureClient =>
+{
+    configureClient.BaseAddress = new Uri("https://localhost:7267");
+});
+builder.Services.AddTransient<IWeatherForecastDataService, WeatherForecastDataService>();
+
 
 
 var app = builder.Build();

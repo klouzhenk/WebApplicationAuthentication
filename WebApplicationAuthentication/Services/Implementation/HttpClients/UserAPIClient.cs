@@ -1,13 +1,8 @@
-﻿using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
-using Microsoft.Win32;
-using WebApplicationAuthentication.Entities;
-using WebApplicationAuthentication.Models.DTO;
-using WebApplicationAuthentication.Services.Interfaces;
+﻿using WebApplicationAuthentication.Models.DTO;
+using WebApplicationAuthentication.Services.Interfaces.HttpClients;
 using static System.Net.WebRequestMethods;
 
-namespace WebApplicationAuthentication.Services.Implementation
+namespace WebApplicationAuthentication.Services.Implementation.HttpClients
 {
     public class UserAPIClient : IUserAPIClient
     {

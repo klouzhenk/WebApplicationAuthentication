@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using WebApplicationAuthentication.Entities;
+using WebApplicationAuthentication.Services.Interfaces.DataServices;
 
 namespace AuthenticationUI.Components.Pages
 {
     [Authorize]
     public partial class WeatherPage : ComponentBase
     {
-        public WeatherForecast[]? forecasts;
-        [Inject] private HttpClient Http { get; set; }
+        public Forecast[]? forecasts;
+        [Inject] private IWeatherForecastDataService DataService { get; set; }
         [Inject] private CustomAuthStateProvider CustomAuthStateProvider { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
-
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -33,9 +34,14 @@ namespace AuthenticationUI.Components.Pages
                     {
                         string idTown = idTownClaim.Value;
                         string day = DateTime.Today.ToString("dd.MM.yyyy");
-
-                        var url = $"WeatherForecast?idTown={idTown}&day={day}";
-                        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>(url);
+                        //string day = "02.08.2024";
+                        forecasts = await DataService.GetForecastsAsync(idTown, day);
+                        var sortedForecasts = forecasts.Select(f => new WeatherForecast
+                        {
+                            Time = f.Time,
+                            Temperature = f.Temperature,
+                            State = f.State
+                        }).ToArray();
                     }
                 }
                 catch (HttpRequestException ex)

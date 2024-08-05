@@ -1,6 +1,7 @@
-﻿using WebApplicationAuthentication.Services.Interfaces;
+﻿using WebApplicationAuthentication.Services.Interfaces.DataServices;
+using WebApplicationAuthentication.Services.Interfaces.HttpClients;
 
-namespace WebApplicationAuthentication.Services.Implementation
+namespace WebApplicationAuthentication.Services.Implementation.DataServices
 {
     public class UserDataService : IUserDataService
     {
