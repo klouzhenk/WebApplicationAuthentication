@@ -12,7 +12,7 @@
 @using System.Net.Http.Json
 
 @inherits LoginPage
-
+@inject IStringLocalizer<Resource> localizer
 @rendermode InteractiveServer
 
 <CascadingAuthenticationState>
@@ -125,8 +125,8 @@
         </NotAuthorized>
         <Authorized>
             <div class="main-container--authorized">
-                <h2 class="page__title">Home</h2>
-                <h2 class="page__paragraph">Hello, @UserInfo.Name</h2>
+                <h2 class="page__title">@localizer["NavHome"]</h2>
+                <h2 class="page__paragraph">@localizer["HomeHello"], @UserInfo.Name</h2>
             </div>
         </Authorized>
     </AuthorizeView>
