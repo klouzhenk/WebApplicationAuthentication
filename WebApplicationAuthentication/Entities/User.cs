@@ -23,6 +23,14 @@ namespace WebApplicationAuthentication.Entities
         public string Salt { get; set; }
 
         [Required]
+        [Column("refresh_token")]
+        public string RefreshToken { get; set; }
+
+        [Required]
+        [Column("refresh_token_expiery_date")]
+        public DateTime RefreshTokenExpieryDate { get; set; }
+
+        [Required]
         [Column("role")]
         public string Role { get; set; }
 
