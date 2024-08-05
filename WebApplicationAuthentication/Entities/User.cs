@@ -27,8 +27,8 @@ namespace WebApplicationAuthentication.Entities
         public string RefreshToken { get; set; }
 
         [Required]
-        [Column("refresh_token_expiery_date")]
-        public DateTime RefreshTokenExpieryDate { get; set; }
+        [Column("refresh_token_expiery_time")]
+        public DateTime RefreshTokenExpieryTime { get; set; }
 
         [Required]
         [Column("role")]
