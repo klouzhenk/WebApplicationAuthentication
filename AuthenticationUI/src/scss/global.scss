@@ -95,4 +95,12 @@ body {
         width: 1rem;
         height: 1rem;
     }
+
+    &--show {
+        display: flex;
+    }
+
+    &--hide {
+        display: none;
+    }
 }

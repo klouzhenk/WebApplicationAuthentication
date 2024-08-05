@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApplicationAuthentication
+namespace WebApplicationAuthentication.Entities
 {
     [Table("app_forecasts")]
     public class Forecast
@@ -17,7 +17,7 @@ namespace WebApplicationAuthentication
         [Required]
         [Column("day")]
         public string Day { get; set; }
-        
+
         [Required]
         [Column("time")]
         public string Time { get; set; }

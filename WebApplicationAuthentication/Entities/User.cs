@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebApplicationAuthentication
+namespace WebApplicationAuthentication.Entities
 {
     [Table("app_users")]
     public class User
@@ -18,10 +18,6 @@ namespace WebApplicationAuthentication
         [Column("password")]
         public string Password { get; set; }
 
-    /*    [Required]
-        [Column("salt")]
-        public string Salt { get; set; } */
-
         [Required]
         [Column("salt")]
         public string Salt { get; set; }
@@ -32,13 +28,5 @@ namespace WebApplicationAuthentication
 
         [Column("id_town")]
         public int IdTown { get; set; }
-
-        //[Required]
-        //[Column("refresh_token")]
-        //public string RefreshToken { get; set; }
-
-        //[Required]
-        //[Column("refresh_token_expiry_time")]
-        //public DateTime RefreshTokenExpiryTime { get; set; }
     }
 }

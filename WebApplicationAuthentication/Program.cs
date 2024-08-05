@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.AspNetCore.Localization;
-using WebApplicationAuthentication;
+using WebApplicationAuthentication.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

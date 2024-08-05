@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebApplicationAuthentication.Entities;
 
-namespace WebApplicationAuthentication
+namespace WebApplicationAuthentication.Models
 {
 
     public class UserDbContext : DbContext

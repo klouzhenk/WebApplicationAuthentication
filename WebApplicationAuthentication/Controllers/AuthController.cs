@@ -3,9 +3,12 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using WebApplicationAuthentication.Class;
-using WebApplicationAuthentication;
+using WebApplicationAuthentication.Entities;
 using Microsoft.EntityFrameworkCore;
+using WebApplicationAuthentication.Models;
+using WebApplicationAuthentication.Models.DTO;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Security.Cryptography;
 
 
 [ApiController]
@@ -89,3 +92,26 @@ public class AuthController : ControllerBase
     }
 }
 
+public static class PasswordHelper
+{
+    public static string GenerateSalt()
+    {
+        byte[] salt = new byte[128 / 8];
+        using (var rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(salt);
+        }
+        return Convert.ToBase64String(salt);
+    }
+
+    public static string HashPassword(string password, string salt)
+    {
+        string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password: password,
+            salt: Convert.FromBase64String(salt),
+            prf: KeyDerivationPrf.HMACSHA256,
+            iterationCount: 10000,
+            numBytesRequested: 256 / 8));
+        return hashed;
+    }
+}

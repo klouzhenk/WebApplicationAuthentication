@@ -595,6 +595,16 @@ body {
   height: 1rem;
 }
 
+.lang-block--show {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.lang-block--hide {
+  display: none;
+}
+
 .nav {
   position: fixed;
   top: 0;

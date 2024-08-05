@@ -1,4 +1,4 @@
-﻿namespace WebApplicationAuthentication.Class
+﻿namespace WebApplicationAuthentication.Models.DTO
 {
     public class JwtResponse
     {

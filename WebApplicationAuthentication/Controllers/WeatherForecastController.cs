@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using WebApplicationAuthentication.Entities;
+using WebApplicationAuthentication.Models;
 
 namespace WebApplicationAuthentication.Controllers
 {
