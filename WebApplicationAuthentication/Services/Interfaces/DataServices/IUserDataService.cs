@@ -1,8 +1,8 @@
 ﻿using WebApplicationAuthentication.Entities;
 
-namespace WebApplicationAuthentication.Services.Interfaces
+namespace WebApplicationAuthentication.Services.Interfaces.DataServices
 {
-    public interface IUserAPIClient
+    public interface IUserDataService
     {
         Task<HttpResponseMessage> LoginUserAsync(string name, string password);
         Task<HttpResponseMessage> RegisterUserAsync(string name, string password, string role);

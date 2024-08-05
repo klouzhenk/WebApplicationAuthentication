@@ -4,8 +4,7 @@ using AuthenticationUI.Components.Pages;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using AuthenticationUI.Components.Pages.Model;
-
-using WebApplicationAuthentication.Services.Interfaces;
+using WebApplicationAuthentication.Services.Interfaces.DataServices;
 
 namespace AuthenticationUI
 {

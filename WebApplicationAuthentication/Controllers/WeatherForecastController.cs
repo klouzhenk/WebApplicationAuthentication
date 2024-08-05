@@ -19,7 +19,7 @@ namespace WebApplicationAuthentication.Controllers
         public Forecast[] Get([FromQuery] int idTown, [FromQuery] string day)
         {
             var forecasts = _forecastDbContext.Forecasts
-                .Where(u => u.IdTown == idTown && u.Day == day).ToArray();
+                .Where(f => f.IdTown == idTown && f.Day == day).ToArray();
             return forecasts;
         }
     }
