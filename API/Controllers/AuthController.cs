@@ -4,9 +4,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using API.Models.DTO;
 using API.Models;
 using API.Entities;
@@ -17,6 +17,7 @@ using API.Models.Helpres;
 public class AuthController : ControllerBase
 {
     private readonly UserDbContext _context;
+    private const string JwtKey = "XA5dpjm3TcXLloBvCtplCKI8cy9e75ubuZK+d8zlfLNbyJTbsRsDcOyyQ3grsE4j"; // Key should be kept in configuration
 
     public AuthController(UserDbContext context)
     {
@@ -30,8 +31,8 @@ public class AuthController : ControllerBase
 
         if (user != null && user.Password == PasswordHelper.HashPassword(request.Password, user.Salt))
         {
-            var key = Encoding.UTF8.GetBytes("XA5dpjm3TcXLloBvCtplCKI8cy9e75ubuZK+d8zlfLNbyJTbsRsDcOyyQ3grsE4j");
-            if (key.Length < 16) // Переконайтеся, що ключ має правильний розмір
+            var key = Encoding.UTF8.GetBytes(JwtKey);
+            if (key.Length < 16) // Ensure the key has the correct size
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Invalid key size" });
             }
@@ -39,12 +40,11 @@ public class AuthController : ControllerBase
             var symmetricSecurityKey = new SymmetricSecurityKey(key);
             var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
             var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, user.Username),
-            new Claim("Password", user.Password),
-            new Claim(ClaimTypes.Role, user.Role),
-            new Claim("IdTown", user.IdTown.ToString()),
-        };
+            {
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim("IdTown", user.IdTown.ToString())
+            };
 
             var securityToken = new JwtSecurityToken(
                 issuer: "https://localhost:7267/",
@@ -55,12 +55,11 @@ public class AuthController : ControllerBase
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(securityToken);
 
-            return Ok(new JwtResponse { Token = tokenString });
+            return Ok(new JwtResponse { Token = tokenString, RefreshToken = user.RefreshToken });
         }
 
         return Unauthorized();
     }
-
 
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequest request)
@@ -95,7 +94,7 @@ public class AuthController : ControllerBase
 
         return Ok(new { message = "User registered successfully" });
     }
-  
+
     [HttpPost("refresh-token")]
     public IActionResult RefreshToken([FromBody] RefreshTokenRequest request)
     {
@@ -118,14 +117,14 @@ public class AuthController : ControllerBase
 
     private string GenerateJwtToken(User user)
     {
-        var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("XA5dpjm3TcXLloBvCtplCKI8cy9e75ubuZK+d8zlfLNbyJTbsRsDcOyyQ3grsE4j"));
+        var key = Encoding.UTF8.GetBytes(JwtKey);
+        var symmetricSecurityKey = new SymmetricSecurityKey(key);
         var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.Username),
-            new Claim("Password", user.Password),
             new Claim(ClaimTypes.Role, user.Role),
-            new Claim("IdTown", user.IdTown.ToString()),
+            new Claim("IdTown", user.IdTown.ToString())
         };
 
         var securityToken = new JwtSecurityToken(
