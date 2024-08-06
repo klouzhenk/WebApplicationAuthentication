@@ -1,4 +1,4 @@
-﻿namespace AuthenticationUI.Components.Pages.Model
+﻿namespace AuthenticationUI.Model
 {
     public class SharedResource
     {
