@@ -364,4 +364,5 @@ FodyWeavers.xsd
 /API/appsettings.json
 /.gitignore
 /API/appsettings.Development.json
-/AuthenticationUI/node_modules
+/API/AuthenticationUI/node_modules
+/API/appsettings.json
