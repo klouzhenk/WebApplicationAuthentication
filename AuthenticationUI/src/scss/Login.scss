@@ -283,6 +283,7 @@
         font-weight: 900;
         line-height: 1.5;
         font-size: 2rem;
+        text-align: center;
     }
 
     &-subtitle {
@@ -299,7 +300,7 @@
             box-shadow 0.15s ease-in-out;
         outline: none;
         box-shadow: none;
-        width: 91.5px;
+        padding: 0 16px;
         height: 44px;
         border: 1px solid;
         border-color: #fff;

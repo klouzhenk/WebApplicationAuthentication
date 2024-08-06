@@ -13,7 +13,7 @@ namespace WebApplicationAuthentication.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Forecast>().ToTable("app_forecasts");
+            modelBuilder.Entity<Forecast>().ToTable("Forecast");
         }
     }
 }

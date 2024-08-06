@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Components
 @using Microsoft.JSInterop
+@inject IStringLocalizer<Resource> localizer
 
 <div class="modal__backdrop @(IsVisible ? "show" : "")" @onclick="CancelAction"></div>
 <div class="modal @(IsVisible ? "show" : "")" tabindex="-1" role="dialog">
@@ -10,8 +11,8 @@
         <p class="modal__text">@Message</p>
     </div>
     <div class="modal__footer">
-        <button type="button" class="modal__button modal__text" @onclick="CancelAction">Cancel</button>
-        <button type="button" class="modal__button modal__text" @onclick="ConfirmAction">OK</button>
+        <button type="button" class="modal__button modal__text" @onclick="CancelAction">@localizer["ModalLogoutBtnCancel"]</button>
+        <button type="button" class="modal__button modal__text" @onclick="ConfirmAction">@localizer["ModalLogoutBtnOk"]</button>
     </div>
 </div>
 

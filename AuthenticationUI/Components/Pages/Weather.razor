@@ -3,10 +3,11 @@
 @using AuthenticationUI.Components.Pages.Model;
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@inject IStringLocalizer<Resource> localizer
 
 @inherits WeatherPage
 
-<PageTitle>Weather</PageTitle>
+<PageTitle>@localizer["WeatherTitle"]</PageTitle>
 
 @if (forecasts == null)
 {
@@ -14,14 +15,14 @@
 }
 else
 {
-    <h1 class="page__title">Weather</h1>
-    <p class="page__paragraph">You can see day weather forecast in your town here.</p>
+    <h1 class="page__title">@localizer["WeatherTitle"]</h1>
+    <p class="page__paragraph">@localizer["WeatherParagraph"]</p>
     <table class="page__table">
         <thead class="page__table-row row--main">
             <tr>
-                <th>Time</th>
-                <th>Temperature</th>
-                <th>State</th>
+                <th>@localizer["WeatherTableTimeTitle"]</th>
+                <th>@localizer["WeatherTableTemperatureTitle"]</th>
+                <th>@localizer["WeatherTableStateTitle"]</th>
             </tr>
         </thead>
         <tbody>

@@ -1,24 +1,25 @@
 ﻿@page "/info"
+@inject IStringLocalizer<Resource> localizer
 @rendermode InteractiveServer
 
 <PageTitle>Info</PageTitle>
 
-<h1 class="page__title">User information</h1>
+<h1 class="page__title">@localizer["InfoTitle"]</h1>
 
-<p class="page__paragraph">You can see your information here.</p>
+<p class="page__paragraph">@localizer["InfoParagraph"]</p>
 
 <table class="page__table">
     <tbody>
         <tr class="page__table-row">
-            <td class="page__table-el--em">Username</td>
+            <td class="page__table-el--em">@localizer["InfoTableNameTitle"]</td>
             <td>@UserInfo.Name</td>
         </tr>
         <tr class="page__table-row">
-            <td class="page__table-el--em">Role</td>
+            <td class="page__table-el--em">@localizer["InfoTableRoleTitle"]</td>
             <td>@UserInfo.Role</td>
         </tr>
         <tr class="page__table-row">
-            <td class="page__table-el--em">Town</td>
+            <td class="page__table-el--em">@localizer["InfoTableTownTitle"]</td>
             <td>...</td>
         </tr>
     </tbody>

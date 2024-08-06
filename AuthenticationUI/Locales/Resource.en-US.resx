@@ -117,13 +117,118 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="HomeGreeting" xml:space="preserve">
+    <value>Hello</value>
+  </data>
+  <data name="HomeTitle" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="InfoParagraph" xml:space="preserve">
+    <value>You can see your information here.</value>
+  </data>
+  <data name="InfoTableNameTitle" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="InfoTableRoleTitle" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="InfoTableTownTitle" xml:space="preserve">
+    <value>Town</value>
+  </data>
+  <data name="InfoTitle" xml:space="preserve">
+    <value>User information</value>
+  </data>
+  <data name="LoginImgBtnSignIn" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="LoginImgBtnSignUp" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="LoginImgSignInQuestion" xml:space="preserve">
+    <value>Don't have an account?</value>
+  </data>
+  <data name="LoginImgSignInTitle" xml:space="preserve">
+    <value>Welcome to login</value>
+  </data>
+  <data name="LoginImgSignUpQuestion" xml:space="preserve">
+    <value>Do have an account?</value>
+  </data>
+  <data name="LoginImgSignUpTitle" xml:space="preserve">
+    <value>Welcome to sign up</value>
+  </data>
+  <data name="LoginPageForgotPassword" xml:space="preserve">
+    <value>Forgot Password</value>
+  </data>
+  <data name="LoginPagePassword" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="LoginPageRememberMe" xml:space="preserve">
+    <value>Remember me</value>
+  </data>
+  <data name="LoginPageRole" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="LoginPageRoleAdmin" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
+  <data name="LoginPageRoleUser" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="LoginPageUsername" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="ModalLogoutBtnCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ModalLogoutBtnOk" xml:space="preserve">
+    <value>Sure</value>
+  </data>
+  <data name="ModalLogoutText" xml:space="preserve">
+    <value>Are you sure you want to log out?</value>
+  </data>
+  <data name="ModalLogoutTitle" xml:space="preserve">
+    <value>Confirm Logout</value>
+  </data>
   <data name="NavHome" xml:space="preserve">
     <value>Home</value>
   </data>
   <data name="NavInfo" xml:space="preserve">
     <value>Info</value>
   </data>
+  <data name="NavLogout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="NavTitle" xml:space="preserve">
+    <value>Account</value>
+  </data>
   <data name="NavWeather" xml:space="preserve">
+    <value>Weather</value>
+  </data>
+  <data name="SignInBtnText" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="SignInTitle" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="SignUpBtnText" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="SignUpTitle" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="WeatherParagraph" xml:space="preserve">
+    <value>You can see day weather forecast here.</value>
+  </data>
+  <data name="WeatherTableStateTitle" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="WeatherTableTemperatureTitle" xml:space="preserve">
+    <value>Temperature</value>
+  </data>
+  <data name="WeatherTableTimeTitle" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="WeatherTitle" xml:space="preserve">
     <value>Weather</value>
   </data>
 </root>
