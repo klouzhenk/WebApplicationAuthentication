@@ -1,11 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
-using Microsoft.AspNetCore.Localization;
 using API.Services.Implementation.DataServices;
 using API.Models;
 using API.Services.Interfaces.HttpClients;
 using API.Services.Interfaces.DataServices;
 using API.Services.Implementation.HttpClients;
+using API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +56,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// binding exception handling
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseRouting();
 app.UseAuthentication();  // Ensure this is called before UseAuthorization
