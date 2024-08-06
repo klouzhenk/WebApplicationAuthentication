@@ -360,6 +360,17 @@ MigrationBackup/
 .ionide/
 
 # Fody - auto-generated XML schema
+<<<<<<< HEAD
 /API/appsettings.Development.json
 /API/AuthenticationUI/node_modules
+/API/appsettings.json
+=======
+FodyWeavers.xsd
+/API/appsettings.json
+/.gitignore
+/API/appsettings.Development.json
+/API/AuthenticationUI/node_modules
+/API/appsettings.json
+>>>>>>> 49ac54999f87e694dea2dda0bc94b49351e0d78d
+/API/appsettings.json
 /API/appsettings.json
