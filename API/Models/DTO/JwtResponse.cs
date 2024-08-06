@@ -1,4 +1,4 @@
-﻿namespace AuthenticationUI.Model
+﻿namespace API.Models.DTO
 {
     public class JwtResponse
     {

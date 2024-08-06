@@ -1,12 +1,12 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Components;
-using AuthenticationUI.Components.Pages;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
-using AuthenticationUI.Components.Pages.Model;
-using WebApplicationAuthentication.Services.Interfaces.DataServices;
+using AuthenticationUI.Model;
+using API.Services.Interfaces.DataServices;
 
-namespace AuthenticationUI
+
+namespace AuthenticationUI.Components.Pages
 {
     public partial class LoginPage : ComponentBase
     {

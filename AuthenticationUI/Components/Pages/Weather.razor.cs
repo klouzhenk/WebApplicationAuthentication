@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using API.Entities;
+using API.Services.Interfaces.DataServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
-using WebApplicationAuthentication.Entities;
-using WebApplicationAuthentication.Services.Interfaces.DataServices;
 
 namespace AuthenticationUI.Components.Pages
 {

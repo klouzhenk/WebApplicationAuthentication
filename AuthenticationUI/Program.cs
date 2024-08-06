@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
-using WebApplicationAuthentication.Services.Implementation.HttpClients;
-using WebApplicationAuthentication.Services.Implementation.DataServices;
-using WebApplicationAuthentication.Services.Interfaces.HttpClients;
-using WebApplicationAuthentication.Services.Interfaces.DataServices;
+using API.Services.Interfaces.HttpClients;
+using API.Services.Implementation.HttpClients;
+using API.Services.Interfaces.DataServices;
+using API.Services.Implementation.DataServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
