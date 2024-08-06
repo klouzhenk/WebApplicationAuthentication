@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplicationAuthentication.Entities
 {
-    [Table("app_users")]
+    [Table("User")]
     public class User
     {
         [Key]

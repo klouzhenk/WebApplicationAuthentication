@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApplicationAuthentication.Entities
 {
-    [Table("app_forecasts")]
+    [Table("Forecast")]
     public class Forecast
     {
         [Key]
