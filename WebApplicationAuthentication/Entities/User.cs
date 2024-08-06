@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApplicationAuthentication.Entities
 {
-    [Table("app_users")]
+    [Table("User")]
     public class User
     {
         [Key]
@@ -22,13 +22,13 @@ namespace WebApplicationAuthentication.Entities
         [Column("salt")]
         public string Salt { get; set; }
 
-        [Required]
-        [Column("refresh_token")]
-        public string RefreshToken { get; set; }
+        //[Required]
+        //[Column("refresh_token")]
+        //public string RefreshToken { get; set; }
 
         [Required]
-        [Column("refresh_token_expiry_time")]
-        public DateTime RefreshTokenExpiryTime { get; set; }
+        [Column("refresh_token_expiery_time")]
+        public DateTime RefreshTokenExpieryTime { get; set; }
 
         [Required]
         [Column("role")]
