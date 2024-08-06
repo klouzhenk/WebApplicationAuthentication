@@ -5,7 +5,6 @@ using API.Services.Interfaces.DataServices;
 
 namespace AuthenticationUI.Components.Pages
 {
-    [Authorize]
     public partial class WeatherPage : ComponentBase
     {
         public Forecast[]? forecasts;
