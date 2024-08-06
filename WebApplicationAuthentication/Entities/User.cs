@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplicationAuthentication.Entities
 {
@@ -27,8 +27,8 @@ namespace WebApplicationAuthentication.Entities
         public string RefreshToken { get; set; }
 
         [Required]
-        [Column("refresh_token_expiery_time")]
-        public DateTime RefreshTokenExpieryTime { get; set; }
+        [Column("refresh_token_expiry_time")]
+        public DateTime RefreshTokenExpiryTime { get; set; }
 
         [Required]
         [Column("role")]

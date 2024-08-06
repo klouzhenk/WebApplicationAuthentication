@@ -11,7 +11,7 @@ using WebApplicationAuthentication.Models.DTO;
 
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
-
+using WebApplicationAuthentication.Models.Helpres;
 
 [ApiController]
 [Route("[controller]")]
@@ -24,7 +24,6 @@ public class AuthController : ControllerBase
         _context = context;
     }
 
-
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequest request)
     {
@@ -32,15 +31,21 @@ public class AuthController : ControllerBase
 
         if (user != null && user.Password == PasswordHelper.HashPassword(request.Password, user.Salt))
         {
-            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("XA5dpjm3TcXLloBvCtplCKI8cy9e75ubuZK+d8zlfLNbyJTbsRsDcOyyQ3grsE4j"));
+            var key = Encoding.UTF8.GetBytes("XA5dpjm3TcXLloBvCtplCKI8cy9e75ubuZK+d8zlfLNbyJTbsRsDcOyyQ3grsE4j");
+            if (key.Length < 16) // Переконайтеся, що ключ має правильний розмір
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Invalid key size" });
+            }
+
+            var symmetricSecurityKey = new SymmetricSecurityKey(key);
             var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
             var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.Username),
-                    new Claim("Password", user.Password),
-                    new Claim(ClaimTypes.Role, user.Role),
-                    new Claim("IdTown", user.IdTown.ToString()),
-                };
+        {
+            new Claim(ClaimTypes.Name, user.Username),
+            new Claim("Password", user.Password),
+            new Claim(ClaimTypes.Role, user.Role),
+            new Claim("IdTown", user.IdTown.ToString()),
+        };
 
             var securityToken = new JwtSecurityToken(
                 issuer: "https://localhost:7267/",
@@ -57,34 +62,33 @@ public class AuthController : ControllerBase
         return Unauthorized();
     }
 
+
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
-        // Перевірка вхідних даних
         if (request == null || string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
         {
             return BadRequest(new { message = "Invalid request" });
         }
 
-        // Перевірка чи користувач вже існує
         var existingUser = await _context.Users.SingleOrDefaultAsync(u => u.Username == request.Username);
         if (existingUser != null)
         {
             return BadRequest(new { message = "Username already exists" });
         }
 
-        // Генерація солі та хешування паролю
         var salt = PasswordHelper.GenerateSalt();
         var hashedPassword = PasswordHelper.HashPassword(request.Password, salt);
 
-        // Створення нового користувача
         var user = new User
         {
             Username = request.Username,
             Password = hashedPassword,
             Salt = salt,
             Role = request.Role,
-            IdTown = 1
+            IdTown = 1,
+            RefreshToken = GenerateRefreshToken(),
+            RefreshTokenExpiryTime = DateTime.Now.AddDays(7)
         };
 
         _context.Users.Add(user);
@@ -92,28 +96,67 @@ public class AuthController : ControllerBase
 
         return Ok(new { message = "User registered successfully" });
     }
-}
-
-public static class PasswordHelper
-{
-    public static string GenerateSalt()
+  
+    [HttpPost("refresh-token")]
+    public IActionResult RefreshToken([FromBody] RefreshTokenRequest request)
     {
-        byte[] salt = new byte[128 / 8];
+        var user = _context.Users.SingleOrDefault(u => u.RefreshToken == request.RefreshToken);
+
+        if (user == null || user.RefreshTokenExpiryTime <= DateTime.Now)
+        {
+            return Unauthorized(new { message = "Invalid refresh token" });
+        }
+
+        var newJwtToken = GenerateJwtToken(user);
+        var newRefreshToken = GenerateRefreshToken();
+
+        user.RefreshToken = newRefreshToken;
+        user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
+        _context.SaveChanges();
+
+        return Ok(new JwtResponse { Token = newJwtToken, RefreshToken = newRefreshToken });
+    }
+
+    private string GenerateJwtToken(User user)
+    {
+        var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("XA5dpjm3TcXLloBvCtplCKI8cy9e75ubuZK+d8zlfLNbyJTbsRsDcOyyQ3grsE4j"));
+        var credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, user.Username),
+            new Claim("Password", user.Password),
+            new Claim(ClaimTypes.Role, user.Role),
+            new Claim("IdTown", user.IdTown.ToString()),
+        };
+
+        var securityToken = new JwtSecurityToken(
+            issuer: "https://localhost:7267/",
+            audience: "https://localhost:7147/",
+            expires: DateTime.Now.AddMinutes(30),
+            signingCredentials: credentials,
+            claims: claims);
+
+        return new JwtSecurityTokenHandler().WriteToken(securityToken);
+    }
+
+    private string GenerateRefreshToken()
+    {
+        var randomNumber = new byte[32];
         using (var rng = RandomNumberGenerator.Create())
         {
-            rng.GetBytes(salt);
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
         }
-        return Convert.ToBase64String(salt);
     }
+}
 
-    public static string HashPassword(string password, string salt)
-    {
-        string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-            password: password,
-            salt: Convert.FromBase64String(salt),
-            prf: KeyDerivationPrf.HMACSHA256,
-            iterationCount: 10000,
-            numBytesRequested: 256 / 8));
-        return hashed;
-    }
+public class RefreshTokenRequest
+{
+    public string RefreshToken { get; set; }
+}
+
+public class JwtResponse
+{
+    public string Token { get; set; }
+    public string RefreshToken { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using WebApplicationAuthentication.Entities;
+using WebApplicationAuthentication.Models.DTO;
 
 namespace WebApplicationAuthentication.Services.Interfaces.DataServices
 {

@@ -1,5 +1,8 @@
-﻿using System.Security.Cryptography;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Security.Cryptography;
+
+namespace WebApplicationAuthentication.Models.Helpres
+{
 
 public static class PasswordHelper
 {
@@ -23,4 +26,6 @@ public static class PasswordHelper
             numBytesRequested: 256 / 8));
         return hashed;
     }
+}
+
 }

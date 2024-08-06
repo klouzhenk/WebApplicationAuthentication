@@ -1,22 +1,31 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using Newtonsoft.Json;
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
 using Microsoft.JSInterop;
 using System.Net.Http;
 using System.Text;
+using System.Security.Cryptography;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System;
 
 public class CustomAuthStateProvider : AuthenticationStateProvider
 {
     private readonly IJSRuntime _jsRuntime;
     private readonly JwtSecurityTokenHandler _tokenHandler;
+    private readonly IConfiguration _configuration;
     private bool _isAuthenticated = false;
     private bool _isAuthenticationInProgress = true;
     private ClaimsPrincipal _user = new ClaimsPrincipal(new ClaimsIdentity());
 
-    public CustomAuthStateProvider(IJSRuntime jsRuntime, bool isAuthenticationInProgress = false)
+    public CustomAuthStateProvider(IJSRuntime jsRuntime, IConfiguration configuration, bool isAuthenticationInProgress = false)
     {
         _jsRuntime = jsRuntime;
         _tokenHandler = new JwtSecurityTokenHandler();
+        _configuration = configuration;
         _isAuthenticationInProgress = isAuthenticationInProgress;
     }
 
@@ -84,5 +93,4 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
             _isAuthenticationInProgress = false;
         }
     }
-
 }
