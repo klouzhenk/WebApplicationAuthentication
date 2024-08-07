@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API.Entities;
+using API.Models;
+using API.Models.DTO;
+using API.Models.Helpres;
+using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using API.Models.DTO;
@@ -171,6 +175,33 @@ public class AuthController : ControllerBase
         }
     }
 
+    [HttpDelete("delete-self")]
+    public IActionResult DeleteSelf()
+    {
+        // Отримати ім'я користувача з контексту аутентифікації
+        var username = User.Identity.Name;
+
+        if (string.IsNullOrEmpty(username))
+        {
+            return Unauthorized(new { message = "User is not authenticated" });
+        }
+
+        // Знайти користувача в базі даних за ім'ям
+        var user = _context.Users.SingleOrDefault(u => u.Username == username);
+
+        if (user == null)
+        {
+            return NotFound(new { message = "User not found" });
+        }
+
+        // Видалити користувача з бази даних
+        _context.Users.Remove(user);
+        _context.SaveChanges();
+
+        return NoContent(); // Повертає код 204 No Content
+    }
+
+
     // Метод для оновлення токену
     [HttpPost("refresh-token")]
     public IActionResult RefreshToken([FromBody] RefreshTokenRequest request)
@@ -196,6 +227,8 @@ public class AuthController : ControllerBase
         // Повернення нового JWT токену та рефреш токену
         return Ok(new JwtResponse { Token = newJwtToken, RefreshToken = newRefreshToken });
     }
+
+    
 
     // Метод для генерації JWT токену
     private string GenerateJwtToken(User user)

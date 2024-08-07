@@ -10,6 +10,8 @@ using API.Services.Implementation.HttpClients;
 using API.Services.Implementation.DataServices;
 using API.Services.Interfaces.HttpClients;
 using API.Services.Interfaces.DataServices;
+using AuthenticationUI.Helpers;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +50,7 @@ builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<CustomAuthStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<CustomAuthStateProvider>());
 builder.Services.AddSingleton<JwtSecurityTokenHandler>();
+builder.Services.AddScoped<DeleteAccountService>(); 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => builder.Configuration.Bind("JwtSettings", options));
