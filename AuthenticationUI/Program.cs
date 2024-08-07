@@ -13,23 +13,25 @@ using API.Services.Interfaces.DataServices;
 using AuthenticationUI.Helpers;
 using Serilog;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure Serilog
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Host.UseSerilog(); // Add this line
+
+// Add services to the container.
 builder.Services.AddLocalization();
 builder.Services.AddControllers();
-
-// Додаємо послуги до контейнера
 builder.Services.AddRazorPages();
-
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
-
+builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers().AddMvcOptions(x => x.CacheProfiles.Clear());
-
-
-
 
 builder.Services.AddHttpClient<IUserAPIClient, UserAPIClient>(configureClient =>
 {
@@ -43,15 +45,13 @@ builder.Services.AddHttpClient<IWeatherForecastAPIClient, WeatherForecastAPIClie
 });
 builder.Services.AddTransient<IWeatherForecastDataService, WeatherForecastDataService>();
 
-
-
 builder.Services.AddAuthenticationCore();
 builder.Services.AddAuthorizationCore();
 
 builder.Services.AddScoped<CustomAuthStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<CustomAuthStateProvider>());
 builder.Services.AddSingleton<JwtSecurityTokenHandler>();
-builder.Services.AddScoped<DeleteAccountService>(); 
+builder.Services.AddScoped<DeleteAccountService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => builder.Configuration.Bind("JwtSettings", options));
@@ -59,7 +59,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();
 
-// Налаштування HttpClient
+// Configure HttpClient
 builder.Services.AddScoped(sp => new HttpClient
 {
     BaseAddress = new Uri("https://localhost:7267")
@@ -67,18 +67,14 @@ builder.Services.AddScoped(sp => new HttpClient
 
 var app = builder.Build();
 
-
-
-string[] supportedCultures = ["en-US", "uk-UA"];
+string[] supportedCultures = { "en-US", "uk-UA" };
 var localizationOptions = new RequestLocalizationOptions()
     .SetDefaultCulture(supportedCultures[0])
     .AddSupportedCultures(supportedCultures)
     .AddSupportedUICultures(supportedCultures);
 app.UseRequestLocalization(localizationOptions);
 
-
-
-// Налаштування конвеєра обробки запитів
+// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
@@ -92,22 +88,14 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseAntiforgery();
 
-
-
 app.MapControllers();
-
-
-
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-
-
 
 static void AddLocalization(WebApplicationBuilder builder)
 {
@@ -126,9 +114,9 @@ static void AddLocalization(WebApplicationBuilder builder)
         options.SupportedCultures = supportedCultures;
         options.SupportedUICultures = supportedCultures;
         options.RequestCultureProviders = new List<IRequestCultureProvider>
-                {
-                    new QueryStringRequestCultureProvider(),
-                    new CookieRequestCultureProvider()
-                };
+        {
+            new QueryStringRequestCultureProvider(),
+            new CookieRequestCultureProvider()
+        };
     });
 }
