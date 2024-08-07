@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using API.Infrastructure;
-using System;
-using System.Runtime.CompilerServices;
+using Serilog;
 
 namespace API.Middleware
 {
@@ -20,23 +19,34 @@ namespace API.Middleware
             {
                 await _next(context);
             }
+            catch (CustomException exception)
+            {
+                Log.Error(exception, "Custom exception caught in middleware");
+
+                var problemDetails = new ProblemDetails
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                    Title = "Client Error",
+                    Detail = exception.Message
+                };
+
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await context.Response.WriteAsJsonAsync(problemDetails);
+            }
             catch (Exception exception)
             {
-                await HandleExceptionAsync(context, exception);
+                Log.Error(exception, "An unhandled exception has occurred");
+
+                var problemDetails = new ProblemDetails
+                {
+                    Status = StatusCodes.Status500InternalServerError,
+                    Title = "Server Error",
+                    Detail = "An unexpected error occurred"
+                };
+
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                await context.Response.WriteAsJsonAsync(problemDetails);
             }
-        }
-
-        private async Task HandleExceptionAsync(HttpContext httpContext, Exception ex)
-        {
-            var problemDetails = new ProblemDetails
-            {
-                Status = StatusCodes.Status400BadRequest,
-                Title = "Client Error",
-                Detail = ex.Message
-            };
-
-            httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-            await httpContext.Response.WriteAsJsonAsync(problemDetails);
         }
     }
 }
