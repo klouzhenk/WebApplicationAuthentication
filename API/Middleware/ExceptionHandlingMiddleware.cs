@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using API.ExceptionHandling;
+using API.Infrastructure;
+using System;
+using System.Runtime.CompilerServices;
 
 namespace API.Middleware
 {
@@ -18,18 +20,23 @@ namespace API.Middleware
             {
                 await _next(context);
             }
-            catch (GlobalException exception)
+            catch (Exception exception)
             {
-                var problemDetails = new ProblemDetails
-                {
-                    Status = StatusCodes.Status400BadRequest,
-                    Title = "Client Error",
-                    Detail = exception.Message
-                };
-
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                await context.Response.WriteAsJsonAsync(problemDetails);
+                await HandleExceptionAsync(context, exception);
             }
+        }
+
+        private async Task HandleExceptionAsync(HttpContext httpContext, Exception ex)
+        {
+            var problemDetails = new ProblemDetails
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Title = "Client Error",
+                Detail = ex.Message
+            };
+
+            httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await httpContext.Response.WriteAsJsonAsync(problemDetails);
         }
     }
 }
