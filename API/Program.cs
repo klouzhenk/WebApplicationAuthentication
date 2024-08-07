@@ -20,8 +20,8 @@ builder.Services.AddCors(options =>
         builder =>
         {
             builder.WithOrigins("https://localhost:7147") // URL Blazor додатка
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
+                .AllowAnyHeader()
+                .AllowAnyMethod();
         });
 });
 
@@ -32,7 +32,7 @@ builder.Services.AddDbContext<ForecastDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 
-
+// set up dataservices
 builder.Services.AddHttpClient<IUserAPIClient, UserAPIClient>( configureClient =>
 {
     configureClient.BaseAddress = new Uri("https://localhost:7267");
