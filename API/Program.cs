@@ -7,7 +7,7 @@ using API.Services.Interfaces.HttpClients;
 using API.Services.Interfaces.DataServices;
 using API.Services.Implementation.HttpClients;
 using API.Middleware;
-using API.Infrastructure;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,19 +47,19 @@ builder.Services.AddHttpClient<IWeatherForecastAPIClient, WeatherForecastAPIClie
 });
 builder.Services.AddTransient<IWeatherForecastDataService, WeatherForecastDataService>();
 
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-builder.Services.AddProblemDetails();
+
 
 var app = builder.Build();
 
-app.UseMiddleware<ExceptionHandlingMiddleware>();
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseHttpsRedirection();
 
