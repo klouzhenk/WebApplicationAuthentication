@@ -7,6 +7,7 @@ using API.Services.Interfaces.HttpClients;
 using API.Services.Interfaces.DataServices;
 using API.Services.Implementation.HttpClients;
 using API.Middleware;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 

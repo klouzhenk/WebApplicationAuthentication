@@ -11,6 +11,7 @@ using API.Services.Implementation.DataServices;
 using API.Services.Interfaces.HttpClients;
 using API.Services.Interfaces.DataServices;
 using AuthenticationUI.Helpers;
+using Serilog;
 
 
 var builder = WebApplication.CreateBuilder(args);
