@@ -1,41 +1,42 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using API.ExceptionHandling;
 
 namespace API.Middleware
 {
-    public class ExceptionHandlingMiddleware
+    public class RegistrationExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionHandlingMiddleware> _logger;
 
-        public ExceptionHandlingMiddleware(
-            RequestDelegate next,
-            ILogger<ExceptionHandlingMiddleware> logger)
+        public RegistrationExceptionHandlingMiddleware(RequestDelegate next)
         {
             _next = next;
-            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
-            try
+            if (context.Request.Path.StartsWithSegments("/Auth/register"))
+            {
+                try
+                {
+                    await _next(context);
+                }
+                catch (GlobalException exception)
+                {
+                    var problemDetails = new ProblemDetails
+                    {
+                        Status = StatusCodes.Status400BadRequest,
+                        Title = "Client Error",
+                        Detail = exception.Message
+                    };
+
+                    context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                    await context.Response.WriteAsJsonAsync(problemDetails);
+                }
+            }
+
+            else
             {
                 await _next(context);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError(
-                    exception, "Exception occurred: {Message}", exception.Message);
-
-                var problemDetails = new ProblemDetails
-                {
-                    Status = StatusCodes.Status500InternalServerError,
-                    Title = "Server Error"
-                };
-
-                context.Response.StatusCode =
-                    StatusCodes.Status500InternalServerError;
-
-                await context.Response.WriteAsJsonAsync(problemDetails);
             }
         }
     }

@@ -6,6 +6,7 @@ using API.Models;
 using API.Services.Interfaces.HttpClients;
 using API.Services.Interfaces.DataServices;
 using API.Services.Implementation.HttpClients;
+using API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,12 +50,15 @@ builder.Services.AddTransient<IWeatherForecastDataService, WeatherForecastDataSe
 
 var app = builder.Build();
 
+
+app.UseMiddleware<RegistrationExceptionHandlingMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseHttpsRedirection();
 

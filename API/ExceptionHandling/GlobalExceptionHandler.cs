@@ -1,19 +1,24 @@
 ﻿namespace API.ExceptionHandling
 {
-    public class GlobalExceptionHandler : ApplicationException
+    public class GlobalException : ApplicationException
     {
         private string msgDetails = String.Empty;
         public DateTime ErrorTimeStamp { get; set; }
         public string CauseOfError { get; set; }
 
         // constructors
-        public GlobalExceptionHandler() { }
-        public GlobalExceptionHandler(string msg, string cause, DateTime dateTime)
+        public GlobalException() { }
+        public GlobalException(string msg)
+        {
+            this.msgDetails = msg;
+            CauseOfError = "Unknown";
+        }
+        public GlobalException(string msg, string cause, DateTime dateTime)
         {
             this.msgDetails = msg;
             CauseOfError = cause;
             ErrorTimeStamp = dateTime;
         }
-        public override string Message => $"Global exception: {this.msgDetails}";
+        public override string Message => this.msgDetails;
     }
 }

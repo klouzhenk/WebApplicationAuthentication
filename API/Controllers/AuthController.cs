@@ -11,6 +11,7 @@ using API.Models.DTO;
 using API.Models;
 using API.Entities;
 using API.Models.Helpres;
+using API.ExceptionHandling;
 
 [ApiController]
 [Route("[controller]")]
@@ -28,6 +29,7 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequest request)
     {
+        if(_context == null) { throw new GlobalException("Something went wrong with generating context of DB."); }
         // Пошук користувача за ім'ям
         var user = _context.Users.SingleOrDefault(u => u.Username == request.Username);
 
@@ -68,42 +70,105 @@ public class AuthController : ControllerBase
     }
 
     // Метод для реєстрації нового користувача
+    //[HttpPost("register")]
+    //public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+    //{
+    //    try
+    //    {
+    //        if (_context == null) { throw new GlobalException("Something went wrong with generating context of DB."); }
+    //        // Перевірка чи користувач з таким ім'ям вже існує
+    //        var existingUser = await _context.Users.SingleOrDefaultAsync(u => u.Username == request.Username);
+    //        if (existingUser != null)
+    //        {
+    //            throw new GlobalException("Username already exists");
+    //        }
+
+    //        // Генерація солі та хешування паролю
+    //        var salt = PasswordHelper.GenerateSalt();
+    //        var hashedPassword = PasswordHelper.HashPassword(request.Password, salt);
+
+    //        // Створення нового користувача
+    //        var user = new User
+    //        {
+    //            Username = request.Username,
+    //            Password = hashedPassword,
+    //            Salt = salt,
+    //            Role = request.Role,
+    //            IdTown = 1,
+    //            RefreshToken = GenerateRefreshToken(),
+    //            RefreshTokenExpiryTime = DateTime.Now.AddDays(7)
+    //        };
+
+    //        try
+    //        {
+    //            _context.Users.Add(user);
+    //        }
+    //        catch (GlobalException ex)
+    //        {
+    //            throw new GlobalException("Adding user to DB was unsuccessful");
+    //        }
+    //        await _context.SaveChangesAsync();
+
+    //        return Ok(new { message = "User registered successfully" });
+    //    }
+    //    catch (GlobalException ex)
+    //    {
+    //        throw; // Кидаємо виняток для обробки у middleware
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        // Інші винятки
+    //        return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An error occurred during registration" });
+    //    }
+    //}
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
-        if (request == null || string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
+        try
         {
-            return BadRequest(new { message = "Invalid request" });
+            var existingUser = await _context.Users.SingleOrDefaultAsync(u => u.Username == request.Username);
+            if (existingUser != null)
+            {
+                throw new GlobalException("Username already exists");
+            }
+
+            var salt = PasswordHelper.GenerateSalt();
+            var hashedPassword = PasswordHelper.HashPassword(request.Password, salt);
+
+            var user = new User
+            {
+                Username = request.Username,
+                Password = hashedPassword,
+                Salt = salt,
+                Role = request.Role,
+                IdTown = 1,
+                RefreshToken = GenerateRefreshToken(),
+                RefreshTokenExpiryTime = DateTime.Now.AddDays(7)
+            };
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "User registered successfully" });
         }
-
-        // Перевірка чи користувач з таким ім'ям вже існує
-        var existingUser = await _context.Users.SingleOrDefaultAsync(u => u.Username == request.Username);
-        if (existingUser != null)
+        catch (GlobalException ex)
         {
-            return BadRequest(new { message = "Username already exists" });
+            return BadRequest(new ProblemDetails
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Title = "Client Error",
+                Detail = ex.Message
+            });
         }
-
-        // Генерація солі та хешування паролю
-        var salt = PasswordHelper.GenerateSalt();
-        var hashedPassword = PasswordHelper.HashPassword(request.Password, salt);
-
-        // Створення нового користувача
-        var user = new User
+        catch (Exception ex)
         {
-            Username = request.Username,
-            Password = hashedPassword,
-            Salt = salt,
-            Role = request.Role,
-            IdTown = 1,
-            RefreshToken = GenerateRefreshToken(), // Генерація рефреш токену
-            RefreshTokenExpiryTime = DateTime.Now.AddDays(7) // Встановлення терміну дії рефреш токену
-        };
-
-        _context.Users.Add(user);
-        await _context.SaveChangesAsync();
-
-        // Повернення успішного повідомлення
-        return Ok(new { message = "User registered successfully" });
+            return StatusCode(StatusCodes.Status500InternalServerError, new ProblemDetails
+            {
+                Status = StatusCodes.Status500InternalServerError,
+                Title = "Server Error",
+                Detail = "An error occurred during registration"
+            });
+        }
     }
 
     // Метод для оновлення токену

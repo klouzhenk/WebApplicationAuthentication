@@ -4,6 +4,8 @@ using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using API.Services.Interfaces.DataServices;
 using AuthenticationUI.Model;
+using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace AuthenticationUI.Components.Pages
 {
@@ -91,6 +93,7 @@ namespace AuthenticationUI.Components.Pages
             StateHasChanged();
         }
 
+
         public async Task Registration()
         {
             try
@@ -103,7 +106,17 @@ namespace AuthenticationUI.Components.Pages
                 }
                 else
                 {
-                    ErrorMessage = "Signing up wasn't successful...";
+                    var errorResponse = await response.Content.ReadAsStringAsync();
+                    var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(errorResponse);
+
+                    if (problemDetails != null)
+                    {
+                        ErrorMessage = $"Signing up wasn't successful: {problemDetails.Detail}";
+                    }
+                    else
+                    {
+                        ErrorMessage = "Signing up wasn't successful and no error details were provided.";
+                    }
                 }
             }
             catch (Exception ex)
