@@ -11,6 +11,7 @@ using API.Models.DTO;
 using API.Models;
 using API.Entities;
 using API.Models.Helpres;
+using API.ExceptionHandling;
 
 [ApiController]
 [Route("[controller]")]
@@ -28,12 +29,24 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequest request)
     {
-        // Пошук користувача за ім'ям
-        var user = _context.Users.SingleOrDefault(u => u.Username == request.Username);
+            // check if password or username is not empty
+            if (request == null ||
+                string.IsNullOrWhiteSpace(request.Username) ||
+                string.IsNullOrWhiteSpace(request.Password))
+            {
+                throw new GlobalException("Username or password is empty. Please assign them.");
+            }
 
-        // Перевірка правильності пароля
-        if (user != null && user.Password == PasswordHelper.HashPassword(request.Password, user.Salt))
-        {
+            var user = _context.Users.SingleOrDefault(u => u.Username == request.Username);
+            // check if we have user with this name
+            if (user == null) { throw new GlobalException("User with this name wasn't found out."); }
+
+            // check password
+            if (user.Password != PasswordHelper.HashPassword(request.Password, user.Salt))
+            {
+                throw new GlobalException("Password is not correct for user with this name.");
+            }
+
             var key = Encoding.UTF8.GetBytes(JwtKey);
             if (key.Length < 16) // Переконатися, що ключ має правильний розмір
             {
@@ -49,7 +62,7 @@ public class AuthController : ControllerBase
                 new Claim("IdTown", user.IdTown.ToString())
             };
 
-            // Генерація JWT токену
+            // JWT generation
             var securityToken = new JwtSecurityToken(
                 issuer: "https://localhost:7267/",
                 audience: "https://localhost:7147/",
@@ -59,29 +72,25 @@ public class AuthController : ControllerBase
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(securityToken);
 
-            // Повернення токену та рефреш токену
+            // return access (JWT) and refresh token
             return Ok(new JwtResponse { Token = tokenString, RefreshToken = user.RefreshToken });
-        }
-
-        // Повернення статусу Unauthorized, якщо аутентифікація не вдалася
-        return Unauthorized();
+        
     }
 
     // Метод для реєстрації нового користувача
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
-        if (request == null || string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
+        if (request == null || 
+            string.IsNullOrWhiteSpace(request.Username) || 
+            string.IsNullOrWhiteSpace(request.Password))
         {
-            return BadRequest(new { message = "Invalid request" });
+            throw new GlobalException("Username or password is empty. Please assign them.");
         }
 
         // Перевірка чи користувач з таким ім'ям вже існує
         var existingUser = await _context.Users.SingleOrDefaultAsync(u => u.Username == request.Username);
-        if (existingUser != null)
-        {
-            return BadRequest(new { message = "Username already exists" });
-        }
+        if (existingUser != null) { throw new GlobalException("User with this name already exists."); }
 
         // Генерація солі та хешування паролю
         var salt = PasswordHelper.GenerateSalt();
@@ -99,8 +108,12 @@ public class AuthController : ControllerBase
             RefreshTokenExpiryTime = DateTime.Now.AddDays(7) // Встановлення терміну дії рефреш токену
         };
 
-        _context.Users.Add(user);
-        await _context.SaveChangesAsync();
+        try
+        {
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception ex) { throw new GlobalException("Adding user to DB was failed."); }
 
         // Повернення успішного повідомлення
         return Ok(new { message = "User registered successfully" });

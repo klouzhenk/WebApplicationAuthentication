@@ -51,48 +51,49 @@ namespace AuthenticationUI.Components.Pages
 
         public async Task Authenticate()
         {
-            try
-            {
-                var response = await DataService.LoginUserAsync(User.Name, User.Password);
+            var response = await DataService.LoginUserAsync(User.Name, User.Password);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    var responseContent = await response.Content.ReadFromJsonAsync<JwtResponse>();
-                    if (responseContent != null)
-                    {
-                        _authToken = responseContent.Token;
-                        _isAuthenticated = true;
-                        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", _authToken);
-                        var claims = new List<Claim>
-                        {
-                            new Claim(ClaimTypes.Name, User.Name)
-                        };
-                        var identity = new ClaimsIdentity(claims, "Authentication");
-                        var principal = new ClaimsPrincipal(identity);
-
-                        var authState = await AuthenticationStateProvider.MarkUserAsAuthenticated(principal);
-                        if (!authState.User.Identity.IsAuthenticated) { return; }
-                        var userClaims = authState.User.Claims;
-                        UserInfo = UserModel.GetUserInfoFromClaims(authState.User);
-                    }
-                    else
-                    {
-                        ErrorMessage = "Invalid response from server";
-                    }
-                }
-                else
-                {
-                    ErrorMessage = "Invalid username or password";
-                }
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage = $"An error occurred: {ex.Message}";
+            if(!response.IsSuccessStatusCode){
+                _setErrorMessage(response);
+                return;
             }
 
+            var responseContent = await response.Content.ReadFromJsonAsync<JwtResponse>();
+            if (responseContent != null)
+            {
+                _authToken = responseContent.Token;
+                _isAuthenticated = true;
+                await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", _authToken);
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, User.Name)
+                };
+                var identity = new ClaimsIdentity(claims, "Authentication");
+                var principal = new ClaimsPrincipal(identity);
+
+                var authState = await AuthenticationStateProvider.MarkUserAsAuthenticated(principal);
+                if (!authState.User.Identity.IsAuthenticated) { return; }
+                var userClaims = authState.User.Claims;
+                UserInfo = UserModel.GetUserInfoFromClaims(authState.User);
+            }
+            else
+            {
+                ErrorMessage = "Invalid response from server";
+            }
+            
             StateHasChanged();
         }
 
+        private async void _setErrorMessage(HttpResponseMessage response)
+        {
+            var errorResponse = await response.Content.ReadAsStringAsync();
+            var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(errorResponse);
+
+            if (problemDetails != null) { ErrorMessage = problemDetails.Detail; }
+            else { ErrorMessage = "No error details were provided."; }
+
+            StateHasChanged();
+        }
 
         public async Task Registration()
         {
@@ -100,29 +101,10 @@ namespace AuthenticationUI.Components.Pages
             {
                 var response = await DataService.RegisterUserAsync(Register.Username, Register.Password, Register.Role);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    ChangeHiding();
-                }
-                else
-                {
-                    var errorResponse = await response.Content.ReadAsStringAsync();
-                    var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(errorResponse);
-
-                    if (problemDetails != null)
-                    {
-                        ErrorMessage = $"Signing up wasn't successful: {problemDetails.Detail}";
-                    }
-                    else
-                    {
-                        ErrorMessage = "Signing up wasn't successful and no error details were provided.";
-                    }
-                }
+                if (response.IsSuccessStatusCode) { ChangeHiding(); }
+                else { _setErrorMessage(response); }
             }
-            catch (Exception ex)
-            {
-                ErrorMessage = $"An error occurred: {ex.Message}";
-            }
+            catch (Exception ex) { ErrorMessage = $"An error occurred: {ex.Message}"; }
 
             StateHasChanged();
         }
