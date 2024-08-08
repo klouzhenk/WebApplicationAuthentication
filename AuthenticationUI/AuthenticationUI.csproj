@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\API\API.csproj" />
+    <ProjectReference Include="..\WebApplicationShared\WebApplicationShared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

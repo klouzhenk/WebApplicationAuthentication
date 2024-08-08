@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationUI", "Authent
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{AFD8E2D4-61D2-47B1-B92A-A5AA77E901D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationShared", "WebApplicationShared\WebApplicationShared.csproj", "{D28314D0-21FC-47AE-83AD-239979979CD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectMaui", "ProjectMaui\ProjectMaui.csproj", "{F24B9E20-34FF-40A9-9AA1-68FACFAF99FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,16 @@ Global
 		{AFD8E2D4-61D2-47B1-B92A-A5AA77E901D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFD8E2D4-61D2-47B1-B92A-A5AA77E901D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFD8E2D4-61D2-47B1-B92A-A5AA77E901D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D28314D0-21FC-47AE-83AD-239979979CD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D28314D0-21FC-47AE-83AD-239979979CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D28314D0-21FC-47AE-83AD-239979979CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D28314D0-21FC-47AE-83AD-239979979CD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F24B9E20-34FF-40A9-9AA1-68FACFAF99FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F24B9E20-34FF-40A9-9AA1-68FACFAF99FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F24B9E20-34FF-40A9-9AA1-68FACFAF99FF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F24B9E20-34FF-40A9-9AA1-68FACFAF99FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F24B9E20-34FF-40A9-9AA1-68FACFAF99FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F24B9E20-34FF-40A9-9AA1-68FACFAF99FF}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

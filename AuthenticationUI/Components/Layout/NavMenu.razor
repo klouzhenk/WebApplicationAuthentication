@@ -42,14 +42,14 @@
         <span class="nav__list-el-text">@localizer["NavLogout"]</span> 
     </button>
 
-    <button @onclick="DeleteAccount" class="btn btn-danger">Delete My Account</button>
+ @*  <button @onclick="DeleteAccount" class="btn btn-danger">Delete My Account</button>
     @code {
         private async Task DeleteAccount()
         {
             await DeleteAccountService.DeleteUserAccountAsync();
         }
 
-    }
+    }*@
 
 </nav>
 
