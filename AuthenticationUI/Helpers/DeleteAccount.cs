@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 
-namespace AuthenticationUI.Helpers // Змініть на простір імен вашого проекту
+namespace AuthenticationUI.Helpers
 {
     public class DeleteAccountService
     {
