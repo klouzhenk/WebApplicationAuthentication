@@ -669,30 +669,26 @@ body {
 }
 
 .nav__list {
+  -webkit-transition: -webkit-transform 0.5s ease-in-out;
+  transition: -webkit-transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out, -webkit-transform 0.5s ease-in-out;
   margin-top: 32px;
   width: 100%;
+}
+
+.nav__list--active {
+  -webkit-transform: translateX(0);
+      -ms-transform: translateX(0);
+          transform: translateX(0);
 }
 
 .nav__btn-logout {
   -webkit-transition: background-color 0.3s ease-in;
   transition: background-color 0.3s ease-in;
-  background-color: transparent;
-  height: 50px;
-  width: 100%;
-  border-radius: 8px;
-  padding: 0 20px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   border: none;
   outline: none;
-}
-
-.nav__btn-logout:hover {
-  background-color: rgba(225, 207, 207, 0.3);
+  background-color: transparent;
 }
 
 .nav .lang-block__wrapper {
@@ -717,7 +713,8 @@ body {
   background-color: rgba(225, 207, 207, 0.2);
 }
 
-.nav .nav__list-el > a {
+.nav .nav__list-el > a,
+.nav .nav__list-el .nav__btn-logout {
   width: 100%;
   height: 100%;
   display: -webkit-box;
@@ -747,6 +744,56 @@ body {
 .nav .container {
   width: auto;
   height: 100%;
+}
+
+.nav__hum-btn {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  background-color: inherit;
+  /*display: none;*/
+  z-index: 100;
+}
+
+.nav__hum-btn span {
+  height: 5px;
+  width: 40px;
+  background-color: #fff;
+  border-radius: 25px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
+}
+
+.nav__hum-btn span:nth-child(1) {
+  top: 25%;
+}
+
+.nav__hum-btn span:nth-child(3) {
+  top: 75%;
+}
+
+.nav__hum-btn--active span:nth-child(1) {
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%) rotate(45deg);
+      -ms-transform: translate(-50%, -50%) rotate(45deg);
+          transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.nav__hum-btn--active span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav__hum-btn--active span:nth-child(3) {
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%) rotate(-45deg);
+      -ms-transform: translate(-50%, -50%) rotate(-45deg);
+          transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 /* Стилі для фону модального вікна */
@@ -1039,5 +1086,70 @@ body {
   100% {
     -webkit-transform: translate(-50%, -150%);
             transform: translate(-50%, -150%);
+  }
+}
+
+@media (max-width: 1200px) {
+  .lang-block__wrapper {
+    display: none;
+  }
+
+  .nav {
+    height: 100px;
+    width: 100vw;
+    padding: 0 60px;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    z-index: 30;
+  }
+
+  .nav__list {
+    position: fixed;
+    top: -4.5%;
+    left: 0;
+    background: linear-gradient(135deg, #f75959 0%, #f35587 100%);
+    height: 100vh;
+    width: 100vw;
+    z-index: 45;
+    -webkit-transform: translateX(0);
+        -ms-transform: translateX(0);
+            transform: translateX(0);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    /*display: none;*/
+  }
+
+  .nav__btn-logout {
+    display: none;
+  }
+
+  .nav .nav__list-el {
+    width: 200px;
+  }
+
+  .nav .nav__list-el:hover {
+    background-color: transparent;
+  }
+
+  .nav__hum-btn {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
   }
 }

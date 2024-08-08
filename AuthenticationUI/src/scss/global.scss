@@ -104,3 +104,9 @@ body {
         display: none;
     }
 }
+
+.lang-block__wrapper {
+    @media (max-width: 1200px) {
+        display: none;
+    }
+}

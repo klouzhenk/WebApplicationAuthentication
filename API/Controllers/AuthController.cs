@@ -4,15 +4,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 using API.Models.DTO;
 using API.Models;
 using API.Entities;
 using API.Models.Helpres;
 using API.Infrastructure;
-using Serilog;
+
 [ApiController]
 [Route("[controller]")]
 public class AuthController : ControllerBase
