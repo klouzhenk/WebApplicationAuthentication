@@ -21,31 +21,26 @@ namespace API.Middleware
             try
             {
                 Log.Information("\n\nStart process ---------------------------\n");
-
                 await _next(context);
-
-                stopwatch.Stop();  // Зупиняємо таймер після завершення процесу
+                stopwatch.Stop();
                 Log.Information($"\n\nFinish process ---------------------------\nElapsed Time: {stopwatch.ElapsedMilliseconds} ms\n");
             }
             catch (CustomException exception)
             {
                 stopwatch.Stop();  // Зупиняємо таймер у випадку виключення
-
                 Log.Error(exception, $"Custom exception caught in middleware. Elapsed Time: {stopwatch.ElapsedMilliseconds} ms");
-
                 var problemDetails = new ProblemDetails
                 {
                     Status = StatusCodes.Status400BadRequest,
                     Title = "Client Error",
                     Detail = exception.Message
                 };
-
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 await context.Response.WriteAsJsonAsync(problemDetails);
             }
             catch (Exception exception)
             {
-                stopwatch.Stop();  // Зупиняємо таймер у випадку виключення
+                stopwatch.Stop();
 
                 Log.Error(exception, $"An unhandled exception has occurred. Elapsed Time: {stopwatch.ElapsedMilliseconds} ms");
 

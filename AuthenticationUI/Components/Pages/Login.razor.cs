@@ -23,7 +23,8 @@ namespace AuthenticationUI.Components.Pages
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] public ProtectedLocalStorage storage { get; set; }
 
-        public string ErrorMessage;
+        public string ErrorMessage = string.Empty;
+        public bool IsErrorVisible = false;
         public bool IsSignUpHidden = true;
 
         private string _authToken;
@@ -78,7 +79,7 @@ namespace AuthenticationUI.Components.Pages
             }
             else
             {
-                ErrorMessage = "Invalid response from server";
+                ShowError("Invalid response from server");
             }
             
             StateHasChanged();
@@ -89,8 +90,8 @@ namespace AuthenticationUI.Components.Pages
             var errorResponse = await response.Content.ReadAsStringAsync();
             var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(errorResponse);
 
-            if (problemDetails != null) { ErrorMessage = problemDetails.Detail; }
-            else { ErrorMessage = "No error details were provided."; }
+            if (problemDetails != null) { ShowError(problemDetails.Detail); }
+            else { ShowError("No error details were provided."); }
 
             StateHasChanged();
         }
@@ -104,8 +105,17 @@ namespace AuthenticationUI.Components.Pages
                 if (response.IsSuccessStatusCode) { ChangeHiding(); }
                 else { _setErrorMessage(response); }
             }
-            catch (Exception ex) { ErrorMessage = $"An error occurred: {ex.Message}"; }
+            catch (Exception ex) { ShowError($"An error occurred: {ex.Message}"); }
 
+            StateHasChanged();
+        }
+
+        private async Task ShowError(string errorMsg)
+        {
+            ErrorMessage = errorMsg;
+            IsErrorVisible = true;
+            await Task.Delay(6000);
+            IsErrorVisible = false;
             StateHasChanged();
         }
     }

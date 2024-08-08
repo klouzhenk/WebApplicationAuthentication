@@ -22,6 +22,7 @@
   <ItemGroup>
     <Folder Include="src\fonts\" />
     <Folder Include="src\img\" />
+    <Folder Include="src\fonts\" />
     <Folder Include="wwwroot\fonts\" />
   </ItemGroup>
 

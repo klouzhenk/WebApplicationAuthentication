@@ -12,6 +12,9 @@
 @using System.Net.Http.Headers
 @using System.Net.Http.Json
 
+@using AuthenticationUI.Components.Shared
+@using AuthenticationUI.Helpers
+
 @inherits LoginPage
 @inject IStringLocalizer<Resource> localizer
 @rendermode InteractiveServer
@@ -58,13 +61,6 @@
                             </div>
                         </div>
                     </EditForm>
-                    <!-- Error Message Display -->
-                    @if (!string.IsNullOrEmpty(ErrorMessage))
-                    {
-                        <div class="form__error-message">
-                            <p>@ErrorMessage</p>
-                        </div>
-                    }
                 </div>
 
                 <div class="form__wrapper form__wrapper-sign-up @(IsSignUpHidden ? "hide-form" : "show-form") @(IsSignUpHidden ? "right-position" : "left-position")">
@@ -132,3 +128,7 @@
         </Authorized>
     </AuthorizeView>
 </CascadingAuthenticationState>
+
+<div class="error__container" style="@(IsErrorVisible ? "display:block;" : "display:none;")">
+    <h3 class="error__container-title">@ErrorMessage</h3>
+</div>
