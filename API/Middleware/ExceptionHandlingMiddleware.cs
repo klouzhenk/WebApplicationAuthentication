@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using API.Infrastructure;
 using Serilog;
+using System.Diagnostics;
 
 namespace API.Middleware
 {
@@ -15,13 +16,22 @@ namespace API.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
+            var stopwatch = Stopwatch.StartNew();  // Запускаємо таймер
+
             try
             {
+                Log.Information("\n\nStart process ---------------------------\n");
+
                 await _next(context);
+
+                stopwatch.Stop();  // Зупиняємо таймер після завершення процесу
+                Log.Information($"\n\nFinish process ---------------------------\nElapsed Time: {stopwatch.ElapsedMilliseconds} ms\n");
             }
             catch (CustomException exception)
             {
-                Log.Error(exception, "Custom exception caught in middleware");
+                stopwatch.Stop();  // Зупиняємо таймер у випадку виключення
+
+                Log.Error(exception, $"Custom exception caught in middleware. Elapsed Time: {stopwatch.ElapsedMilliseconds} ms");
 
                 var problemDetails = new ProblemDetails
                 {
@@ -35,7 +45,9 @@ namespace API.Middleware
             }
             catch (Exception exception)
             {
-                Log.Error(exception, "An unhandled exception has occurred");
+                stopwatch.Stop();  // Зупиняємо таймер у випадку виключення
+
+                Log.Error(exception, $"An unhandled exception has occurred. Elapsed Time: {stopwatch.ElapsedMilliseconds} ms");
 
                 var problemDetails = new ProblemDetails
                 {

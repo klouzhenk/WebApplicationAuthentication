@@ -29,7 +29,6 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginRequest request)
     {
-        Log.Information("\n\nStart login process ---------------------------\n");
         // check if password or username is not empty
         if (request == null ||
             string.IsNullOrWhiteSpace(request.Username) ||
@@ -72,8 +71,6 @@ public class AuthController : ControllerBase
             claims: claims);
 
         var tokenString = new JwtSecurityTokenHandler().WriteToken(securityToken);
-        Log.Information("\n\nFinish login process ---------------------------\n");
-
         // return access (JWT) and refresh token
         return Ok(new JwtResponse { Token = tokenString, RefreshToken = user.RefreshToken });
     }
@@ -82,8 +79,6 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
-        Log.Information("\n\nStart register process ---------------------------\n");
-
         if (request == null || 
             string.IsNullOrWhiteSpace(request.Username) || 
             string.IsNullOrWhiteSpace(request.Password))
@@ -118,17 +113,13 @@ public class AuthController : ControllerBase
         }
         catch (Exception ex) { throw new CustomException("Adding user to DB was failed."); }
        
-        Log.Information("\n\nFinish register process ---------------------------\n");
-
         // Повернення успішного повідомлення
         return Ok(new { message = "User registered successfully" });
     }
 
     [HttpDelete("delete-self")]
-    public IActionResult DeleteSelf()
+    public IActionResult DeleteSelf([FromBody] RegisterRequest request)
     {
-        Log.Information("\n\nStart deleting user ---------------------------\n");
-
         // Отримати ім'я користувача з контексту аутентифікації
         var username = User.Identity.Name;
 
@@ -148,9 +139,6 @@ public class AuthController : ControllerBase
         // Видалити користувача з бази даних
         _context.Users.Remove(user);
         _context.SaveChanges();
-
-        Log.Information("\n\nFinish deleting user ---------------------------\n");
-
         return NoContent(); // Повертає код 204 No Content
     }
 
