@@ -60,8 +60,8 @@ builder.Services.AddTransient<IWeatherForecastDataService, WeatherForecastDataSe
 
 var app = builder.Build();
 
-
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
