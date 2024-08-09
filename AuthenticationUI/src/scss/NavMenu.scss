@@ -74,17 +74,16 @@
             height: 100vh;
             width: 100vw;
             z-index: 45;
-            transform: translateX(0);
+            transform: translateX(100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            /*display: none;*/
         }
+    }
 
-        &--active {
-            transform: translateX(0);
-        }
+    .nav__list--active{
+        transform: translateX(0%);
     }
 
     &__btn-logout {
@@ -157,7 +156,7 @@
         height: 50px;
         position: relative;
         background-color: inherit;
-        /*display: none;*/
+        display: none;
         z-index: 100;
 
         span {
