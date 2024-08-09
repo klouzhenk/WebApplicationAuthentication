@@ -1,19 +1,19 @@
 ﻿@page "/"
-@    using AuthenticationUI.Locales
-@    using Microsoft.AspNetCore.Components.Authorization
-@    using Microsoft.AspNetCore.Authentication.Cookies
-@    using Microsoft.AspNetCore.Authentication
+@using WebApplicationShared.Locales
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Authentication.Cookies
+@using Microsoft.AspNetCore.Authentication
 
-@    using System.Security.Claims;
-@    using Microsoft.AspNetCore.Components;
-@    using AuthenticationUI.Components.Pages;
-@    using Microsoft.JSInterop;
+@using System.Security.Claims;
+@using Microsoft.AspNetCore.Components;
+@using WebApplicationShared.Pages;
+@using Microsoft.JSInterop;
 
-@    using System.Net.Http.Headers
-@    using System.Net.Http.Json
+@using System.Net.Http.Headers
+@using System.Net.Http.Json
 
-@    using AuthenticationUI.Components.Shared
-@    using AuthenticationUI.Helpers
+@using WebApplicationShared.Shared
+@using WebApplicationShared.Helpers
 
 @inherits LoginPage
 @inject IStringLocalizer<Resource> localizer
