@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using WebApplicationShared.Model;
 using Microsoft.AspNetCore.Http;
+using System.Net.Http.Json;
 
 namespace WebApplicationShared.Pages
 {
