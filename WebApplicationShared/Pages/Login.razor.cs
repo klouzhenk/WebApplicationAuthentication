@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using API.Services.Interfaces.DataServices;
-using AuthenticationUI.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using WebApplicationShared.Model;
 
-namespace AuthenticationUI.Components.Pages
+namespace WebApplicationShared.Pages
 {
     public partial class LoginPage : ComponentBase
     {
@@ -54,7 +54,8 @@ namespace AuthenticationUI.Components.Pages
         {
             var response = await DataService.LoginUserAsync(User.Name, User.Password);
 
-            if(!response.IsSuccessStatusCode){
+            if (!response.IsSuccessStatusCode)
+            {
                 _setErrorMessage(response);
                 return;
             }
@@ -81,7 +82,7 @@ namespace AuthenticationUI.Components.Pages
             {
                 ShowError("Invalid response from server");
             }
-            
+
             StateHasChanged();
         }
 

@@ -1,17 +1,16 @@
 using Microsoft.AspNetCore.Localization;
-using Microsoft.Extensions.Options;
 using System.Globalization;
-using AuthenticationUI.Components;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Extensions.Configuration;
 using API.Services.Implementation.HttpClients;
 using API.Services.Implementation.DataServices;
 using API.Services.Interfaces.HttpClients;
 using API.Services.Interfaces.DataServices;
-using AuthenticationUI.Helpers;
 using Serilog;
+using WebApplicationShared.Helpers;
+using WebApplicationShared;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -99,7 +98,7 @@ app.Run();
 
 static void AddLocalization(WebApplicationBuilder builder)
 {
-    builder.Services.AddLocalization(options => options.ResourcesPath = "Locales");
+    builder.Services.AddLocalization(options => options.ResourcesPath = "WebApplicationShared/Locales");
 
     var supportedCultures = new List<CultureInfo>();
     var cultures = builder.Configuration.GetSection("Cultures").GetChildren().ToDictionary(x => x.Key, x => x.Value);

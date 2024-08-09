@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace AuthenticationUI.Helpers
+namespace WebApplicationShared.Helpers
 {
     public partial class LogoutPage : ComponentBase
     {

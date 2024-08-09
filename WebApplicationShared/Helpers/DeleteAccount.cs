@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 
-namespace AuthenticationUI.Helpers
+namespace WebApplicationShared.Helpers
 {
     public class DeleteAccountService
     {

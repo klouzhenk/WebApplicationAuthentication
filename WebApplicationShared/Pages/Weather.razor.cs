@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using API.Entities;
 using API.Services.Interfaces.DataServices;
 
-namespace AuthenticationUI.Components.Pages
+namespace WebApplicationShared.Pages
 {
     public partial class WeatherPage : ComponentBase
     {

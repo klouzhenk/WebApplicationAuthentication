@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AuthenticationUI.Locales {
+namespace WebApplicationShared.Locales {
     using System;
     
     
