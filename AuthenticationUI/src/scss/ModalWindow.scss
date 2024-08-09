@@ -29,11 +29,33 @@
     align-items: center;
     justify-content: space-around;
 
+
+    @media(max-width: 700px) {
+        min-width: 100px;
+        width: calc(100% - 200px);
+    }
+
+    @media(max-width: 600px) {
+        height: 240px;
+        padding: 2rem 2rem;
+        width: 320px;
+    }
+
+    @media(max-width: 410px) {
+        width: 82.5%;
+        padding: 1.25rem 1.5rem;
+        height: 200px;
+    }
+
     &__text {
         color: #fff;
         font-size: 1.25rem;
         letter-spacing: 1px;
         text-align: center;
+
+        @media(max-width: 600px) {
+            font-size: 1rem;
+        }
     }
 
     &__header, &__body, &__footer {
@@ -44,11 +66,27 @@
         display: flex;
         align-items: center;
         justify-content: space-evenly;
+
+        @media(max-width: 650px) {
+            justify-content: space-between;
+        }
     }
 
     &__title {
         font-size: 2.25rem;
         letter-spacing: 2px;
+
+        @media(max-width: 700px) {
+            font-size: 2rem;
+        }
+
+        @media(max-width: 600px) {
+            font-size: 2rem;
+        }
+
+        @media(max-width: 410px) {
+            font-size: 1.8rem;
+        }
     }
 
     &__button {
@@ -62,6 +100,10 @@
         border: 2px solid;
         border-color: #f2acae;
         background-color: transparent;
+
+        @media(max-width: 410px) {
+            height: 40px;
+        }
 
         &:hover {
             background-color: #f2acae;

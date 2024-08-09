@@ -208,13 +208,13 @@
     <value>Зайти</value>
   </data>
   <data name="SignInTitle" xml:space="preserve">
-    <value>Зайти</value>
+    <value>Логін</value>
   </data>
   <data name="SignUpBtnText" xml:space="preserve">
     <value>Зареєструватися</value>
   </data>
   <data name="SignUpTitle" xml:space="preserve">
-    <value>Зареєструватися</value>
+    <value>Реєстрація</value>
   </data>
   <data name="WeatherParagraph" xml:space="preserve">
     <value>Тут ти можеш знайти сьогоднійшній прогноз погоди в своєму місті.</value>

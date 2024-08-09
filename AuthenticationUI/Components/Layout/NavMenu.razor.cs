@@ -13,8 +13,6 @@ namespace AuthenticationUI.Components.Layout
         public void ChangeNavListVisibility()
         {
             IsNavListVisible = IsNavListVisible ? false : true;
-            StateHasChanged();
-            return;
         }
 
         public void ShowLogoutConfirmation()
@@ -37,10 +35,12 @@ namespace AuthenticationUI.Components.Layout
                 }
             }
             showModal = false;
+            ChangeNavListVisibility();
         }
         public void OnCancelLogout()
         {
             showModal = false;
+            ChangeNavListVisibility();
         }
     }
 }
