@@ -1,46 +1,4 @@
-﻿.page {
-    &__title {
-        font-size: 3.5rem;
-        letter-spacing: 2px;
-        text-align: center;
-        color: #795858;
-        font-weight: 1000;
-        width: 100%;
-    }
-
-    &__paragraph {
-        margin: 20px 0;
-        font-size: 1.3rem;
-        letter-spacing: 2px;
-        text-align: center;
-        color: #795858;
-        font-weight: 400;
-        width: 100%;
-    }
-
-    &__table {
-        margin: 20px 20px 0;
-        min-width: 700px;
-        max-width: 900px;
-        border: 2px solid #795858;
-
-        &-row {
-            box-sizing: border-box;
-            height: 3.5rem;
-            text-align: center;
-            border-bottom: 1px solid #795858;
-        }
-
-        &-el--em {
-            width: 200px;
-            background-color: rgba(120, 88, 88, 0.2);
-            border-right: 1px solid #795858;
-            font-weight: 600;
-        }
-    }
-}
-
-.row--main {
+﻿.row--main {
     background-color: #e67c7c;
     height: 3.5rem;
     border-bottom: 2px solid #795858;

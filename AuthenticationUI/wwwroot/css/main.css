@@ -510,6 +510,47 @@ body {
           align-items: center;
 }
 
+.page__title {
+  font-size: 3.5rem;
+  letter-spacing: 2px;
+  text-align: center;
+  color: #795858;
+  font-weight: 1000;
+  width: 100%;
+}
+
+.page__paragraph {
+  margin: 20px 0;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  text-align: center;
+  color: #795858;
+  font-weight: 400;
+  width: 100%;
+}
+
+.page__table {
+  margin: 20px 20px 0;
+  min-width: 700px;
+  max-width: 900px;
+  border: 2px solid #795858;
+}
+
+.page__table-row {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  height: 3.5rem;
+  text-align: center;
+  border-bottom: 1px solid #795858;
+}
+
+.page__table-el--em {
+  width: 200px;
+  background-color: rgba(120, 88, 88, 0.2);
+  border-right: 1px solid #795858;
+  font-weight: 600;
+}
+
 .main {
   padding: 40px;
   width: calc(100vw - 280px);
@@ -604,6 +645,25 @@ body {
 
 .lang-block--hide {
   display: none;
+}
+
+.page-info__table {
+  width: calc(100% - 200px);
+}
+
+.page-info__table .page__table-row {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  height: 3.5rem;
+  text-align: center;
+  border-bottom: 1px solid #795858;
+}
+
+.page-info__table .page__table-el--em {
+  width: 200px;
+  background-color: rgba(120, 88, 88, 0.2);
+  border-right: 1px solid #795858;
+  font-weight: 600;
 }
 
 .nav {
@@ -896,47 +956,6 @@ body {
   display: flex;
 }
 
-.page__title {
-  font-size: 3.5rem;
-  letter-spacing: 2px;
-  text-align: center;
-  color: #795858;
-  font-weight: 1000;
-  width: 100%;
-}
-
-.page__paragraph {
-  margin: 20px 0;
-  font-size: 1.3rem;
-  letter-spacing: 2px;
-  text-align: center;
-  color: #795858;
-  font-weight: 400;
-  width: 100%;
-}
-
-.page__table {
-  margin: 20px 20px 0;
-  min-width: 700px;
-  max-width: 900px;
-  border: 2px solid #795858;
-}
-
-.page__table-row {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  height: 3.5rem;
-  text-align: center;
-  border-bottom: 1px solid #795858;
-}
-
-.page__table-el--em {
-  width: 200px;
-  background-color: rgba(120, 88, 88, 0.2);
-  border-right: 1px solid #795858;
-  font-weight: 600;
-}
-
 .row--main {
   background-color: #e67c7c;
   height: 3.5rem;
@@ -1090,6 +1109,15 @@ body {
 }
 
 @media (max-width: 1200px) {
+  .body__container {
+    padding-top: 100px;
+  }
+
+  .main {
+    width: 100vw;
+    position: static;
+  }
+
   .lang-block__wrapper {
     display: none;
   }
@@ -1150,5 +1178,116 @@ body {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+  }
+}
+
+@media (max-width: 880px) {
+  .page-info__title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 850px) {
+  .page-info__table {
+    width: calc(100% - 80px);
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 700px) {
+  .page__title {
+    font-size: 3rem;
+  }
+
+  .page__paragraph {
+    font-size: 1rem;
+  }
+
+  .page-info__title {
+    font-size: 2.25rem;
+  }
+}
+
+@media (max-width: 625px) {
+  .body__container {
+    padding-top: 80px;
+  }
+
+  .nav {
+    height: 80px;
+    padding: 0 50px;
+  }
+
+  .nav__title {
+    font-size: 2rem;
+    line-height: 2rem;
+  }
+
+  .nav__hum-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .nav__hum-btn span {
+    height: 4px;
+  }
+}
+
+@media (max-width: 620px) {
+  .page-info__table {
+    width: calc(100% - 40px);
+  }
+}
+
+@media (max-width: 600px) {
+  .page-info__table .page__table-el--em {
+    width: 100px;
+  }
+}
+
+@media (max-width: 550px) {
+  .page__title {
+    font-size: 2.8rem;
+  }
+
+  .page-info__title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 525px) {
+  .page-info__table {
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .nav__title {
+    font-size: 1.8rem;
+    line-height: 1.8rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .nav {
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 425px) {
+  .page-info__title {
+    font-size: 1.7rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .main {
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 370px) {
+  .page-info__title {
+    font-size: 1.6rem;
   }
 }

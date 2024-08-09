@@ -30,6 +30,15 @@
         z-index: 30;
     }
 
+    @media (max-width: 625px) {
+        height: 80px;
+        padding: 0 50px;
+    }
+
+    @media (max-width: 450px) {
+        padding: 0 40px;
+    }
+
     &__title {
         position: relative;
         font-size: 2.25rem;
@@ -59,6 +68,16 @@
                 transform: scaleX(1);
             }
         }
+
+        @media (max-width: 625px) {
+            font-size: 2rem;
+            line-height: 2rem;
+        }
+
+        @media (max-width: 500px) {
+            font-size: 1.8rem;
+            line-height: 1.8rem;
+        }
     }
 
     &__list {
@@ -82,7 +101,7 @@
         }
     }
 
-    .nav__list--active{
+    .nav__list--active {
         transform: translateX(0%);
     }
 
@@ -159,6 +178,11 @@
         display: none;
         z-index: 100;
 
+        @media (max-width: 625px) {
+            width: 40px;
+            height: 40px;
+        }
+
         span {
             height: 5px;
             width: 40px;
@@ -176,6 +200,10 @@
 
             &:nth-child(3) {
                 top: 75%;
+            }
+
+            @media (max-width: 625px) {
+                height: 4px;
             }
         }
 

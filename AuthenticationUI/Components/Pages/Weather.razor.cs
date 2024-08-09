@@ -32,8 +32,8 @@ namespace AuthenticationUI.Components.Pages
                     if (idTownClaim != null)
                     {
                         string idTown = idTownClaim.Value;
-                        string day = DateTime.Today.ToString("dd.MM.yyyy");
-                        //string day = "02.08.2024";
+                        //string day = DateTime.Today.ToString("dd.MM.yyyy");
+                        string day = "02.08.2024";
                         forecasts = await DataService.GetForecastsAsync(idTown, day);
                         var sortedForecasts = forecasts.Select(f => new WeatherForecast
                         {

@@ -32,6 +32,68 @@ body {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+
+    @media (max-width: 1200px) {
+        padding-top: 100px;
+    }
+
+    @media (max-width: 625px) {
+        padding-top: 80px;
+    }
+}
+
+.page {
+    &__title {
+        font-size: 3.5rem;
+        letter-spacing: 2px;
+        text-align: center;
+        color: #795858;
+        font-weight: 1000;
+        width: 100%;
+
+        @media (max-width: 700px) {
+            font-size: 3rem;
+        }
+
+        @media (max-width: 550px) {
+            font-size: 2.8rem;
+        }
+    }
+
+    &__paragraph {
+        margin: 20px 0;
+        font-size: 1.3rem;
+        letter-spacing: 2px;
+        text-align: center;
+        color: #795858;
+        font-weight: 400;
+        width: 100%;
+
+        @media (max-width: 700px) {
+            font-size: 1rem;
+        }
+    }
+
+    &__table {
+        margin: 20px 20px 0;
+        min-width: 700px;
+        max-width: 900px;
+        border: 2px solid #795858;
+
+        &-row {
+            box-sizing: border-box;
+            height: 3.5rem;
+            text-align: center;
+            border-bottom: 1px solid #795858;
+        }
+
+        &-el--em {
+            width: 200px;
+            background-color: rgba(120, 88, 88, 0.2);
+            border-right: 1px solid #795858;
+            font-weight: 600;
+        }
+    }
 }
 
 .main {
@@ -44,6 +106,15 @@ body {
     position: fixed;
     top: 0;
     right: 0;
+
+    @media (max-width: 1200px) {
+        width: 100vw;
+        position: static;
+    }
+
+    @media (max-width: 400px) {
+        padding: 30px 20px;
+    }
 }
 
 .lang-block {
@@ -108,5 +179,64 @@ body {
 .lang-block__wrapper {
     @media (max-width: 1200px) {
         display: none;
+    }
+}
+
+.page-info__table {
+    width: calc(100% - 200px);
+
+    @media (max-width: 850px) {
+        width: calc(100% - 80px);
+        min-width: 100px;
+    }
+
+    @media (max-width: 620px) {
+        width: calc(100% - 40px);
+    }
+
+    @media (max-width: 525px) {
+        width: 100%;
+    }
+
+    .page__table {
+        &-row {
+            box-sizing: border-box;
+            height: 3.5rem;
+            text-align: center;
+            border-bottom: 1px solid #795858;
+        }
+
+        &-el--em {
+            width: 200px;
+            background-color: rgba(120, 88, 88, 0.2);
+            border-right: 1px solid #795858;
+            font-weight: 600;
+
+            @media (max-width: 600px) {
+                width: 100px;
+            }
+        }
+    }
+}
+
+.page-info__title {
+    @media (max-width: 880px) {
+        font-size: 2.5rem;
+    }
+
+    @media (max-width: 700px) {
+        font-size: 2.25rem;
+    }
+
+    @media (max-width: 550px) {
+        font-size: 2rem;
+    }
+
+    @media (max-width: 425px) {
+        font-size: 1.7rem;
+    }
+
+    @media (max-width: 370px) {
+        font-size: 1.6rem;
     }
 }
