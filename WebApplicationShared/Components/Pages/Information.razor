@@ -1,0 +1,51 @@
+﻿@inject IStringLocalizer<Resource> localizer
+@rendermode InteractiveServer
+
+<PageTitle>Info</PageTitle>
+
+<h1 class="page__title page-info__title">@localizer["InfoTitle"]</h1>
+
+<p class="page__paragraph">@localizer["InfoParagraph"]</p>
+
+<table class="page__table page-info__table">
+    <tbody>
+        <tr class="page__table-row">
+            <td class="page__table-el--em">@localizer["InfoTableNameTitle"]</td>
+            <td>@UserInfo.Name</td>
+        </tr>
+        <tr class="page__table-row">
+            <td class="page__table-el--em">@localizer["InfoTableRoleTitle"]</td>
+            <td>@UserInfo.Role</td>
+        </tr>
+        <tr class="page__table-row">
+            <td class="page__table-el--em">@localizer["InfoTableTownTitle"]</td>
+            <td>...</td>
+        </tr>
+    </tbody>
+</table>
+
+@code {
+    [Inject] private NavigationManager NavigationManager { get; set; }
+    public UserModel UserInfo { get; set; } = new();
+
+    // for reauthorizing
+    [Inject] private CustomAuthStateProvider AuthenticationStateProvider { get; set; }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            AuthenticationStateProvider.CheckAuthenticationAfterRendering();
+        }
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+        if (!authState.User.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("/");
+            return;
+        }
+
+        var userClaims = authState.User.Claims;
+        UserInfo = UserModel.GetUserInfoFromClaims(authState.User);
+        StateHasChanged();
+    }
+}

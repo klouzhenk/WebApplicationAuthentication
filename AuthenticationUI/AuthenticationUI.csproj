@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.7" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.7" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Serilog" Version="4.0.1" />
@@ -20,33 +21,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="src\fonts\" />
-    <Folder Include="src\img\" />
-    <Folder Include="src\fonts\" />
-    <Folder Include="wwwroot\fonts\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\API\API.csproj" />
     <ProjectReference Include="..\WebApplicationShared\WebApplicationShared.csproj" />
+    <!--<ProjectReference Include="..\WebApplicationShared\WebApplicationShared.csproj" />-->
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Locales\Resource.en-US.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resource.en-US.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Locales\Resource.en-US.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.en-US.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Locales\Resource.uk-UA.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
+    <Folder Include="logs\" />
+    <Folder Include="src\fonts\" />
   </ItemGroup>
 
 </Project>
