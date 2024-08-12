@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using API.Entities;
 using API.Services.Interfaces.DataServices;
-using WebApplicationShared.Model;
+using WebApplicationShared;
 
 namespace WebApplicationShared.Components.Pages
 {

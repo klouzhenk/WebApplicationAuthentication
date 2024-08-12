@@ -1,0 +1,18 @@
+﻿@* @inherits LayoutComponentBase
+
+<div class="body__container">
+    <CascadingAuthenticationState>
+        <AuthorizeView>
+            <Authorized>
+                 <NavMenu />
+            </Authorized>
+        </AuthorizeView>
+    </CascadingAuthenticationState>
+
+    <main class="main">
+        @Body
+    </main>
+</div> *@
+
+@using WebApplicationShared.Components.Layout
+<WebApplicationShared.Components.Pages.MainLayout></WebApplicationShared.Components.Pages.MainLayout>

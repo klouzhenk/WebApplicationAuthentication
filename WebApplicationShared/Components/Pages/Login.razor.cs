@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http.Json;
+using WebApplicationShared;
 
 namespace WebApplicationShared.Components.Pages
 {
@@ -50,6 +51,9 @@ namespace WebApplicationShared.Components.Pages
 
             var userClaims = authState.User.Claims;
             UserInfo = UserModel.GetUserInfoFromClaims(authState.User);
+
+            StateHasChanged();
+
         }
 
         public async Task Authenticate()
@@ -78,6 +82,8 @@ namespace WebApplicationShared.Components.Pages
                 if (!authState.User.Identity.IsAuthenticated) { return; }
                 var userClaims = authState.User.Claims;
                 UserInfo = UserModel.GetUserInfoFromClaims(authState.User);
+
+                StateHasChanged();
             }
             else
             {

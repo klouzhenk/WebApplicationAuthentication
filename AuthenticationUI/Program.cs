@@ -2,9 +2,8 @@ using AuthenticationUI.Components;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
-
-using WebApplicationShared.Model;
 using WebApplicationShared.Helpers;
+using WebApplicationShared;
 
 using API.Services.Implementation.HttpClients;
 using API.Services.Interfaces.HttpClients;
@@ -47,8 +46,11 @@ builder.Services.AddTransient<IWeatherForecastDataService, WeatherForecastDataSe
 builder.Services.AddAuthenticationCore();
 builder.Services.AddAuthorizationCore();
 
+// Register CustomAuthStateProvider from the WebApplicationShared RCL
 builder.Services.AddScoped<CustomAuthStateProvider>();
-builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<CustomAuthStateProvider>());
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+
+//builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<CustomAuthStateProvider>());
 builder.Services.AddSingleton<JwtSecurityTokenHandler>();
 builder.Services.AddScoped<DeleteAccountService>();
 
@@ -89,10 +91,10 @@ app.UseAntiforgery();
 
 app.MapControllers();
 
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode()
-    .AddAdditionalAssemblies(typeof(WebApplicationShared._Imports).Assembly);
-//app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
+//app.MapRazorComponents<App>()
+//    .AddInteractiveServerRenderMode()
+//    .AddAdditionalAssemblies(typeof(WebApplicationShared._Imports).Assembly);
+app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 app.MapControllerRoute(
     name: "default",
