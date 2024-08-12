@@ -1,16 +1,15 @@
-using Microsoft.AspNetCore.Localization;
-using Microsoft.Extensions.Options;
-using System.Globalization;
 using AuthenticationUI.Components;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Extensions.Configuration;
+
+using WebApplicationShared.Model;
+using WebApplicationShared.Helpers;
+
 using API.Services.Implementation.HttpClients;
-using API.Services.Implementation.DataServices;
 using API.Services.Interfaces.HttpClients;
+using API.Services.Implementation.DataServices;
 using API.Services.Interfaces.DataServices;
-using AuthenticationUI.Helpers;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -89,34 +88,14 @@ app.UseAuthorization();
 app.UseAntiforgery();
 
 app.MapControllers();
-app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
+
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode()
+    .AddAdditionalAssemblies(typeof(WebApplicationShared._Imports).Assembly);
+//app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-
-static void AddLocalization(WebApplicationBuilder builder)
-{
-    builder.Services.AddLocalization(options => options.ResourcesPath = "Locales");
-
-    var supportedCultures = new List<CultureInfo>();
-    var cultures = builder.Configuration.GetSection("Cultures").GetChildren().ToDictionary(x => x.Key, x => x.Value);
-    foreach (var culture in cultures)
-        supportedCultures.Add(new CultureInfo(culture.Key));
-
-    var selectCulture = new CultureInfo(builder.Configuration["DefaultLanguage"]);
-
-    builder.Services.Configure<RequestLocalizationOptions>(options =>
-    {
-        options.DefaultRequestCulture = new RequestCulture(selectCulture);
-        options.SupportedCultures = supportedCultures;
-        options.SupportedUICultures = supportedCultures;
-        options.RequestCultureProviders = new List<IRequestCultureProvider>
-        {
-            new QueryStringRequestCultureProvider(),
-            new CookieRequestCultureProvider()
-        };
-    });
-}

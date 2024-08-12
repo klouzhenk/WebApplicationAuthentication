@@ -1,0 +1,39 @@
+﻿@page "/weather"
+@using Microsoft.AspNetCore.Authorization
+@using WebApplicationShared.Model;
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Resource> localizer
+
+@inherits WeatherPage
+
+<PageTitle>@localizer["WeatherTitle"]</PageTitle>
+
+@if (forecasts == null)
+{
+    <div class="preloader"></div>
+}
+else
+{
+    <h1 class="page__title">@localizer["WeatherTitle"]</h1>
+    <p class="page__paragraph">@localizer["WeatherParagraph"]</p>
+    <table class="page__table page-weather__table">
+        <thead class="page__table-row row--main">
+            <tr>
+                <th>@localizer["WeatherTableTimeTitle"]</th>
+                <th>@localizer["WeatherTableTemperatureTitle"]</th>
+                <th>@localizer["WeatherTableStateTitle"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr class="page__table-row">
+                    <td>@forecast.Time</td>
+                    <td>@forecast.Temperature °C</td>
+                    <td>@forecast.State</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
