@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Components\Layout\NavMenu.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.7" />
@@ -29,6 +33,18 @@
   <ItemGroup>
     <Folder Include="logs\" />
     <Folder Include="src\fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\Layout\NavMenu.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\Layout\NavMenu.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Components\Layout\NavMenu.razor" />
   </ItemGroup>
 
 </Project>

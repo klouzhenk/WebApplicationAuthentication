@@ -52,7 +52,7 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>
 
 //builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<CustomAuthStateProvider>());
 builder.Services.AddSingleton<JwtSecurityTokenHandler>();
-builder.Services.AddScoped<DeleteAccountService>();
+//builder.Services.AddScoped<DeleteAccountService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => builder.Configuration.Bind("JwtSettings", options));
@@ -91,10 +91,10 @@ app.UseAntiforgery();
 
 app.MapControllers();
 
-//app.MapRazorComponents<App>()
-//    .AddInteractiveServerRenderMode()
-//    .AddAdditionalAssemblies(typeof(WebApplicationShared._Imports).Assembly);
-app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode()
+    .AddAdditionalAssemblies(typeof(WebApplicationShared._Imports).Assembly);
+//app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 app.MapControllerRoute(
     name: "default",

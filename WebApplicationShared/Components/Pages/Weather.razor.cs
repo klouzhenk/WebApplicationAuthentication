@@ -9,8 +9,8 @@ namespace WebApplicationShared.Components.Pages
     public partial class WeatherPage : ComponentBase
     {
         public Forecast[]? forecasts;
+        [Parameter] public CustomAuthStateProvider CustomAuthStateProvider { get; set; }
         [Inject] private IWeatherForecastDataService DataService { get; set; }
-        [Inject] private CustomAuthStateProvider CustomAuthStateProvider { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)

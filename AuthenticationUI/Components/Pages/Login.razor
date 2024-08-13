@@ -1,4 +1,5 @@
 ﻿@using WebApplicationShared.Components.Pages
 @page "/"
+@inherits LoginPage
 
-<WebApplicationShared.Components.Pages.Login></WebApplicationShared.Components.Pages.Login>
+<WebApplicationShared.Components.Pages.Login @AuthenticationStateProvider="new CustomAuthStateProvider()"/>
