@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplicationShared", "WebApplicationShared\WebApplicationShared.csproj", "{D28314D0-21FC-47AE-83AD-239979979CD8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiProject", "MauiProject\MauiProject.csproj", "{181EA385-D00E-414A-810B-054DC3C73859}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,12 @@ Global
 		{D28314D0-21FC-47AE-83AD-239979979CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D28314D0-21FC-47AE-83AD-239979979CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D28314D0-21FC-47AE-83AD-239979979CD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{181EA385-D00E-414A-810B-054DC3C73859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{181EA385-D00E-414A-810B-054DC3C73859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{181EA385-D00E-414A-810B-054DC3C73859}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{181EA385-D00E-414A-810B-054DC3C73859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{181EA385-D00E-414A-810B-054DC3C73859}.Release|Any CPU.Build.0 = Release|Any CPU
+		{181EA385-D00E-414A-810B-054DC3C73859}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
