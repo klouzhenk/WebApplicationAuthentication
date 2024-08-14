@@ -27,16 +27,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowBlazorApp",
-        builder =>
-        {
-            builder.WithOrigins("https://localhost:7147") // URL Blazor додатка
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-});
 
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
@@ -49,7 +39,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowBlazorApp",
         builder =>
         {
-            builder.WithOrigins("https://localhost:7147") // URL Blazor додатка
+            builder.WithOrigins("https://localhost:7296") // URL Blazor додатка
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
