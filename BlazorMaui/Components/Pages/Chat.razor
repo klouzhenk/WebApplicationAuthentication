@@ -1,0 +1,50 @@
+﻿@page "/chat"
+@inject BlazorMaui.Services.ChatService ChatService
+
+<h3>Chat</h3>
+
+<input @bind="User" placeholder="User" />
+<input @bind="Message" placeholder="Message" />
+<button @onclick="SendMessage">Send</button>
+
+<ul>
+    @foreach (var chatMessage in ChatMessages)
+    {
+        <li><strong>@chatMessage.User:</strong> @chatMessage.Message</li>
+    }
+</ul>
+
+@code {
+    private string User { get; set; }
+    private string Message { get; set; }
+    private List<ChatMessage> ChatMessages { get; set; } = new List<ChatMessage>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ChatService.MessageReceived += OnMessageReceived;
+        await ChatService.StartAsync();
+    }
+
+    private async Task SendMessage()
+    {
+        await ChatService.SendMessageAsync(User, Message);
+        Message = string.Empty;
+    }
+
+    private void OnMessageReceived(string user, string message)
+    {
+        ChatMessages.Add(new ChatMessage { User = user, Message = message });
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        ChatService.MessageReceived -= OnMessageReceived;
+    }
+
+    private class ChatMessage
+    {
+        public string User { get; set; }
+        public string Message { get; set; }
+    }
+}
