@@ -9,6 +9,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http.Json;
 using WebApplicationShared;
+using Serilog;
 
 namespace AuthenticationUI.Components.Pages
 {
@@ -43,6 +44,7 @@ namespace AuthenticationUI.Components.Pages
         {
             if (firstRender)
             {
+                Log.Information("\n\nStart AUTHENTICATION ---------------------------\n");
                 AuthenticationStateProvider.CheckAuthenticationAfterRendering();
             }
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -52,8 +54,9 @@ namespace AuthenticationUI.Components.Pages
             var userClaims = authState.User.Claims;
             UserInfo = UserModel.GetUserInfoFromClaims(authState.User);
 
-            StateHasChanged();
+            Log.Information("\n\n Finish AUTHENTICATION ---------------------------\n");
 
+            StateHasChanged();
         }
 
         public async Task Authenticate()
