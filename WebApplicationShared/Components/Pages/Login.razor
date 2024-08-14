@@ -14,7 +14,6 @@
 @using WebApplicationShared.Components.Shared
 @using WebApplicationShared.Helpers
 
-@inherits LoginPage
 @inject IStringLocalizer<Resource> localizer
 @rendermode InteractiveServer
 
@@ -24,7 +23,8 @@
             <div class="main-container--notauthorized">
                 <div class="forms__container">
                 <div class="form__wrapper form__wrapper-sign-in @(IsSignUpHidden ? "show-form" : "hide-form") @(IsSignUpHidden ? "right-position" : "left-position")">
-                    <EditForm Model="@User" OnSubmit="Authenticate" FormName="SignInForm" class="form">
+                        <EditForm Model="@User" 
+                            OnSubmit="@(() => Authenticate.InvokeAsync())" FormName="SignInForm" class="form">
                         <div class="form__register form__sign-in">
                             <div class="form__header">
                                 <h3 class="form__header-title">@localizer["SignInTitle"]</h3>
@@ -131,3 +131,35 @@
 <div class="error__container" style="@(IsErrorVisible ? "display:block;" : "display:none;")">
     <h3 class="error__container-title">@ErrorMessage</h3>
 </div>
+
+@code {
+    [Parameter]
+    public UserModel User { get; set; }
+
+    [Parameter]
+    public UserModel UserInfo { get; set; }
+
+    [Parameter]
+    public WebApplicationShared.Model.RegisterRequest Register { get; set; }
+
+    [Parameter]
+    public bool IsErrorVisible { get; set; }
+
+    [Parameter]
+    public string ErrorMessage { get; set; }
+
+    [Parameter]
+    public bool IsSignUpHidden { get; set; }
+
+    [Parameter]
+    public EventCallback Authenticate { get; set; }
+
+    [Parameter]
+    public EventCallback Registration { get; set; }
+
+    public void ChangeHiding()
+    {
+        IsSignUpHidden = IsSignUpHidden ? false : true;
+        return;
+    }
+}

@@ -1,4 +1,14 @@
 ﻿@using WebApplicationShared.Components.Pages
+@using WebApplicationShared.Model
+
+@inherits LoginPage
 @page "/"
 
-<WebApplicationShared.Components.Pages.Login></WebApplicationShared.Components.Pages.Login>
+<WebApplicationShared.Components.Pages.Login 
+    User="@User"
+    Register="@Register"
+    IsErrorVisible="@IsErrorVisible"
+    ErrorMessage="@ErrorMessage"
+    Authenticate="Authenticate"
+    Registration="Registration">
+</WebApplicationShared.Components.Pages.Login>
