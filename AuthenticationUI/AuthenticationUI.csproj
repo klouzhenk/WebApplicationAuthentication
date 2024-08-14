@@ -32,4 +32,13 @@
     <Folder Include="src\fonts\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Components\Pages\Information.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Components\Pages\Weather.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
 </Project>

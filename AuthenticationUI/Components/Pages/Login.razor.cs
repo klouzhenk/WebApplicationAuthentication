@@ -42,10 +42,10 @@ namespace AuthenticationUI.Components.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            Log.Information("\n\nStart AUTHENTICATION ---------------------------\n");
             if (firstRender)
             {
-                Log.Information("\n\nStart AUTHENTICATION ---------------------------\n");
-                AuthenticationStateProvider.CheckAuthenticationAfterRendering();
+                AuthenticationStateProvider.CheckAuthenticationAfterRendering();            
             }
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 

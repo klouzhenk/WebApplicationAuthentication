@@ -1,5 +1,7 @@
-﻿@using WebApplicationShared.Components.Pages
+﻿@using Microsoft.AspNetCore.Authorization
+@using WebApplicationShared.Model
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
 
-@page "/weather"
-
-<WebApplicationShared.Components.Pages.Weather></WebApplicationShared.Components.Pages.Weather>
+@inherits WeatherPage
+<WebApplicationShared.Components.Pages.Weather/>
