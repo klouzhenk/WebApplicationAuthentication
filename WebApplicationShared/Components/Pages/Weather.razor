@@ -4,8 +4,6 @@
 @inject HttpClient Http
 @inject IStringLocalizer<Resource> localizer
 
-<PageTitle>@localizer["WeatherTitle"]</PageTitle>
-
 @if (forecasts == null)
 {
     <div class="preloader"></div>
@@ -37,5 +35,5 @@ else
 
 @code{
     [Parameter]
-    public Forecast forecasts { get; set; }
+    public Forecast[] forecasts { get; set; }
 }

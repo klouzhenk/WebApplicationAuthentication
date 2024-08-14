@@ -1,28 +1,13 @@
-﻿@inject IStringLocalizer<Resource> localizer
+﻿@page "/info"
 @rendermode InteractiveServer
 
-<PageTitle>Info</PageTitle>
+<CascadingAuthenticationState>
+    <AuthorizeView Context="InformationPage">
+        <WebApplicationShared.Components.Pages.Information UserInfo="UserInfo">
+        </WebApplicationShared.Components.Pages.Information>
+    </AuthorizeView>
+</CascadingAuthenticationState>
 
-<h1 class="page__title page-info__title">@localizer["InfoTitle"]</h1>
-
-<p class="page__paragraph">@localizer["InfoParagraph"]</p>
-
-<table class="page__table page-info__table">
-    <tbody>
-        <tr class="page__table-row">
-            <td class="page__table-el--em">@localizer["InfoTableNameTitle"]</td>
-            <td>@UserInfo.Name</td>
-        </tr>
-        <tr class="page__table-row">
-            <td class="page__table-el--em">@localizer["InfoTableRoleTitle"]</td>
-            <td>@UserInfo.Role</td>
-        </tr>
-        <tr class="page__table-row">
-            <td class="page__table-el--em">@localizer["InfoTableTownTitle"]</td>
-            <td>...</td>
-        </tr>
-    </tbody>
-</table>
 
 @code {
     [Inject] private NavigationManager NavigationManager { get; set; }

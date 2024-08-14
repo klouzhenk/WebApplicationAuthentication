@@ -14,14 +14,14 @@
 </head>
 
 <body>
-    <Router AppAssembly="@typeof(App).Assembly" AdditionalAssemblies="new[] { typeof(WebApplicationShared.Components.Layout.MainLayout).Assembly }">
+    <Router AppAssembly="@typeof(App).Assembly" AdditionalAssemblies="new[] { typeof(AuthenticationUI.Components.Layout.MainLayout).Assembly }">
         <Found Context="routeData">
-            <RouteView RouteData="@routeData" DefaultLayout="@typeof(WebApplicationShared.Components.Layout.MainLayout)" />
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(AuthenticationUI.Components.Layout.MainLayout)" />
             <FocusOnNavigate RouteData="@routeData" Selector="h1" />
         </Found>
         <NotFound>
             <PageTitle>Not found</PageTitle>
-            <LayoutView Layout="@typeof(WebApplicationShared.Components.Layout.MainLayout)">
+            <LayoutView Layout="@typeof(AuthenticationUI.Components.Layout.MainLayout)">
                 <p role="alert">Sorry, there's nothing at this address.</p>
             </LayoutView>
         </NotFound>
