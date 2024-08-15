@@ -47,12 +47,11 @@ builder.Services.AddAuthenticationCore();
 builder.Services.AddAuthorizationCore();
 
 // Register CustomAuthStateProvider from the WebApplicationShared RCL
-builder.Services.AddScoped<CustomAuthStateProvider>();
-builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+builder.Services.AddScoped<AuthenticationUI.CustomAuthStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationUI.CustomAuthStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<AuthenticationUI.CustomAuthStateProvider>());
 
-//builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<CustomAuthStateProvider>());
 builder.Services.AddSingleton<JwtSecurityTokenHandler>();
-builder.Services.AddScoped<DeleteAccountService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => builder.Configuration.Bind("JwtSettings", options));

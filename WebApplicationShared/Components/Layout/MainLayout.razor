@@ -1,14 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="body__container">
-    <CascadingAuthenticationState>
-        <AuthorizeView>
-            <Authorized>
-                 <NavMenu />
-            </Authorized>
-        </AuthorizeView>
-    </CascadingAuthenticationState>
-
+    <NavMenu />
     <main class="main">
         @Body
     </main>

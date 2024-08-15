@@ -1,4 +1,10 @@
-﻿@* @using WebApplicationShared.Components.Pages *@
-@page "/info"
+﻿@page "/info"
+@inherits InformationPage
+@rendermode InteractiveServer
 
-<WebApplicationShared.Components.Pages.Information></WebApplicationShared.Components.Pages.Information>
+<CascadingAuthenticationState>
+    <AuthorizeView Context="InformationPage">
+        <WebApplicationShared.Components.Pages.Information UserInfo="UserInfo">
+        </WebApplicationShared.Components.Pages.Information>
+    </AuthorizeView>
+</CascadingAuthenticationState>

@@ -1,5 +1,12 @@
-﻿@using WebApplicationShared.Components.Pages
+﻿@using Microsoft.AspNetCore.Authorization
+@using WebApplicationShared.Model
 
 @page "/weather"
+@inherits WeatherPage
+@rendermode InteractiveServer
 
-<WebApplicationShared.Components.Pages.Weather></WebApplicationShared.Components.Pages.Weather>
+<CascadingAuthenticationState>
+    <AuthorizeView Context="WeatherPage">
+        <WebApplicationShared.Components.Pages.Weather forecasts="forecasts"/>
+    </AuthorizeView>
+</CascadingAuthenticationState>
