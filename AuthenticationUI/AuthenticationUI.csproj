@@ -29,7 +29,8 @@
 
   <ItemGroup>
     <Folder Include="Components\Layout\" />
-    <Folder Include="logs\" />
+    <Folder Include="Components\Layout\" />
+    <Folder Include="src\fonts\" />
     <Folder Include="src\fonts\" />
     <Folder Include="src\fonts\" />
   </ItemGroup>

@@ -1,0 +1,50 @@
+﻿.error__container {
+    position: fixed;
+    z-index: 300;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -150%);
+    max-width: 600px;
+    width: calc(100vw - 40px);
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #f75959 0%, #f35587 50%, #f75959 100%);
+    border-radius: 16px;
+    border: 2px solid rgba(102, 8, 8, 0.596);
+    animation: 4s ease-in-out 1 error--appearing;
+}
+
+.error__container-title {
+    font-size: 1.2rem;
+    text-align: center;
+    color: aliceblue;
+}
+
+@keyframes error--appearing {
+    0% {
+        transform: translate(-50%, -150%) rotate(0);
+    }
+
+    5% {
+        transform: translate(-50%, -80%);
+    }
+
+    10% {
+        transform: translate(-50%, -90%) rotate(10deg);
+    }
+
+    17.5% {
+        transform: translate(-50%, 40%) rotate(-10deg);
+    }
+
+    22% {
+        transform: translate(-50%, 40%) rotate(0deg);
+    }
+
+    85% {
+        transform: translate(-50%, 40%);
+    }
+
+    100% {
+        transform: translate(-50%, -150%);
+    }
+}

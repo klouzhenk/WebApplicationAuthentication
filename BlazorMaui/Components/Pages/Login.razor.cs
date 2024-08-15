@@ -10,7 +10,9 @@ using System.Net.Http.Json;
 using WebApplicationShared;
 using Serilog;
 
-namespace AuthenticationUI.Components.Pages
+using BlazorMaui;
+
+namespace BlazorMaui.Components.Pages
 {
     public partial class LoginPage : ComponentBase
     {
