@@ -9,7 +9,7 @@ namespace BlazorMaui.Services
         public ChatService()
         {
             _hubConnection = new HubConnectionBuilder()
-                .WithUrl("https://localhost:7296/chatHub") // Замініть на правильний URL вашого API
+                .WithUrl("https://localhost:7267/chatHub") // Замініть на правильний URL вашого API
                 .WithAutomaticReconnect()
                 .Build();
 
