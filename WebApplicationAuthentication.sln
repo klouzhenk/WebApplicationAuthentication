@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplicationShared", "WebApplicationShared\WebApplicationShared.csproj", "{D28314D0-21FC-47AE-83AD-239979979CD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorMaui", "BlazorMaui\BlazorMaui.csproj", "{B4A11277-999E-437D-ADF1-32B75D4996F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiProject", "MauiProject\MauiProject.csproj", "{181EA385-D00E-414A-810B-054DC3C73859}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

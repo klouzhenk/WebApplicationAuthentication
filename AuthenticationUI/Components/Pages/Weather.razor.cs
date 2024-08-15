@@ -4,7 +4,7 @@ using API.Entities;
 using API.Services.Interfaces.DataServices;
 using WebApplicationShared;
 
-namespace WebApplicationShared.Components.Pages
+namespace AuthenticationUI.Components.Pages
 {
     public partial class WeatherPage : ComponentBase
     {

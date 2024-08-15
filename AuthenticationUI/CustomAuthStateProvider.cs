@@ -4,7 +4,7 @@ using System.Security.Claims;
 using Microsoft.JSInterop;
 using Microsoft.Extensions.Configuration;
 
-namespace WebApplicationShared
+namespace AuthenticationUI
 {
     public class CustomAuthStateProvider : AuthenticationStateProvider
     {

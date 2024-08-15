@@ -25,27 +25,6 @@
 </table>
 
 @code {
-    [Inject] private NavigationManager NavigationManager { get; set; }
-    public UserModel UserInfo { get; set; } = new();
-
-    // for reauthorizing
-    [Inject] private CustomAuthStateProvider AuthenticationStateProvider { get; set; }
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            AuthenticationStateProvider.CheckAuthenticationAfterRendering();
-        }
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-
-        if (!authState.User.Identity.IsAuthenticated)
-        {
-            NavigationManager.NavigateTo("/");
-            return;
-        }
-
-        var userClaims = authState.User.Claims;
-        UserInfo = UserModel.GetUserInfoFromClaims(authState.User);
-        StateHasChanged();
-    }
+    [Parameter]
+    public UserModel UserInfo { get; set; }
 }
