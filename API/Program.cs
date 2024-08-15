@@ -8,6 +8,7 @@ using API.Services.Interfaces.DataServices;
 using API.Services.Implementation.HttpClients;
 using API.Middleware;
 using Serilog;
+using SignalRChat.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
+builder.Services.AddSignalR();
 builder.Host.UseSerilog(); // Add this line
 // Add services to the container.
 builder.Services.AddControllers();
@@ -68,7 +70,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.MapHub<ChatHub>("/chatHub");
 
 app.UseHttpsRedirection();
 
