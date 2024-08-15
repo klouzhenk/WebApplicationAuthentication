@@ -1,5 +1,11 @@
-﻿<h3>Home</h3>
+﻿@inject IStringLocalizer<Resource> localizer
+
+<div class="main-container--authorized">
+    <h2 class="page__title">@localizer["NavHome"]</h2>
+    <h2 class="page__paragraph">@localizer["HomeGreeting"], @UserInfo.Name</h2>
+</div>
 
 @code {
-
+    [Parameter]
+    public UserModel UserInfo { get; set; }
 }

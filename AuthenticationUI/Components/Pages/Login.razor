@@ -47,10 +47,7 @@
             </div>
         </NotAuthorized>
         <Authorized>
-            <div class="main-container--authorized">
-                <h2 class="page__title">@localizer["NavHome"]</h2>
-                <h2 class="page__paragraph">@localizer["HomeGreeting"], @UserInfo.Name</h2>
-            </div>
+            <WebApplicationShared.Components.LoginParts.Home UserInfo="UserInfo"/>
         </Authorized>
     </AuthorizeView>
 </CascadingAuthenticationState>

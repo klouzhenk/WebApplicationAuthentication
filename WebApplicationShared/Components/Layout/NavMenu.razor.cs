@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace AuthenticationUI.Components.Layout
+namespace WebApplicationShared.Components.Layout
 {
     public class NavMenuPage : ComponentBase
     {

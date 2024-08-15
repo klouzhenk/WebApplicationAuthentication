@@ -14,9 +14,9 @@
 
     <body>
         <CascadingAuthenticationState>
-            <Router AppAssembly="@typeof(App).Assembly" AdditionalAssemblies="new[] { typeof(AuthenticationUI.Components.Layout.MainLayout).Assembly }">
+        <Router AppAssembly="@typeof(App).Assembly" AdditionalAssemblies="new[] { typeof(WebApplicationShared.Components.Layout.MainLayout).Assembly }">
                 <Found Context="routeData">
-                    <RouteView RouteData="@routeData" DefaultLayout="@typeof(AuthenticationUI.Components.Layout.MainLayout)" />
+                <RouteView RouteData="@routeData" DefaultLayout="@typeof(WebApplicationShared.Components.Layout.MainLayout)" />
                     <FocusOnNavigate RouteData="@routeData" Selector="h1" />
                 </Found>
             </Router>
