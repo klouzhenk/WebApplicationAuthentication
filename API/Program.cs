@@ -27,16 +27,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowBlazorApp",
-        builder =>
-        {
-            builder.WithOrigins("https://localhost:7147") // URL Blazor додатка
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-});
 
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
@@ -44,6 +34,16 @@ builder.Services.AddDbContext<UserDbContext>(options =>
 builder.Services.AddDbContext<ForecastDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBlazorApp",
+        builder =>
+        {
+            builder.WithOrigins("https://localhost:7296") // URL Blazor додатка
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
 // set up dataservices
 builder.Services.AddHttpClient<IUserAPIClient, UserAPIClient>( configureClient =>
@@ -75,7 +75,9 @@ app.MapHub<ChatHub>("/chatHub");
 app.UseHttpsRedirection();
 
 app.UseRouting();
-app.UseAuthentication();  // Ensure this is called before UseAuthorization
+
+app.UseCors("AllowBlazorApp");
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
