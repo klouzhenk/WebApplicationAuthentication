@@ -6,6 +6,8 @@ namespace BlazorMaui.Services
     {
         private readonly HubConnection _hubConnection;
 
+        public string ConnectionState { get; private set; } = "Disconnected";
+
         public ChatService()
         {
             _hubConnection = new HubConnectionBuilder()
@@ -17,6 +19,24 @@ namespace BlazorMaui.Services
             {
                 MessageReceived?.Invoke(user, message);
             });
+
+            _hubConnection.Reconnecting += error =>
+            {
+                ConnectionState = "Reconnecting";
+                return Task.CompletedTask;
+            };
+
+            _hubConnection.Reconnected += connectionId =>
+            {
+                ConnectionState = "Connected";
+                return Task.CompletedTask;
+            };
+
+            _hubConnection.Closed += error =>
+            {
+                ConnectionState = "Disconnected";
+                return Task.CompletedTask;
+            };
         }
 
         public async Task StartAsync()
@@ -24,6 +44,7 @@ namespace BlazorMaui.Services
             try
             {
                 await _hubConnection.StartAsync();
+                ConnectionState = "Connected";
                 Console.WriteLine("Connection started");
             }
             catch (Exception ex)

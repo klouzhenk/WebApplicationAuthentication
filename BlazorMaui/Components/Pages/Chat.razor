@@ -2,7 +2,7 @@
 @inject BlazorMaui.Services.ChatService ChatService
 
 <h3>Chat</h3>
-
+<p>Status: @ChatService.ConnectionState</p>
 <input @bind="User" placeholder="User" />
 <input @bind="Message" placeholder="Message" />
 <button @onclick="SendMessage">Send</button>
