@@ -39,7 +39,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowBlazorApp",
         builder =>
         {
-            builder.WithOrigins("https://localhost:7267") // URL Blazor додатка
+            builder.WithOrigins("https://localhost:7267") // URL Blazor
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });

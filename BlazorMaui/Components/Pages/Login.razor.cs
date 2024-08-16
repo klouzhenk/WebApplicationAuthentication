@@ -10,8 +10,6 @@ using System.Net.Http.Json;
 using WebApplicationShared;
 using Serilog;
 
-using BlazorMaui;
-
 namespace BlazorMaui.Components.Pages
 {
     public partial class LoginPage : ComponentBase
@@ -45,7 +43,7 @@ namespace BlazorMaui.Components.Pages
             Log.Information("\n\nStart AUTHENTICATION ---------------------------\n");
             if (firstRender)
             {
-                AuthenticationStateProvider.CheckAuthenticationAfterRendering();            
+                AuthenticationStateProvider.CheckAuthenticationAfterRendering();
             }
             var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
@@ -63,7 +61,8 @@ namespace BlazorMaui.Components.Pages
         {
             var response = await DataService.LoginUserAsync(User.Name, User.Password);
 
-            if(!response.IsSuccessStatusCode){
+            if (!response.IsSuccessStatusCode)
+            {
                 _setErrorMessage(response);
                 return;
             }
@@ -92,7 +91,7 @@ namespace BlazorMaui.Components.Pages
             {
                 ShowError("Invalid response from server");
             }
-            
+
             StateHasChanged();
         }
 

@@ -12,6 +12,8 @@ using API.Services.Implementation.HttpClients;
 using API.Services.Interfaces.HttpClients;
 using API.Services.Implementation.DataServices;
 using API.Services.Interfaces.DataServices;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.Security.Claims;
 
 namespace BlazorMaui
 {
@@ -20,6 +22,12 @@ namespace BlazorMaui
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+            ConfigureServices(builder);
+            return builder.Build();
+        }
+
+        private static void ConfigureServices(MauiAppBuilder builder)
+        {
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -27,16 +35,17 @@ namespace BlazorMaui
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
 
+            // Add necessary services
             builder.Services.AddMauiBlazorWebView();
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddLocalization();
 
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();
 #endif
 
-            // Add services similar to Blazor Web App
-            builder.Services.AddHttpContextAccessor();
-            builder.Services.AddLocalization();
+            // Configure HttpClient and custom data services
             builder.Services.AddHttpClient<IUserAPIClient, UserAPIClient>(configureClient =>
             {
                 configureClient.BaseAddress = new Uri("https://localhost:7267");
@@ -49,23 +58,19 @@ namespace BlazorMaui
             });
             builder.Services.AddTransient<IWeatherForecastDataService, WeatherForecastDataService>();
 
+            // Add authentication and authorization
             builder.Services.AddAuthenticationCore();
-            builder.Services.AddAuthorizationCore();
-
-            // Register CustomAuthStateProvider from the WebApplicationShared RCL
             builder.Services.AddScoped<BlazorMaui.CustomAuthStateProvider>();
-            builder.Services.AddScoped<AuthenticationStateProvider, BlazorMaui.CustomAuthStateProvider>();
-            builder.Services.AddSingleton<JwtSecurityTokenHandler>();
+            builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<BlazorMaui.CustomAuthStateProvider>());
 
+            builder.Services.AddAuthorizationCore();
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => builder.Configuration.Bind("JwtSettings", options));
 
-            builder.Services.AddAuthorization();
-
-            // Реєстрація ChatService
+            // Register custom services
+            builder.Services.AddSingleton<JwtSecurityTokenHandler>();
             builder.Services.AddSingleton<ChatService>();
-
-            return builder.Build();
+            builder.Services.AddSingleton<UserModel>();
         }
     }
 }
