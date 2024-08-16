@@ -41,6 +41,12 @@
                             <span class="nav__list-el-text">@localizer["NavWeather"]</span>
                         </a>
                     </li>
+                    <!-- Новий елемент навігації для чату -->
+                    <li @onclick="ChangeNavListVisibility" class="nav__list-el">
+                        <a href="chat">
+                            <span class="nav__list-el-text">Chat</span>
+                        </a>
+                    </li>
 
                     <li @onclick="ShowLogoutConfirmation" class="nav__list-el">
                         <button class="nav__btn-logout">
