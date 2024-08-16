@@ -40,7 +40,6 @@ namespace AuthenticationUI.Components.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            Log.Information("\n\nStart AUTHENTICATION ---------------------------\n");
             if (firstRender)
             {
                 AuthenticationStateProvider.CheckAuthenticationAfterRendering();            
@@ -52,7 +51,6 @@ namespace AuthenticationUI.Components.Pages
             var userClaims = authState.User.Claims;
             UserInfo = UserModel.GetUserInfoFromClaims(authState.User);
 
-            Log.Information("\n\n Finish AUTHENTICATION ---------------------------\n");
 
             StateHasChanged();
         }
