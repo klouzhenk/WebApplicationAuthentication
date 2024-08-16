@@ -93,4 +93,10 @@
 	  </Content>
 	</ItemGroup>
 
+
+	<ItemGroup>
+	  <Folder Include="src\fonts\" />
+	  <Folder Include="src\fonts\" />
+	</ItemGroup>
+
 </Project>
