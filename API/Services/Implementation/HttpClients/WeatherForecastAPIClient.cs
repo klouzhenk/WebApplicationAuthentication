@@ -14,7 +14,7 @@ namespace API.Services.Implementation.HttpClients
 
         public async Task<Forecast[]> GetForecastsAsync(string idTown, string day)
         {
-            var url = $"WeatherForecast?idTown={idTown}&day={day}";
+            var url = $"/WeatherForecast?idTown={idTown}&day={day}";
             return await _client.GetFromJsonAsync<Forecast[]>(url);
         }
     }
