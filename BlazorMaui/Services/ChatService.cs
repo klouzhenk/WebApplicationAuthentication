@@ -1,10 +1,15 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace BlazorMaui.Services
 {
-    public class ChatService
+    public class ChatService : IAsyncDisposable
     {
         private readonly HubConnection _hubConnection;
+        private Timer _heartbeatTimer;
+        private const int HeartbeatInterval = 10000; // 10 секунд
 
         public string ConnectionState { get; private set; } = "Disconnected";
 
@@ -23,18 +28,21 @@ namespace BlazorMaui.Services
             _hubConnection.Reconnecting += error =>
             {
                 ConnectionState = "Reconnecting";
+                StopHeartbeat();
                 return Task.CompletedTask;
             };
 
             _hubConnection.Reconnected += connectionId =>
             {
                 ConnectionState = "Connected";
+                StartHeartbeat();
                 return Task.CompletedTask;
             };
 
             _hubConnection.Closed += error =>
             {
                 ConnectionState = "Disconnected";
+                StopHeartbeat();
                 return Task.CompletedTask;
             };
         }
@@ -45,6 +53,7 @@ namespace BlazorMaui.Services
             {
                 await _hubConnection.StartAsync();
                 ConnectionState = "Connected";
+                StartHeartbeat();
                 Console.WriteLine("Connection started");
             }
             catch (Exception ex)
@@ -67,6 +76,45 @@ namespace BlazorMaui.Services
             }
         }
 
+        private void StartHeartbeat()
+        {
+            _heartbeatTimer = new Timer(async _ =>
+            {
+                if (_hubConnection.State == HubConnectionState.Connected)
+                {
+                    try
+                    {
+                        // Після того як зв'язок встановлено, перевірити активність
+                        await _hubConnection.SendAsync("Ping"); 
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error during heartbeat: {ex.Message}");
+                        ConnectionState = "Disconnected";
+                        await _hubConnection.StopAsync();
+                        await StartAsync(); // Перепідключення
+                    }
+                }
+                else
+                {
+                    ConnectionState = "Disconnected";
+                }
+            }, null, HeartbeatInterval, HeartbeatInterval);
+        }
+
+        private void StopHeartbeat()
+        {
+            _heartbeatTimer?.Change(Timeout.Infinite, Timeout.Infinite);
+            _heartbeatTimer?.Dispose();
+            _heartbeatTimer = null;
+        }
+
         public event Action<string, string> MessageReceived;
+
+        public async ValueTask DisposeAsync()
+        {
+            StopHeartbeat();
+            await _hubConnection.DisposeAsync();
+        }
     }
 }
