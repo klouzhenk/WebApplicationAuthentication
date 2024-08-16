@@ -8,23 +8,21 @@
 
 
 <div class="chat__container">
-    <div class="chat__container-inner">
-        <ul class="chat__msg-list">
-            @foreach (var chatMessage in ChatMessages)
-            {
-                <li class="chat__msg">
-                    <strong>@chatMessage.User:</strong>
-                    @chatMessage.Message
-                </li>
-            }
-        </ul>
-    </div>
-    <div class="chat__container-send-box">
-        @* <input @bind="User" placeholder=@(User) /> *@
-        <h5>@(User)</h5>
-        <input @bind="Message" placeholder="Message" />
-        <button @onclick="SendMessage">Send</button>
-    </div>
+    <ul class="chat__msg-list">
+        @foreach (var chatMessage in ChatMessages)
+        {
+            <li class="chat__msg-el">
+                <h6 class="chat__msg--username">@chatMessage.User</h6>
+                <p class="chat__msg--text">@chatMessage.Message</p>
+            </li>
+        }
+    </ul>
+</div>
+
+<div class="send-msg-box">
+    @* <input @bind="User" placeholder=@(User) /> *@
+    <input class="form__input-area" @bind="Message" placeholder="Message" />
+    <button class="form__btn-submit" @onclick="SendMessage">Send</button>
 </div>
 
 @code {
