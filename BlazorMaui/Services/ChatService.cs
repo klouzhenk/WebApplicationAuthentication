@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+﻿using Microsoft.AspNetCore.Http.Connections;
+using Microsoft.AspNetCore.Http.Connections.Client;
+using Microsoft.AspNetCore.SignalR.Client;
 using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,8 +18,11 @@ namespace BlazorMaui.Services
 
         public ChatService()
         {
+            var transportType = HttpTransportType.WebSockets | HttpTransportType.LongPolling;
+            var options = ConfigureHttpConnection();
+
             _hubConnection = new HubConnectionBuilder()
-                .WithUrl("https://localhost:7267/chatHub") // Замініть на правильний URL вашого API
+                .WithUrl("https://localhost:7267/chatHub", transportType, options) 
                 .WithAutomaticReconnect()
                 .Build();
 
@@ -45,6 +51,25 @@ namespace BlazorMaui.Services
                 StopHeartbeat();
                 return Task.CompletedTask;
             };
+        }
+
+        private Action<HttpConnectionOptions> ConfigureHttpConnection()
+        {
+            return options =>
+                {
+                    options.ClientCertificates =
+                        new X509CertificateCollection();
+                    options.UseDefaultCredentials = true;
+                    options.HttpMessageHandlerFactory = handler =>
+                    {
+                        if (handler is not HttpClientHandler clientHandler) return handler;
+                        clientHandler.ServerCertificateCustomValidationCallback =
+                            (sender, cert, chain, sslPolicyErrors) => true;
+                        return handler;
+                    };
+                    options.WebSocketConfiguration = null;
+                    options.WebSocketFactory = null;
+                };
         }
 
         public async Task StartAsync()

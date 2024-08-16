@@ -41,6 +41,7 @@ namespace WebApplicationShared.Components.Layout
         {
             showModal = false;
             ChangeNavListVisibility();
+            StateHasChanged();
         }
     }
 }
