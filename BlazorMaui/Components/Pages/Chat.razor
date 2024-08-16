@@ -2,10 +2,13 @@
 @using System.Security.Claims
 @inject BlazorMaui.Services.ChatService ChatService
 
+@using Microsoft.Extensions.Localization
+@using WebApplicationShared.Locales
+@inject IStringLocalizer<WebApplicationShared.Locales.Resource> localizer
 
-<h1 class="page__title">Chat</h1>
-<p class="page__paragraph">Status: @ChatService.ConnectionState</p>
+<h1 class="page__title">@localizer["ChatTitle"]</h1>
 
+<p class="page__paragraph">@localizer["ChatStatusTitle"]: @ChatService.ConnectionState</p>
 
 <div class="chat__container">
     <ul class="chat__msg-list">
@@ -20,9 +23,8 @@
 </div>
 
 <div class="send-msg-box">
-    @* <input @bind="User" placeholder=@(User) /> *@
-    <input class="form__input-area" @bind="Message" placeholder="Message" />
-    <button class="form__btn-submit" @onclick="SendMessage">Send</button>
+    <input class="form__input-area" @bind="Message" placeholder=@localizer["ChatMsgPlaceholder"] />
+    <button class="form__btn-submit" @onclick="SendMessage">@localizer["ChatBtnMsgSend"]</button>
 </div>
 
 @code {

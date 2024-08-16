@@ -22,7 +22,7 @@ namespace BlazorMaui.Services
             var options = ConfigureHttpConnection();
 
             _hubConnection = new HubConnectionBuilder()
-                .WithUrl("https://localhost:7267/chatHub", transportType, options) 
+                .WithUrl("https://172.19.100.148:7267/chatHub", transportType, options) 
                 .WithAutomaticReconnect()
                 .Build();
 

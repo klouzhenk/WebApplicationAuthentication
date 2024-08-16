@@ -15,6 +15,10 @@ using API.Services.Interfaces.DataServices;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
+
+using Microsoft.AspNetCore.Http.Connections.Client;
+
+
 namespace BlazorMaui
 {
     public static class MauiProgram
@@ -44,14 +48,6 @@ namespace BlazorMaui
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();
 #endif
-
-
-
-
-            //HttpClientHandler clientHandler = new HttpClientHandler();
-            //clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
-            //// Pass the handler to httpclient(from you are calling api)
-            //HttpClient client = new HttpClient(clientHandler);
 
 
 
@@ -103,5 +99,25 @@ namespace BlazorMaui
             builder.Services.AddSingleton<ChatService>();
             builder.Services.AddSingleton<UserModel>();
         }
+
+        private static Action<HttpConnectionOptions> ConfigureHttpConnection()
+        {
+            return options =>
+            {
+                options.ClientCertificates =
+                    new X509CertificateCollection();
+                options.UseDefaultCredentials = true;
+                options.HttpMessageHandlerFactory = handler =>
+                {
+                    if (handler is not HttpClientHandler clientHandler) return handler;
+                    clientHandler.ServerCertificateCustomValidationCallback =
+                        (sender, cert, chain, sslPolicyErrors) => true;
+                    return handler;
+                };
+                options.WebSocketConfiguration = null;
+                options.WebSocketFactory = null;
+            };
+        }
     }
 }
+
