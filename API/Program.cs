@@ -39,22 +39,23 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowBlazorApp",
         builder =>
         {
-            builder.WithOrigins("https://localhost:7267") // URL Blazor
+            builder.WithOrigins("https://172.19.100.148:7267/swagger/index.html") // URL Blazor
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
 });
 
+
 // set up dataservices
 builder.Services.AddHttpClient<IUserAPIClient, UserAPIClient>( configureClient =>
 {
-    configureClient.BaseAddress = new Uri("https://localhost:7267");
+    configureClient.BaseAddress = new Uri("https://172.19.100.148:7267/swagger/index.html");
 });
 builder.Services.AddTransient<IUserDataService, UserDataService>();
 
 builder.Services.AddHttpClient<IWeatherForecastAPIClient, WeatherForecastAPIClient>(configureClient =>
 {
-    configureClient.BaseAddress = new Uri("https://localhost:7267");
+    configureClient.BaseAddress = new Uri("https://172.19.100.148:7267/swagger/index.html");
 });
 builder.Services.AddTransient<IWeatherForecastDataService, WeatherForecastDataService>();
 

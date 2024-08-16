@@ -14,7 +14,7 @@ using API.Services.Implementation.DataServices;
 using API.Services.Interfaces.DataServices;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Security.Claims;
-
+using System.Security.Cryptography.X509Certificates;
 namespace BlazorMaui
 {
     public static class MauiProgram
@@ -45,18 +45,49 @@ namespace BlazorMaui
             builder.Logging.AddDebug();
 #endif
 
+
+
+
+            //HttpClientHandler clientHandler = new HttpClientHandler();
+            //clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            //// Pass the handler to httpclient(from you are calling api)
+            //HttpClient client = new HttpClient(clientHandler);
+
+
+
             // Configure HttpClient and custom data services
             builder.Services.AddHttpClient<IUserAPIClient, UserAPIClient>(configureClient =>
             {
-                configureClient.BaseAddress = new Uri("https://localhost:7267");
+                configureClient.BaseAddress = new Uri("https://172.19.100.148:7267/swagger/index.html");
+            }).ConfigurePrimaryHttpMessageHandler(() => {
+                var handler = new HttpClientHandler();
+
+                // Add your custom HTTP client options here
+                //handler.ClientCertificates = new X509CertificateCollection();
+                handler.UseDefaultCredentials = true;
+                handler.ServerCertificateCustomValidationCallback =
+                    (sender, cert, chain, sslPolicyErrors) => true;
+
+                return handler;
             });
             builder.Services.AddTransient<IUserDataService, UserDataService>();
 
             builder.Services.AddHttpClient<IWeatherForecastAPIClient, WeatherForecastAPIClient>(configureClient =>
             {
-                configureClient.BaseAddress = new Uri("https://localhost:7267");
+                configureClient.BaseAddress = new Uri("https://172.19.100.148:7267/swagger/index.html");
+            }).ConfigurePrimaryHttpMessageHandler(() => {
+                var handler = new HttpClientHandler();
+
+                // Add your custom HTTP client options here
+                //handler.ClientCertificates = new X509CertificateCollection();
+                handler.UseDefaultCredentials = true;
+                handler.ServerCertificateCustomValidationCallback =
+                    (sender, cert, chain, sslPolicyErrors) => true;
+
+                return handler;
             });
             builder.Services.AddTransient<IWeatherForecastDataService, WeatherForecastDataService>();
+
 
             // Add authentication and authorization
             builder.Services.AddAuthenticationCore();

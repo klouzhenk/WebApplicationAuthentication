@@ -62,7 +62,7 @@ public class AuthController : ControllerBase
 
         // JWT generation
         var securityToken = new JwtSecurityToken(
-            issuer: "https://localhost:7267/",
+            issuer: "https://172.19.100.148:7267/swagger/index.html",
             audience: "https://localhost:7147/",
             expires: DateTime.Now.AddMinutes(30),
             signingCredentials: credentials,
