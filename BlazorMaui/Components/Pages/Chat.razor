@@ -1,28 +1,71 @@
 ﻿@page "/chat"
+@using System.Security.Claims
 @inject BlazorMaui.Services.ChatService ChatService
 
-<h3>Chat</h3>
-<p>Status: @ChatService.ConnectionState</p>
-<input @bind="User" placeholder="User" />
-<input @bind="Message" placeholder="Message" />
-<button @onclick="SendMessage">Send</button>
 
-<ul>
-    @foreach (var chatMessage in ChatMessages)
-    {
-        <li><strong>@chatMessage.User:</strong> @chatMessage.Message</li>
-    }
-</ul>
+<h1 class="page__title">Chat</h1>
+<p class="page__paragraph">Status: @ChatService.ConnectionState</p>
+
+
+<div class="chat__container">
+    <div class="chat__container-inner">
+        <ul class="chat__msg-list">
+            @foreach (var chatMessage in ChatMessages)
+            {
+                <li class="chat__msg">
+                    <strong>@chatMessage.User:</strong>
+                    @chatMessage.Message
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="chat__container-send-box">
+        @* <input @bind="User" placeholder=@(User) /> *@
+        <h5>@(User)</h5>
+        <input @bind="Message" placeholder="Message" />
+        <button @onclick="SendMessage">Send</button>
+    </div>
+</div>
 
 @code {
     private string User { get; set; }
     private string Message { get; set; }
     private List<ChatMessage> ChatMessages { get; set; } = new List<ChatMessage>();
 
+    [Inject] private CustomAuthStateProvider CustomAuthStateProvider { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         ChatService.MessageReceived += OnMessageReceived;
         await ChatService.StartAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            CustomAuthStateProvider.CheckAuthenticationAfterRendering();
+
+            try
+            {
+                var authState = await CustomAuthStateProvider.GetAuthenticationStateAsync();
+
+                if (!authState.User.Identity.IsAuthenticated)
+                {
+                    NavigationManager.NavigateTo("/");
+                    return;
+                }
+
+                User = authState.User.FindFirstValue(ClaimTypes.Name);
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.Error.WriteLine($"Failed to get messages: {ex.Message}");
+            }
+
+            StateHasChanged();
+        }
     }
 
     private async Task SendMessage()
