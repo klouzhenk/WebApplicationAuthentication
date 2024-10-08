@@ -8,8 +8,8 @@ using System.Security.Cryptography;
 using API.Models.DTO;
 using API.Models;
 using API.Entities;
-using API.Models.Helpers;
 using API.Infrastructure;
+using API.Models.Helpers;
 
 namespace API.Controllers;
 
@@ -24,8 +24,6 @@ public class AuthController : ControllerBase
 	{
 		_context = context;
 	}
-
-	public AuthController() { }
 
 	[HttpPost("login")]
 	public IActionResult Login([FromBody] LoginRequest request)

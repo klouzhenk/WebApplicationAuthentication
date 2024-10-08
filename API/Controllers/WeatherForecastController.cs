@@ -16,8 +16,6 @@ public class WeatherForecastController : ControllerBase
         _forecastDbContext = forecastDbContext;
     }
 
-    public WeatherForecastController() { }
-
     [HttpGet(Name = "GetWeatherForecast")]
     public Forecast[] Get([FromQuery] int idTown, [FromQuery] string day)
     {

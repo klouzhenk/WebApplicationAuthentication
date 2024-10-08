@@ -65,7 +65,7 @@ namespace AuthenticationUI.Components.Pages
                 return;
             }
 
-            var responseContent = await response.Content.ReadFromJsonAsync<JwtResponse>();
+            var responseContent = await response.Content.ReadFromJsonAsync<API.Controllers.JwtResponse>();
             if (responseContent != null)
             {
                 _authToken = responseContent.Token;
