@@ -41,6 +41,7 @@ namespace BlazorMaui.Components.Layout
         {
             showModal = false;
             ChangeNavListVisibility();
+            StateHasChanged();
         }
     }
 }
