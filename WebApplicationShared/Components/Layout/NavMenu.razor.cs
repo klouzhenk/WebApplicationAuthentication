@@ -37,6 +37,7 @@ namespace WebApplicationShared.Components.Layout
             showModal = false;
             ChangeNavListVisibility();
         }
+
         public void OnCancelLogout()
         {
             showModal = false;

@@ -9,12 +9,6 @@ namespace WebApplicationShared.Helpers
         [Inject] private NavigationManager NavigationManager { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
 
-        public void ShowLogoutConfirmation()
-        {
-            showModal = true;
-        }
-
-
         public async Task OnLogoutConfirmed(bool isConfirmed)
         {
             if (isConfirmed)

@@ -34,7 +34,7 @@ namespace AuthenticationUI.Components.Pages
 
         public void ChangeHiding()
         {
-            IsSignUpHidden = IsSignUpHidden ? false : true;
+            IsSignUpHidden = !IsSignUpHidden;
             return;
         }
 
@@ -79,14 +79,13 @@ namespace AuthenticationUI.Components.Pages
 
                 var authState = await AuthenticationStateProvider.MarkUserAsAuthenticated(principal);
                 if (!authState.User.Identity.IsAuthenticated) { return; }
-                var userClaims = authState.User.Claims;
                 UserInfo = UserModel.GetUserInfoFromClaims(authState.User);
 
                 StateHasChanged();
             }
             else
             {
-                ShowError("Invalid response from server");
+                await ShowError("Invalid response from server");
             }
             
             StateHasChanged();
@@ -97,8 +96,8 @@ namespace AuthenticationUI.Components.Pages
             var errorResponse = await response.Content.ReadAsStringAsync();
             var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(errorResponse);
 
-            if (problemDetails != null) { ShowError(problemDetails.Detail); }
-            else { ShowError("No error details were provided."); }
+            if (problemDetails != null) { await ShowError(problemDetails.Detail); }
+            else { await ShowError("No error details were provided."); }
 
             StateHasChanged();
         }
@@ -112,7 +111,7 @@ namespace AuthenticationUI.Components.Pages
                 if (response.IsSuccessStatusCode) { ChangeHiding(); }
                 else { _setErrorMessage(response); }
             }
-            catch (Exception ex) { ShowError($"An error occurred: {ex.Message}"); }
+            catch (Exception ex) { await ShowError($"An error occurred: {ex.Message}"); }
 
             StateHasChanged();
         }

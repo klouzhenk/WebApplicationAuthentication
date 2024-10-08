@@ -28,7 +28,6 @@ namespace AuthenticationUI.Components.Pages
                 return;
             }
 
-            var userClaims = authState.User.Claims;
             UserInfo = UserModel.GetUserInfoFromClaims(authState.User);
             StateHasChanged();
         }
