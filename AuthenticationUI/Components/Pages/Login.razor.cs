@@ -9,10 +9,11 @@ using Microsoft.AspNetCore.Http;
 using System.Net.Http.Json;
 using WebApplicationShared;
 using Serilog;
+using API.Controllers;
 
 namespace AuthenticationUI.Components.Pages
 {
-    public partial class LoginPage : ComponentBase
+	public partial class LoginPage : ComponentBase
     {
         // public fields
         [CascadingParameter] public HttpContext HttpContext { get; set; }

@@ -1,29 +1,27 @@
 ﻿using API.Services.Interfaces.HttpClients;
 using API.Models.DTO;
-using static System.Net.WebRequestMethods;
 
-namespace API.Services.Implementation.HttpClients
+namespace API.Services.Implementation.HttpClients;
+
+public class UserAPIClient : IUserAPIClient
 {
-    public class UserAPIClient : IUserAPIClient
+    private readonly HttpClient _client;
+
+    public UserAPIClient(HttpClient client)
     {
-        private readonly HttpClient _client;
+        _client = client;
+    }
 
-        public UserAPIClient(HttpClient client)
-        {
-            _client = client;
-        }
+    public async Task<HttpResponseMessage> LoginUserAsync(string name, string password)
+    {
+        var loginRequest = new LoginRequest { Username = name, Password = password };
+        return await _client.PostAsJsonAsync("/Auth/login", loginRequest);
+    }
 
-        public async Task<HttpResponseMessage> LoginUserAsync(string name, string password)
-        {
-            var loginRequest = new LoginRequest { Username = name, Password = password };
-            return await _client.PostAsJsonAsync("/Auth/login", loginRequest);
-        }
-
-        public async Task<HttpResponseMessage> RegisterUserAsync(string name, string password, string role)
-        {
-            var registerRequest = new RegisterRequest { Username = name, Password = password, Role = role };
-            return await _client.PostAsJsonAsync("/Auth/register", registerRequest);
-        }
+    public async Task<HttpResponseMessage> RegisterUserAsync(string name, string password, string role)
+    {
+        var registerRequest = new RegisterRequest { Username = name, Password = password, Role = role };
+        return await _client.PostAsJsonAsync("/Auth/register", registerRequest);
     }
 }
 

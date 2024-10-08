@@ -1,9 +1,8 @@
 ﻿using API.Entities;
 
-namespace API.Services.Interfaces.HttpClients
+namespace API.Services.Interfaces.HttpClients;
+
+public interface IWeatherForecastAPIClient
 {
-    public interface IWeatherForecastAPIClient
-    {
-        Task<Forecast[]> GetForecastsAsync(string idTown, string day);
-    }
+    Task<Forecast[]> GetForecastsAsync(string idTown, string day);
 }

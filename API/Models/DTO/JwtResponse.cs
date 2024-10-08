@@ -1,7 +1,6 @@
-﻿namespace API.Models.DTO
+﻿namespace API.Models.DTO;
+
+public class JwtResponse
 {
-    public class JwtResponse
-    {
-        public string Token { get; set; }
-    }
+    public string Token { get; set; }
 }

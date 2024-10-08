@@ -1,6 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
-using Microsoft.AspNetCore.Localization;
 using API.Services.Implementation.DataServices;
 using API.Models;
 using API.Services.Interfaces.HttpClients;
@@ -21,16 +19,14 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 builder.Services.AddSignalR();
-builder.Host.UseSerilog(); // Add this line
-// Add services to the container.
+builder.Host.UseSerilog();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
-
 builder.Services.AddDbContext<ForecastDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
@@ -45,7 +41,6 @@ builder.Services.AddCors(options =>
         });
 });
 
-
 // set up dataservices
 builder.Services.AddHttpClient<IUserAPIClient, UserAPIClient>( configureClient =>
 {
@@ -58,7 +53,6 @@ builder.Services.AddHttpClient<IWeatherForecastAPIClient, WeatherForecastAPIClie
     configureClient.BaseAddress = new Uri("https://172.19.100.148:7267/swagger/index.html");
 });
 builder.Services.AddTransient<IWeatherForecastDataService, WeatherForecastDataService>();
-
 
 
 var app = builder.Build();

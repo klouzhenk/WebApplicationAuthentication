@@ -1,31 +1,28 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Security.Cryptography;
 
-namespace API.Models.Helpres
+namespace API.Models.Helpers;
+
+public static class PasswordHelper
 {
-
-    public static class PasswordHelper
+    public static string GenerateSalt()
     {
-        public static string GenerateSalt()
+        byte[] salt = new byte[128 / 8];
+        using (var rng = RandomNumberGenerator.Create())
         {
-            byte[] salt = new byte[128 / 8];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
-            }
-            return Convert.ToBase64String(salt);
+            rng.GetBytes(salt);
         }
-
-        public static string HashPassword(string password, string salt)
-        {
-            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: Convert.FromBase64String(salt),
-                prf: KeyDerivationPrf.HMACSHA256,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8));
-            return hashed;
-        }
+        return Convert.ToBase64String(salt);
     }
 
+    public static string HashPassword(string password, string salt)
+    {
+        string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            password: password,
+            salt: Convert.FromBase64String(salt),
+            prf: KeyDerivationPrf.HMACSHA256,
+            iterationCount: 10000,
+            numBytesRequested: 256 / 8));
+        return hashed;
+    }
 }

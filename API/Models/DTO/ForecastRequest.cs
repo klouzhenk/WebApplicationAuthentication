@@ -1,8 +1,7 @@
-﻿namespace API.Models.DTO
+﻿namespace API.Models.DTO;
+
+public class ForecastRequest
 {
-    public class ForecastRequest
-    {
-        public int IdTown { get; set; }
-        public string Day { get; set; }
-    }
+    public int IdTown { get; set; }
+    public string Day { get; set; }
 }

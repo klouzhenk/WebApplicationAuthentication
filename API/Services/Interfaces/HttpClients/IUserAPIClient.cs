@@ -1,10 +1,7 @@
-﻿using API.Entities;
+﻿namespace API.Services.Interfaces.HttpClients;
 
-namespace API.Services.Interfaces.HttpClients
+public interface IUserAPIClient
 {
-    public interface IUserAPIClient
-    {
-        Task<HttpResponseMessage> LoginUserAsync(string name, string password);
-        Task<HttpResponseMessage> RegisterUserAsync(string name, string password, string role);
-    }
+    Task<HttpResponseMessage> LoginUserAsync(string name, string password);
+    Task<HttpResponseMessage> RegisterUserAsync(string name, string password, string role);
 }

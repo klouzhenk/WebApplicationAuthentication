@@ -1,19 +1,17 @@
 ﻿using API.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Models
+namespace API.Models;
+
+public class ForecastDbContext : DbContext
 {
+    public ForecastDbContext(DbContextOptions<ForecastDbContext> options) : base(options) { }
 
-    public class ForecastDbContext : DbContext
+    public DbSet<Forecast> Forecasts { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public ForecastDbContext(DbContextOptions<ForecastDbContext> options) : base(options) { }
-
-        public DbSet<Forecast> Forecasts { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Forecast>().ToTable("Forecast");
-        }
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Forecast>().ToTable("Forecast");
     }
 }

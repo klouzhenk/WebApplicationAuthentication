@@ -12,7 +12,6 @@ namespace SignalRChat.Hubs
 
         public Task Ping()
         {
-            // Можна просто повернути Task.CompletedTask
             return Task.CompletedTask;
         }
     }
